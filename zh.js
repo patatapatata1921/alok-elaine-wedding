@@ -798,7 +798,7 @@ window.I18N_ZH = {
 "@Masala dosa with chutney": "马萨拉煎饼配酸辣酱",
 "@Malabar chicken biryani": "马拉巴尔鸡肉香饭",
 "@Idiyappam with egg curry": "米线饼配鸡蛋咖喱",
-"Kerala food and place photos via Wikimedia Commons (CC BY-SA / CC BY): Solowomanwalks, ideowl, Nita Abbey, Viewfinder18, athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj. Plug and socket photo: Shoestring (Wikivoyage), CC BY-SA 4.0.": "喀拉拉美食与景点照片来自 Wikimedia Commons（CC BY-SA）：Solowomanwalks、ideowl、Nita Abbey、Viewfinder18、athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj。插头与插座照片：Shoestring（Wikivoyage），CC BY-SA 4.0。",
+"Kerala food and place photos via Wikimedia Commons (CC BY-SA / CC BY): Solowomanwalks, ideowl, Nita Abbey, Viewfinder18, athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj. Plug and socket photo: Shoestring (Wikivoyage), CC BY-SA 4.0. Outfit photos: R.U.P.A.K - A.N.T.O (CC BY 2.0), Jaisonyesudas (CC0), Vachan Rawal (CC BY-SA 4.0).": "喀拉拉美食与景点照片来自 Wikimedia Commons（CC BY-SA）：Solowomanwalks、ideowl、Nita Abbey、Viewfinder18、athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj。插头与插座照片：Shoestring（Wikivoyage），CC BY-SA 4.0。服装照片：R.U.P.A.K - A.N.T.O（CC BY 2.0）、Jaisonyesudas（CC0）、Vachan Rawal（CC BY-SA 4.0）。",
 "One last step — tap below to send your RSVP to us by email.": "最后一步——请点击下方按钮，通过电子邮件把回复发送给我们。",
 "Send my RSVP by email": "通过电子邮件发送我的回复",
 "@A Kerala wedding: the couple with their friends, the men in cream kurtas and mundus, the women in silk sarees and lehengas": "喀拉拉邦婚礼：新人与朋友们，男士身穿米色 kurta 和 mundu，女士身穿丝绸纱丽和 lehenga",
@@ -827,5 +827,9 @@ window.I18N_ZH = {
 "📍 About 2.5 km · 10 min to the reception": "📍 距晚宴场地约2.5公里 · 车程10分钟",
 "A modern hotel in Thampanoor, steps from the central railway and bus stations — handy if you plan day trips by train.": "位于 Thampanoor 的现代酒店，距中央火车站和巴士总站仅几步之遥——若打算乘火车一日游会很方便。",
 "What you'll find in the wall: an Indian socket (left) and plug (right).": "墙上的样子：印度插座（左）和插头（右）。",
-"@An Indian wall socket and a three-round-pin plug": "印度墙壁插座和三圆脚插头"
+"@An Indian wall socket and a three-round-pin plug": "印度墙壁插座和三圆脚插头",
+"Staying at": "入住酒店",
+"@Two women in cream-and-gold Kerala kasavu sarees": "两位身穿米白金边喀拉拉 kasavu 纱丽的女士",
+"@A man in a white mundu with a green kurta": "身穿白色 mundu 搭配绿色 kurta 的男士",
+"@A pair of embroidered slip-on sandals": "一双刺绣一脚蹬凉鞋"
 };

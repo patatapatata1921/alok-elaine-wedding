@@ -1029,6 +1029,7 @@
   .travel-tab[aria-selected="true"] { background: #3d2817; border-color: #3d2817; color: var(--bg); }
   .travel-panel[hidden] { display: none; }
   .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .wear-photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; display: block; margin-bottom: 0.9rem; }
   .guide-card {
     background: rgba(231, 219, 200, 0.4);
     border-radius: 14px; padding: 1.2rem 1.3rem 1.4rem;
@@ -1962,16 +1963,19 @@
     <h3 class="party-heading">What to Wear</h3>
     <div class="guide-grid">
         <div class="guide-card">
+          <img class="wear-photo" src="images/wear-ladies.jpg" alt="Two women in cream-and-gold Kerala kasavu sarees" loading="lazy" style="object-position:center 20%">
           <span class="member-name">For the ladies</span>
           <h5>Sarees, lehengas or a smart dress</h5>
           <p>A <b>silk or cotton saree</b>, a <b>lehenga</b> or a <b>salwar / kurta set</b>. Rich, happy colours — maroon, mustard, emerald, pink, gold.</p><p>Prefer Western clothes? A bright, elegant midi or maxi dress with covered shoulders.</p>
         </div>
         <div class="guide-card">
+          <img class="wear-photo" src="images/wear-gentlemen.jpg" alt="A man in a white mundu with a green kurta" loading="lazy" style="object-position:center 8%">
           <span class="member-name">For the gentlemen</span>
           <h5>Kurta, mundu or a light suit</h5>
           <p>A <b>kurta</b> with trousers, or a <b>sherwani / bandhgala</b> for the evening. For a Kerala touch, the <b>mundu</b> — a white cotton wrap with a gold border, worn with a shirt.</p><p>Prefer Western clothes? A linen suit in a lighter colour.</p>
         </div>
         <div class="guide-card">
+          <img class="wear-photo" src="images/wear-sandals.jpg" alt="A pair of embroidered slip-on sandals" loading="lazy" style="object-position:center">
           <span class="member-name">Good to know</span>
           <h5>A few gentle guidelines</h5>
           <p><b>Colours:</b> avoid all-white and all-black, and leave bright red to the bride.</p><p><b>Cover up a little</b> for the ceremony; a scarf or dupatta is handy.</p><p><b>Shoes</b> may come off — choose slip-on sandals or flats. <b>Fabric:</b> cotton, linen and light silk for the warm weather.</p>
@@ -1980,28 +1984,44 @@
 
     <h3 class="party-heading">Need an Outfit?</h3>
     <p>Thiruvananthapuram has wonderful shops for Indian wear. Shop on your first day — alterations and blouse stitching usually take a day or two.</p>
+    <div class="explore-from">
+      <label for="shop-from">Staying at</label>
+      <select id="shop-from">
+        <option value="hyatt">Hyatt Regency Trivandrum</option>
+        <option value="vivanta">Vivanta Thiruvananthapuram</option>
+        <option value="hilton">Hilton Garden Inn Trivandrum</option>
+        <option value="mascot">Mascot Hotel (KTDC)</option>
+        <option value="southpark">The South Park</option>
+        <option value="hycinth">Hycinth by Sparsa</option>
+      </select>
+      <span class="explore-from-note">Distances update for your hotel. Drive times are typical daytime traffic.</span>
+    </div>
     <div class="guide-grid shop-grid">
       <div class="guide-card">
         <span class="member-name">Sarees</span>
         <h5><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Pothys+MG+Road+Thiruvananthapuram" target="_blank" rel="noopener">Pothys, MG Road</a></h5>
+        <div class="hotel-dist" data-shop="pothys"></div>
         <p>Six floors with three dedicated to sarees, plus kurtas and ready-made outfits for men and women.</p>
         <p class="guide-wear"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Pothys+MG+Road+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></p>
       </div>
       <div class="guide-card">
         <span class="member-name">Kerala silk</span>
         <h5><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Jayalakshmi+Silks+Thiruvananthapuram" target="_blank" rel="noopener">Jayalakshmi Silks</a></h5>
+        <div class="hotel-dist" data-shop="jaya"></div>
         <p>Known for traditional Kerala sarees, silk and churidar sets.</p>
         <p class="guide-wear"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Jayalakshmi+Silks+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></p>
       </div>
       <div class="guide-card">
         <span class="member-name">One-stop mall</span>
         <h5><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Lulu+Mall+Thiruvananthapuram" target="_blank" rel="noopener">Lulu Mall</a></h5>
+        <div class="hotel-dist" data-shop="lulu"></div>
         <p><b>Manyavar</b> for men's sherwanis and kurtas, plus Biba, Jaypore and Ritu Kumar for women. Near the airport.</p>
         <p class="guide-wear"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Lulu+Mall+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></p>
       </div>
       <div class="guide-card">
         <span class="member-name">Handloom</span>
         <h5><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Balaramapuram+handloom" target="_blank" rel="noopener">Balaramapuram</a></h5>
+        <div class="hotel-dist" data-shop="balaram"></div>
         <p>The handloom village on the way to Kovalam, famous for cream-and-gold <b>kasavu</b> sarees and mundu.</p>
         <p class="guide-wear"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Balaramapuram+handloom" target="_blank" rel="noopener">Open in Google Maps →</a></p>
       </div>
@@ -2835,7 +2855,7 @@
   <p>Alok &amp; Elaine · January 15–16, 2027</p>
   <details class="credits">
     <summary>Photo credits</summary>
-    <p>Kerala food and place photos via Wikimedia Commons (CC BY-SA / CC BY): Solowomanwalks, ideowl, Nita Abbey, Viewfinder18, athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj. Plug and socket photo: Shoestring (Wikivoyage), CC BY-SA 4.0.</p>
+    <p>Kerala food and place photos via Wikimedia Commons (CC BY-SA / CC BY): Solowomanwalks, ideowl, Nita Abbey, Viewfinder18, athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj. Plug and socket photo: Shoestring (Wikivoyage), CC BY-SA 4.0. Outfit photos: R.U.P.A.K - A.N.T.O (CC BY 2.0), Jaisonyesudas (CC0), Vachan Rawal (CC BY-SA 4.0).</p>
   </details>
 </footer>
 
@@ -3891,32 +3911,34 @@
 </script>
 
 <script>
-  /* Explore → "Travelling from": driving distances (OpenStreetMap routing, km) from each recommended hotel.
-     Times add typical Thiruvananthapuram traffic on top of the distance. */
+  /* Explore "Travelling from" + Dress Code "Staying at": driving distances (OpenStreetMap routing, km)
+     from each recommended hotel to the places and shops. Times add typical Thiruvananthapuram traffic. */
   (function () {
-    const KM = {"hyatt": {"kovalam": 15.7, "temple": 2.9, "napier": 2.8, "poovar": 27.7, "shang": 9.0, "varkala": 46.2}, "vivanta": {"kovalam": 14.7, "temple": 1.9, "napier": 3.6, "poovar": 26.7, "shang": 8.0, "varkala": 45.9}, "hilton": {"kovalam": 15.2, "temple": 2.3, "napier": 2.1, "poovar": 27.2, "shang": 8.1, "varkala": 44.5}, "mascot": {"kovalam": 16.3, "temple": 3.3, "napier": 0.5, "poovar": 28.3, "shang": 9.1, "varkala": 44.4}, "southpark": {"kovalam": 15.2, "temple": 2.2, "napier": 2.1, "poovar": 27.2, "shang": 8.1, "varkala": 44.5}, "hycinth": {"kovalam": 15.4, "temple": 2.2, "napier": 2.8, "poovar": 27.4, "shang": 8.7, "varkala": 46.1}};
+    const KM = {"hyatt": {"kovalam": 15.7, "temple": 2.9, "napier": 2.8, "poovar": 27.7, "shang": 9.0, "varkala": 46.2, "pothys": 2.4, "jaya": 2.2, "lulu": 9.1, "balaram": 14.3}, "vivanta": {"kovalam": 14.7, "temple": 1.9, "napier": 3.6, "poovar": 26.7, "shang": 8.0, "varkala": 45.9, "pothys": 1.5, "jaya": 1.3, "lulu": 8.7, "balaram": 13.2}, "hilton": {"kovalam": 15.2, "temple": 2.3, "napier": 2.1, "poovar": 27.2, "shang": 8.1, "varkala": 44.5, "pothys": 1.4, "jaya": 1.5, "lulu": 7.4, "balaram": 15.4}, "mascot": {"kovalam": 16.3, "temple": 3.3, "napier": 0.5, "poovar": 28.3, "shang": 9.1, "varkala": 44.4, "pothys": 2.5, "jaya": 2.6, "lulu": 7.3, "balaram": 15.9}, "southpark": {"kovalam": 15.2, "temple": 2.2, "napier": 2.1, "poovar": 27.2, "shang": 8.1, "varkala": 44.5, "pothys": 1.4, "jaya": 1.5, "lulu": 7.4, "balaram": 15.1}, "hycinth": {"kovalam": 15.4, "temple": 2.2, "napier": 2.8, "poovar": 27.4, "shang": 8.7, "varkala": 46.1, "pothys": 1.6, "jaya": 1.5, "lulu": 9.0, "balaram": 13.9}};
     const NAMES = { hyatt: 'Hyatt Regency', vivanta: 'Vivanta', hilton: 'Hilton Garden Inn', mascot: 'Mascot Hotel', southpark: 'The South Park', hycinth: 'Hycinth' };
-    const sel = document.getElementById('explore-from');
-    if (!sel) return;
+    const sels = ['explore-from', 'shop-from'].map(id => document.getElementById(id)).filter(Boolean);
+    if (!sels.length) return;
     const drive = km => {
       let m = Math.round((km * (km < 10 ? 2 : 1.8) + 5) / 5) * 5;
       if (m < 60) return m + ' min';
       const h = Math.floor(m / 60); m = m % 60;
       return h + ' hr' + (m ? ' ' + m + ' min' : '');
     };
-    function render() {
-      const from = KM[sel.value];
-      document.querySelectorAll('.hotel-dist[data-place]').forEach(el => {
-        const km = from[el.dataset.place];
+    function render(hotel) {
+      sels.forEach(s => { s.value = hotel; });
+      const from = KM[hotel];
+      document.querySelectorAll('.hotel-dist[data-place], .hotel-dist[data-shop]').forEach(el => {
+        const km = from[el.dataset.place || el.dataset.shop];
         el.textContent = km < 1
-          ? `📍 About ${Math.round(km * 10) * 100} m · a short walk from ${NAMES[sel.value]}`
-          : `📍 About ${Math.round(km)} km · ${drive(km)} drive from ${NAMES[sel.value]}`;
+          ? `📍 About ${Math.round(km * 10) * 100} m · a short walk from ${NAMES[hotel]}`
+          : `📍 About ${Math.round(km)} km · ${drive(km)} drive from ${NAMES[hotel]}`;
       });
-      try { localStorage.setItem('explore-from', sel.value); } catch (e) {}
+      try { localStorage.setItem('explore-from', hotel); } catch (e) {}
     }
-    try { const saved = localStorage.getItem('explore-from'); if (saved && KM[saved]) sel.value = saved; } catch (e) {}
-    sel.addEventListener('change', render);
-    render();
+    let start = 'hyatt';
+    try { const saved = localStorage.getItem('explore-from'); if (saved && KM[saved]) start = saved; } catch (e) {}
+    sels.forEach(s => s.addEventListener('change', () => render(s.value)));
+    render(start);
   })();
 </script>
 </body>
