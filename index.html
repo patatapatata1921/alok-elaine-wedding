@@ -1148,6 +1148,12 @@
   .explore-from { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.8rem; margin: 0.4rem 0 1rem; font-family: 'Inter', var(--sans); }
   .explore-from label { font-weight: 600; color: #3d2817; font-size: 0.95rem; }
   .explore-from select { font: inherit; font-size: 0.95rem; padding: 0.55rem 2.2rem 0.55rem 0.9rem; border: 1px solid #3d2817; border-radius: 999px; background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233d2817' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 0.9rem center; -webkit-appearance: none; appearance: none; color: #3d2817; max-width: 100%; cursor: pointer; }
+  .flight-finder { margin: 1.4rem 0 1.6rem; padding: 1.1rem 1.2rem 1rem; border-radius: 14px; background: rgba(61, 40, 23, 0.05); font-family: 'Inter', var(--sans); }
+  .ff-label { display: block; font-weight: 600; color: #3d2817; font-size: 0.95rem; margin-bottom: 0.55rem; }
+  .flight-finder select { font: inherit; font-size: 0.95rem; width: 100%; max-width: 26rem; padding: 0.6rem 2.2rem 0.6rem 0.9rem; border: 1px solid #3d2817; border-radius: 999px; background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233d2817' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 0.9rem center; -webkit-appearance: none; appearance: none; color: #3d2817; cursor: pointer; }
+  .ff-note { margin: 0.7rem 0 0; color: #3d2817; font-size: 0.92rem; }
+  .ff-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+  .ff-hint { margin: 0.7rem 0 0; color: var(--muted); font-size: 0.83rem; }
   .explore-from-note { flex-basis: 100%; color: var(--muted); font-size: 0.85rem; }
   .plug-photo { margin: 0.8rem 0 0; max-width: 360px; }
   .plug-photo img { width: 100%; border-radius: 12px; display: block; }
@@ -2192,13 +2198,117 @@
       <div class="modal-info-label">Flight</div>
       <h4>Getting There</h4>
       <p>Fly into <a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+International+Airport" target="_blank" rel="noopener"><b>Trivandrum International Airport (TRV)</b></a> — about 25 minutes by car from the venue. The celebrations begin with the Mehendi on the evening of <b>Thursday 14 January</b>, followed by the reception on <b>Friday 15 January</b> and the Grihapravesham on <b>Saturday 16 January</b> — plan your arrival and departure however suits you. Direct flights: Singapore (Scoot), Kuala Lumpur (AirAsia, Malaysia Airlines), Colombo (SriLankan), and the Gulf. From Europe and the US, connect through Dubai, Doha, Abu Dhabi or Singapore. When you RSVP, you'll get a flight finder for your city. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+International+Airport" target="_blank" rel="noopener">Open in Google Maps →</a></p>
+      <div class="flight-finder">
+        <label class="ff-label" for="ff-from">Check flight prices</label>
+        <select id="ff-from">
+            <option value="">— Where are you flying from? —</option>
+          <optgroup label="India — by state">
+            <option value="IXZ" data-note="">Andaman &amp; Nicobar — Port Blair</option>
+            <option value="VTZ" data-note="">Andhra Pradesh — Visakhapatnam</option>
+            <option value="VGA" data-note="">Andhra Pradesh — Vijayawada</option>
+            <option value="HGI" data-note="">Arunachal Pradesh — Itanagar</option>
+            <option value="GAU" data-note="">Assam — Guwahati</option>
+            <option value="PAT" data-note="">Bihar — Patna</option>
+            <option value="IXC" data-note="">Chandigarh</option>
+            <option value="RPR" data-note="">Chhattisgarh — Raipur</option>
+            <option value="DEL" data-note="metro">Delhi</option>
+            <option value="GOI" data-note="">Goa</option>
+            <option value="AMD" data-note="">Gujarat — Ahmedabad</option>
+            <option value="DEL" data-note="metro">Haryana — Delhi airport</option>
+            <option value="IXC" data-note="">Himachal Pradesh — Chandigarh airport</option>
+            <option value="SXR" data-note="">Jammu &amp; Kashmir — Srinagar</option>
+            <option value="IXJ" data-note="">Jammu &amp; Kashmir — Jammu</option>
+            <option value="IXR" data-note="">Jharkhand — Ranchi</option>
+            <option value="BLR" data-note="metro1h">Karnataka — Bengaluru</option>
+            <option value="IXE" data-note="">Karnataka — Mangaluru</option>
+            <option value="KERALA" data-note="kerala">Kerala</option>
+            <option value="IXL" data-note="">Ladakh — Leh</option>
+            <option value="IDR" data-note="">Madhya Pradesh — Indore</option>
+            <option value="BHO" data-note="">Madhya Pradesh — Bhopal</option>
+            <option value="BOM" data-note="metro">Maharashtra — Mumbai</option>
+            <option value="PNQ" data-note="">Maharashtra — Pune</option>
+            <option value="NAG" data-note="">Maharashtra — Nagpur</option>
+            <option value="IMF" data-note="">Manipur — Imphal</option>
+            <option value="GAU" data-note="">Meghalaya — Guwahati airport</option>
+            <option value="AJL" data-note="">Mizoram — Aizawl</option>
+            <option value="DMU" data-note="">Nagaland — Dimapur</option>
+            <option value="BBI" data-note="">Odisha — Bhubaneswar</option>
+            <option value="MAA" data-note="metro1h">Puducherry — Chennai airport</option>
+            <option value="ATQ" data-note="">Punjab — Amritsar</option>
+            <option value="JAI" data-note="">Rajasthan — Jaipur</option>
+            <option value="UDR" data-note="">Rajasthan — Udaipur</option>
+            <option value="IXB" data-note="">Sikkim — Bagdogra airport</option>
+            <option value="MAA" data-note="metro1h">Tamil Nadu — Chennai</option>
+            <option value="CJB" data-note="">Tamil Nadu — Coimbatore</option>
+            <option value="IXM" data-note="">Tamil Nadu — Madurai</option>
+            <option value="HYD" data-note="metro">Telangana — Hyderabad</option>
+            <option value="IXA" data-note="">Tripura — Agartala</option>
+            <option value="LKO" data-note="">Uttar Pradesh — Lucknow</option>
+            <option value="VNS" data-note="">Uttar Pradesh — Varanasi</option>
+            <option value="DED" data-note="">Uttarakhand — Dehradun</option>
+            <option value="CCU" data-note="">West Bengal — Kolkata</option>
+          </optgroup>
+          <optgroup label="Rest of the world">
+            <option value="SYD" data-note="asia">Australia — Sydney</option>
+            <option value="MEL" data-note="asia">Australia — Melbourne</option>
+            <option value="PER" data-note="asia">Australia — Perth</option>
+            <option value="BAH" data-note="gulf">Bahrain</option>
+            <option value="YYZ" data-note="west">Canada — Toronto</option>
+            <option value="YVR" data-note="westcoast">Canada — Vancouver</option>
+            <option value="PEK" data-note="asia">China — Beijing</option>
+            <option value="PVG" data-note="asia">China — Shanghai</option>
+            <option value="CAN" data-note="asia">China — Guangzhou</option>
+            <option value="HEL" data-note="west">Finland — Helsinki</option>
+            <option value="CDG" data-note="west">France — Paris</option>
+            <option value="FRA" data-note="west">Germany — Frankfurt</option>
+            <option value="MUC" data-note="west">Germany — Munich</option>
+            <option value="HKG" data-note="asia">Hong Kong</option>
+            <option value="CGK" data-note="asia">Indonesia — Jakarta</option>
+            <option value="DPS" data-note="asia">Indonesia — Bali</option>
+            <option value="NRT" data-note="asia">Japan — Tokyo</option>
+            <option value="KWI" data-note="">Kuwait</option>
+            <option value="KUL" data-note="kul">Malaysia — Kuala Lumpur</option>
+            <option value="MLE" data-note="">Maldives — Malé</option>
+            <option value="AMS" data-note="west">Netherlands — Amsterdam</option>
+            <option value="AKL" data-note="asia">New Zealand — Auckland</option>
+            <option value="MCT" data-note="gulf">Oman — Muscat</option>
+            <option value="MNL" data-note="asia">Philippines — Manila</option>
+            <option value="DOH" data-note="gulf">Qatar — Doha</option>
+            <option value="RUH" data-note="">Saudi Arabia — Riyadh</option>
+            <option value="JED" data-note="">Saudi Arabia — Jeddah</option>
+            <option value="DMM" data-note="">Saudi Arabia — Dammam</option>
+            <option value="SIN" data-note="sin">Singapore</option>
+            <option value="ICN" data-note="asia">South Korea — Seoul</option>
+            <option value="CMB" data-note="cmb">Sri Lanka — Colombo</option>
+            <option value="ZRH" data-note="west">Switzerland — Zurich</option>
+            <option value="TPE" data-note="asia">Taiwan — Taipei</option>
+            <option value="BKK" data-note="asia">Thailand — Bangkok</option>
+            <option value="DXB" data-note="gulf">UAE — Dubai</option>
+            <option value="AUH" data-note="gulf">UAE — Abu Dhabi</option>
+            <option value="SHJ" data-note="gulf">UAE — Sharjah</option>
+            <option value="LHR" data-note="west">United Kingdom — London</option>
+            <option value="JFK" data-note="west">USA — New York</option>
+            <option value="ORD" data-note="west">USA — Chicago</option>
+            <option value="SFO" data-note="westcoast">USA — San Francisco</option>
+            <option value="LAX" data-note="westcoast">USA — Los Angeles</option>
+            <option value="SGN" data-note="asia">Vietnam — Ho Chi Minh City</option>
+            <option value="ANY" data-note="">Somewhere else</option>
+          </optgroup>
+        </select>
+        <p class="ff-note" id="ff-note" hidden></p>
+        <div class="ff-links" id="ff-links" hidden>
+          <a class="travel-btn" id="ff-gf" href="https://www.google.com/travel/flights" target="_blank" rel="noopener">Live prices — Google Flights →</a>
+          <a class="travel-btn travel-btn-ghost" id="ff-sky" href="https://www.skyscanner.com/" target="_blank" rel="noopener">Skyscanner →</a>
+        </div>
+        <p class="ff-hint">Pick where you're flying from to see live flights and prices for 14–17 January 2027. You can change the dates on the next page.</p>
+      </div>
       <p><b>From the airport, please use Uber.</b> Download the app before you fly and book your ride once you've collected your bags — the fare is fixed up front and the trip is tracked. If Uber isn't available at the pickup point, use the official <b>prepaid taxi counter</b> inside arrivals rather than drivers who approach you.</p>
     </div>
 
     <div class="modal-info travel-panel" data-panel="hotels">
       <div class="modal-info-label">Where to stay</div>
       <h4>Recommended Hotels</h4>
-      <p>Six hotels close to the reception at Trivandrum Club, so getting there is easy. Book early — mid-January is high season in Kerala.</p>
+      <p>Six hotels close to the reception at Trivandrum Club, so getting there is easy.</p>
       <div class="hotel-list">
         <div class="hotel">
           <div class="hotel-tag">Five-star</div>
@@ -2937,6 +3047,11 @@
       });
     }
     function translateAttrs(root) {
+      root.querySelectorAll('optgroup').forEach(g => {
+        if (g.__en === undefined) g.__en = g.label;
+        const z = DICTS[lang] && DICTS[lang]['@opt:' + g.__en];
+        g.label = lang !== 'en' && z ? z : g.__en;
+      });
       root.querySelectorAll('[placeholder],[aria-label],img[alt],option').forEach(el => {
         if (el.closest('#lang-toggle')) return;
         ['placeholder', 'aria-label', 'alt'].forEach(a => {
@@ -2999,6 +3114,25 @@
       applyAll();
     });
     if (lang !== 'en') window.addEventListener('load', applyAll);
+  })();
+
+  /* ===== Flights tab: live prices from the guest's state / city ===== */
+  (function () {
+    const sel = document.getElementById('ff-from');
+    if (!sel) return;
+    const NOTES = {"metro": "Several flights a day; compare direct and one-stop.", "metro1h": "Several flights a day, about 1 hour.", "kerala": "You're already in Kerala — driving or the train is usually easier than flying. Thiruvananthapuram Central station is about 10 minutes from the hotels.", "gulf": "Direct flights run most days.", "sin": "Direct: Scoot, about 4 hours.", "kul": "Direct: AirAsia and Malaysia Airlines, about 4 hours.", "cmb": "Direct: SriLankan Airlines, about 1 hour.", "asia": "No direct flight — usually one stop via Singapore or Kuala Lumpur.", "west": "No direct flight — usually one stop via Dubai, Doha or Abu Dhabi.", "westcoast": "No direct flight — usually one or two stops via Singapore or the Gulf."};
+    const note = document.getElementById('ff-note'), links = document.getElementById('ff-links');
+    sel.addEventListener('change', () => {
+      const code = sel.value, opt = sel.selectedOptions[0];
+      const n = NOTES[opt && opt.dataset.note];
+      note.hidden = !n; note.textContent = n || '';
+      links.hidden = !code || code === 'KERALA';
+      const from = code && code !== 'ANY' ? `%20from%20${code}` : '';
+      document.getElementById('ff-gf').href =
+        `https://www.google.com/travel/flights?q=Flights${from}%20to%20TRV%20on%202027-01-14%20through%202027-01-17`;
+      document.getElementById('ff-sky').href =
+        `https://www.skyscanner.com/transport/flights/${from ? code.toLowerCase() : 'to'}/trv/270114/270117/`;
+    });
   })();
 
   /* ===== Photos slideshow ===== */
