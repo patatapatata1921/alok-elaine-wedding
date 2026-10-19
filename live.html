@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
+<meta name="referrer" content="no-referrer" />
 <title>Live photos — Alok & Elaine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,7 +54,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
   // EDIT ME: paste the same photos Apps Script "Web app URL" as in upload.html
-  const PHOTO_ENDPOINT = '';
+  const PHOTO_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyFS_PpVeda2ZVm6Rjw7pd7eeFpPAtoBZfvHr6iCef1q3NRoaekHTEYJKOIEWXxEyHY/exec';
   const SHOW_SECONDS = 7;      // each photo stays this long
   const CHECK_SECONDS = 20;    // how often to look for new uploads
 
@@ -108,6 +109,7 @@
     if (!id) { current = null; return; }
     const f = known.get(id) || { from: '' };
     const img = new Image();
+    img.referrerPolicy = 'no-referrer';   // Google Drive refuses images when it sees the website's address
     img.onload = () => show(img, f, isNew);
     img.onerror = () => { current = current || null; setTimeout(next, 500); };
     img.src = src(id);
