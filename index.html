@@ -3583,7 +3583,7 @@
     /* Submit — sends to the Google Sheet receiver (rsvp-backend/Code.gs), which records the
        row, flags duplicates and emails/WhatsApps the couple. A copy stays in this browser too.
        text/plain + no-cors: Apps Script accepts it without a CORS preflight. */
-    const RSVP_ENDPOINT = '';   // EDIT ME: paste the Apps Script "Web app URL" here
+    const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxqVV_H7q0lo3ZOj-_81g2TqoNBJSTT34i7OXFB0klpxG-lbEVgOq7-MBVIdWm8Ou-I_Q/exec';   // Apps Script web app (alokelaine@gmail.com)
     function submit() {
       if (RSVP_ENDPOINT) {
         fetch(RSVP_ENDPOINT, {
