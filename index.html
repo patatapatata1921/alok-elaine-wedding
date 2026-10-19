@@ -1,0 +1,3848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<!-- EDIT ME: Browser tab title -->
+<title>Alok & Elaine — January 15–16, 2027</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #faf7f2;
+    --ink: #2b2622;
+    --muted: #6b6258;
+    --accent: #8a6d4b;
+    --line: #e6dfd3;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV — transparent over hero, becomes a floating white pill once scrolled */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: transparent;
+    color: #fff;
+    transition: top 0.4s ease, left 0.4s ease, right 0.4s ease,
+                padding 0.4s ease, background-color 0.4s ease,
+                color 0.4s ease, border-radius 0.4s ease, box-shadow 0.4s ease;
+  }
+  nav.scrolled {
+    top: 1rem; left: 1.2rem; right: 1.2rem;
+    padding: 0.85rem 1.6rem;
+    background: #fff;
+    color: var(--ink);
+    border-radius: 999px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  }
+  nav .logo { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; letter-spacing: 0.05em; }
+  nav ul { display: flex; gap: 2.2rem; list-style: none; font-size: 0.9rem; letter-spacing: 0.02em; align-items: center; }
+  nav a:hover { color: var(--accent); }
+  .nav-cta {
+    padding: 0.55rem 1.2rem; border-radius: 999px;
+    background: #3d2817; color: #fff;
+    font-size: 0.85rem;
+  }
+  .nav-cta:hover { background: #5a3c22; color: #fff; }
+  .lang-toggle {
+    margin-left: auto; margin-right: 1.6rem;
+    background: transparent; color: inherit; cursor: pointer;
+    border: 1px solid currentColor; border-radius: 999px;
+    padding: 0.35rem 0.85rem; font-size: 0.85rem; font-family: 'Inter', var(--sans);
+    letter-spacing: 0.04em; line-height: 1;
+  }
+  .lang-toggle:hover { background: rgba(0,0,0,0.06); }
+  @media (max-width: 768px) { .lang-toggle { margin-right: 0.9rem; } }
+  .menu-toggle { display: none; background: none; border: none; color: inherit; font-size: 1.5rem; cursor: pointer; }
+
+  /* ========== HERO — scroll-driven collage assembly ========== */
+  .hero-scroll {
+    position: relative;
+    height: 200vh;            /* drives the assembly animation length — bigger = slower */
+    background: var(--bg);
+  }
+  .hero-sticky {
+    position: sticky; top: 0;
+    height: 100vh; width: 100%;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .hero-main {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    border-radius: 0;
+    will-change: width, height, top, left, border-radius;
+  }
+  .hero-main::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.40));
+    pointer-events: none;
+  }
+  .hero-main img {
+    width: 100%; height: 100%; object-fit: cover;
+    /* starts zoomed into the bouquet/hands — faces above the frame — then eases out */
+    transform-origin: 48% 95%;
+    will-change: transform;
+  }
+  .hero-text {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    color: #fff; text-align: center; padding: 2rem;
+    z-index: 5; pointer-events: none;
+    will-change: opacity;
+  }
+  .hero-text h1 {
+    font-family: var(--serif); font-weight: 500; font-style: italic;
+    font-size: clamp(3.5rem, 11vw, 9rem);
+    letter-spacing: 0.01em; line-height: 1;
+  }
+  .hero-text .scroll {
+    position: absolute; bottom: 2rem; right: 2.5rem;
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.85;
+  }
+
+  /* Satellite collage images — start offscreen, slide inward on scroll */
+  .satellite {
+    position: absolute;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+    will-change: transform;
+    z-index: 2;
+  }
+  /* Final positions — sized in vw so they scale with viewport (no max-width caps) */
+  .sat-1 { top: 9%;   left: 8%;   width: 24vw; }   /* beach, top-left (lowered to clear nav) */
+  .sat-2 { top: 44%;  left: 14%;  width: 18vw; }   /* couple B&W, mid-left (gap below sat-1) */
+  .sat-3 { top: 35%;  right: 15%; width: 17vw;     /* horse & mountain, mid-right */
+           filter: brightness(0.95); }
+  .sat-4 { top: 60%;  right: 10%; width: 22vw; }   /* feet, bottom-right */
+
+  /* ========== STORY INTRO — typographic word-by-word reveal ========== */
+  .story-intro {
+    position: relative;
+    min-height: 200vh;            /* shorter — tighter transition into Our Story */
+    display: flex; align-items: center; justify-content: center;
+    padding: 6rem 2rem;
+    background: var(--bg);
+    max-width: none;
+  }
+  .story-intro p {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.15; letter-spacing: -0.01em;
+    max-width: 1100px; text-align: center;
+  }
+  .story-intro .word {
+    color: rgba(61, 40, 23, 0.22);        /* faded version of brand brown */
+    transition: color 0.3s ease;
+    display: inline-block; margin-right: 0.25em;
+  }
+  .story-intro .word.lit { color: #3d2817; }
+  .story-intro .word.name { font-weight: 600; }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+  /* full-bleed sections that shouldn't inherit the centered/padded section defaults */
+  section.hero-scroll, section.story-intro, section.event, section.closing, section.story-section, section.venue-section {
+    max-width: none; padding: 0; margin: 0; width: 100%;
+  }
+  section.venue-section {
+    background: var(--bg);
+    padding: 6rem 2rem;
+    text-align: center;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  section.story-intro { padding: 6rem 2rem; }
+  section.event { padding: 6rem 2rem; }
+  .section-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 4.5vw, 4rem);
+    color: #3d2817;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    text-align: center;
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 1rem;
+    max-width: 720px;
+    margin: 0 auto 4rem;
+  }
+
+  /* STORY — one continuous sticky stage. Photos rise up to center and stay (stack). */
+  section.story-section { height: 450vh; }
+  .story-stage {
+    position: sticky; top: 0;
+    height: 100vh; width: 100%;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .story-mega {
+    position: absolute;
+    top: 7vh; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(5rem, 14vw, 14rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #3d2817;
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Chapter text — three states, only one visible at a time, cross-fades */
+  .chapter-text {
+    position: absolute;
+    top: 48%;
+    transform: translateY(-50%);
+    width: 340px;
+    padding: 0 1rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+  }
+  .chapter-text.active { opacity: 1; }
+  /* Anchor text directly beside the centered polaroid (not the viewport edge) with a fixed 2rem gap.
+     Polaroid is 32vw capped at 580px → half-width is min(16vw, 290px). */
+  .chapter-text[data-side="left"]  { right: calc(50% + min(16vw, 290px) + 2rem); text-align: left; }
+  .chapter-text[data-side="right"] { left:  calc(50% + min(16vw, 290px) + 2rem); text-align: left; }
+  /* Below ~1140px the text + photo + text layout no longer fits horizontally — drop text below the photo */
+  @media (max-width: 1140px) {
+    .chapter-text {
+      top: auto;
+      bottom: 6%;
+      transform: none;
+      left: 1rem !important;
+      right: 1rem !important;
+      width: auto;
+      max-width: 540px;
+      margin: 0 auto;
+      text-align: center;
+      background: rgba(250, 247, 242, 0.88);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+    }
+  }
+  .chapter-text h3 {
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .chapter-text p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  /* Photos — always centered in the stage; rise up from below, then stay */
+  .photos-stage {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .polaroid {
+    position: absolute;
+    top: 55%; left: 50%;
+    width: 32vw; max-width: 580px;
+    background: #fff;
+    padding: 14px 14px 60px;
+    border-radius: 14px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+    will-change: transform;
+  }
+  .polaroid img { border-radius: 6px; }
+  .polaroid img {
+    width: 100%; height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+  /* A tall phone photo forced into the 4:3 frame gets its top and bottom cropped
+     away (object-fit: cover), which lops off heads. Mark those .portrait and they
+     get a narrower, taller card that shows the whole picture undistorted. */
+  .polaroid.portrait { width: 22vw; max-width: 390px; }
+  .polaroid.portrait img { aspect-ratio: 3/4; }
+  .polaroid figcaption {
+    position: absolute;
+    bottom: 18px; left: 14px; right: 14px;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* EVENT DETAILS — "so please join us..." + huge date + countdown with separators */
+  .event {
+    background: var(--bg);
+    padding: 8rem 2rem 6rem;
+    text-align: center;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .event-tagline {
+    font-family: var(--serif);
+    font-style: normal;
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.4vw, 2.2rem);
+    color: #3d2817;
+    margin-bottom: 1rem;
+  }
+  .event-date {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(4rem, 17vw, 17rem);
+    line-height: 1;
+    color: #3d2817;
+    letter-spacing: -0.03em;
+    margin: 0 0 3rem;
+  }
+  .countdown {
+    display: flex; justify-content: center; align-items: flex-start;
+    gap: 1rem; margin: 1rem 0 3rem; flex-wrap: wrap;
+  }
+  .countdown > div { min-width: 70px; text-align: center; }
+  .countdown .num {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: #3d2817; line-height: 1;
+  }
+  .countdown .label {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.7rem;
+  }
+  .cd-sep {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: var(--muted); line-height: 1;
+    align-self: flex-start;
+  }
+  .venue { max-width: 1100px; margin: 0 auto; }
+  .venue img {
+    width: 100%;
+    aspect-ratio: 16/10; object-fit: cover; border-radius: 6px;
+    margin-bottom: 4rem;
+  }
+  .venue h4 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    color: #3d2817;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .venue-address {
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-family: var(--sans);
+  }
+  .venue-rsvp-note {
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-family: var(--sans);
+    margin-top: 1.4rem;
+  }
+  .btn {
+    display: inline-block; padding: 0.95rem 2.6rem; margin-top: 3rem;
+    background: #8a6d4b;
+    color: #fff;
+    font-size: 0.85rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #6d553a; color: #fff; }
+
+  /* INFO CARDS — full-bleed image with gradient overlay + plus icon */
+  section#travel { max-width: 1500px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
+  .card {
+    position: relative; display: block;
+    aspect-ratio: 5/4;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    text-decoration: none;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .card-overlay {
+    position: absolute; left: 0; right: 0; bottom: 0; top: 0;
+    padding: 1.6rem;
+    background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.75) 100%);
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1rem;
+    color: #fff;
+    pointer-events: none;
+  }
+  .card-text { flex: 1; }
+  .card-text h4 {
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 700;
+    font-size: clamp(1.3rem, 1.8vw, 1.7rem);
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 0.35rem;
+  }
+  .card-text p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+  }
+  .card-plus {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.22);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 1.4rem; font-weight: 300; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* MODAL — slide-up sheet over a blurred page (used for Wedding Parties, Travel, Registry) */
+  .modal {
+    position: fixed;
+    top: 90px; left: 0; right: 0; bottom: 0;
+    z-index: 200;
+    background: var(--bg);
+    transform: translateY(100%);
+    transition: transform 0.45s cubic-bezier(.2,.7,.2,1);
+    overflow-y: auto;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.18);
+    visibility: hidden;
+  }
+  .modal.open {
+    transform: translateY(0);
+    visibility: visible;
+  }
+  /* Blur the underlying page (every direct child of body except the modals themselves) */
+  body.modal-open > *:not(.modal) {
+    filter: blur(10px);
+    transition: filter 0.45s ease;
+    pointer-events: none;
+  }
+  .modal-bar {
+    position: sticky; top: 0; z-index: 1;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 2.5rem;
+    background: var(--bg);
+  }
+  .modal-bar h3 {
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+  .modal-close {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.06);
+    color: var(--ink);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: rgba(0,0,0,0.10); }
+  .modal-body { padding: 1rem 2.5rem 6rem; max-width: 1100px; margin: 0 auto; }
+  .modal-hero {
+    width: 100%; aspect-ratio: 16/6;
+    object-fit: cover; border-radius: 12px;
+    margin-bottom: 2.5rem;
+  }
+  /* Override for decorative (non-photo) hero artwork — let it breathe at its natural ratio,
+     centered, on the cream page bg so the padded sides blend seamlessly */
+  .modal-hero-attire {
+    aspect-ratio: auto;
+    height: auto;
+    width: auto;
+    max-width: min(560px, 100%);   /* never wider than the modal body */
+    max-height: 70vh;
+    margin: 0 auto 2rem;
+    display: block;
+    object-fit: contain;
+    border-radius: 0;
+    background: transparent;
+  }
+  .modal-body > h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .modal-body > p {
+    color: var(--muted);
+    max-width: 860px;
+    font-size: clamp(1rem, 0.85rem + 0.45vw, 1.2rem);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+  .modal-body h3.party-heading {
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--ink);
+    margin: 2.5rem 0 1.5rem;
+  }
+  .party-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+  }
+  .member-card {
+    background: rgba(231, 219, 200, 0.4);
+    border-radius: 14px;
+    padding: 1.2rem;
+    aspect-ratio: 4/5;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    position: relative;
+  }
+  .member-name {
+    align-self: flex-start;
+    background: #a39282; color: #fff;
+    padding: 0.4rem 0.9rem; border-radius: 999px;
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 600; font-size: 0.85rem;
+  }
+  .member-placeholder {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%;
+  }
+  .member-icon {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+  }
+  .member-placeholder p:first-of-type {
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 700; font-size: 0.9rem;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .member-placeholder p:last-of-type {
+    color: var(--muted); font-size: 0.78rem;
+    line-height: 1.3;
+    max-width: 130px;
+  }
+
+  /* Modal "info section" — small-caps label + bold heading + paragraph */
+  .modal-info { margin-bottom: 2.5rem; max-width: 560px; }
+  .modal-info-label {
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .modal-info h4 {
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .modal-info p {
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 1rem;
+  }
+  .modal-info p + p { margin-top: 0.7rem; }
+
+  /* ===== RSVP MODAL — full-screen Cordially-style questionnaire ===== */
+  .modal.modal-rsvp { top: 0; border-radius: 0; box-shadow: none; }
+  .rsvp-stage {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    padding: 2rem 2.5rem;
+    position: relative;
+  }
+  .rsvp-stage .modal-close {
+    position: absolute; top: 2rem; right: 2.5rem;
+    width: 36px; height: 36px;
+    background: transparent;
+    font-size: 1.6rem; color: var(--ink);
+    z-index: 2;
+  }
+  .rsvp-stage .modal-close:hover { background: rgba(0,0,0,0.06); }
+  .rsvp-step {
+    display: none;
+    flex: 1;
+    flex-direction: column; justify-content: center;
+    max-width: 640px; width: 100%;
+    margin: 0 auto;
+    padding: 4rem 0;
+  }
+  .rsvp-step[data-active="true"] { display: flex; }
+  .rsvp-step h2 {
+    font-family: var(--serif);
+    font-style: italic; font-weight: 500;
+    font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+    color: #3d2817;
+    text-align: center;
+    margin-bottom: 0.6rem;
+    line-height: 1.1;
+  }
+  .rsvp-sub {
+    font-family: 'Inter', var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .rsvp-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    font-family: 'Inter', var(--sans);
+    font-size: 1.15rem;
+    color: var(--ink);
+    padding: 0.9rem 0;
+    margin-bottom: 1.2rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .rsvp-input:focus { border-bottom-color: #3d2817; }
+  .rsvp-input::placeholder { color: rgba(107, 98, 88, 0.45); }
+  textarea.rsvp-input { resize: vertical; min-height: 110px; }
+  .rsvp-pair {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .rsvp-choices {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+  }
+  .rsvp-choice {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 2.2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', var(--sans);
+  }
+  .rsvp-choice:hover { border-color: #3d2817; }
+  .rsvp-choice[aria-pressed="true"] {
+    border-color: #3d2817;
+    background: rgba(61, 40, 23, 0.05);
+  }
+  .rsvp-choice-title {
+    font-family: var(--serif);
+    font-style: italic; font-weight: 500;
+    font-size: 1.45rem;
+    color: #3d2817;
+    margin-bottom: 0.4rem;
+  }
+  .rsvp-choice-sub { color: var(--muted); font-size: 0.85rem; }
+  .rsvp-checkboxes {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 1.5rem;
+  }
+  .rsvp-checkbox {
+    display: flex; align-items: center; gap: 0.7rem;
+    cursor: pointer;
+    padding: 0.55rem 0;
+    font-family: 'Inter', var(--sans);
+    color: var(--ink);
+    font-size: 0.95rem;
+  }
+  .rsvp-checkbox input { accent-color: #3d2817; width: 16px; height: 16px; }
+  .rsvp-stepper {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  .rsvp-stepper button {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: #3d2817;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .rsvp-stepper button:hover { border-color: #3d2817; }
+  .rsvp-stepper button:disabled { opacity: 0.3; cursor: not-allowed; }
+  .rsvp-count {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 2.6rem;
+    color: #3d2817;
+    min-width: 60px;
+    text-align: center;
+  }
+  .rsvp-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 640px; width: 100%;
+    margin: 1rem auto 0;
+    padding-bottom: 1rem;
+  }
+  .rsvp-arrow {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 1px solid #3d2817;
+    background: transparent;
+    color: #3d2817;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .rsvp-arrow:hover { background: #3d2817; color: var(--bg); }
+  .rsvp-arrow.invisible { visibility: hidden; }
+  .rsvp-progress {
+    font-family: 'Inter', var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .rsvp-summary {
+    background: rgba(61, 40, 23, 0.04);
+    border-radius: 14px;
+    padding: 1.6rem 1.8rem;
+    font-family: 'Inter', var(--sans);
+  }
+  .rsvp-summary-row {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 1rem;
+    align-items: baseline;
+  }
+  .rsvp-summary-row:last-child { border-bottom: none; }
+  .rsvp-summary-label {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.7rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .rsvp-summary-value {
+    color: var(--ink);
+    text-align: right;
+    font-size: 0.95rem;
+  }
+  .rsvp-events-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  .rsvp-event-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: 'Inter', var(--sans);
+    display: flex; flex-direction: column;
+    gap: 0.25rem;
+    position: relative;
+  }
+  .rsvp-event-card:hover { border-color: #3d2817; }
+  .rsvp-event-card[aria-pressed="true"] {
+    border-color: #3d2817;
+    background: rgba(61, 40, 23, 0.05);
+  }
+  .rsvp-event-card[aria-pressed="true"]::after {
+    content: '✓';
+    position: absolute;
+    top: 0.9rem; right: 1rem;
+    width: 22px; height: 22px;
+    background: #3d2817; color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+  }
+  .rsvp-event-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.35rem;
+    color: #3d2817;
+    line-height: 1.1;
+  }
+  .rsvp-event-meta {
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  .rsvp-event-decline {
+    display: block;
+    margin: 1.6rem auto 0;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Inter', var(--sans);
+    font-size: 0.88rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    transition: all 0.18s ease;
+  }
+  .rsvp-event-decline:hover { color: #3d2817; }
+  .rsvp-event-decline[aria-pressed="true"] {
+    color: #3d2817;
+    font-weight: 600;
+    text-decoration: none;
+    background: rgba(61, 40, 23, 0.06);
+  }
+  @media (max-width: 540px) {
+    .rsvp-events-grid { grid-template-columns: 1fr; }
+  }
+
+  .rsvp-cc-card {
+    background: rgba(61, 40, 23, 0.04);
+    border-radius: 14px;
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .rsvp-cc-card-label {
+    font-family: 'Inter', var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+    text-align: left;
+  }
+  .rsvp-cc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+  .rsvp-cc-chip {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.65rem 0.8rem;
+    font-family: 'Inter', var(--sans);
+    font-size: 0.92rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    text-align: center;
+    line-height: 1;
+  }
+  .rsvp-cc-chip:hover { border-color: #3d2817; }
+  .rsvp-cc-chip[aria-pressed="true"] {
+    background: #3d2817; color: #fff; border-color: #3d2817;
+  }
+  .rsvp-cc-chip strong { font-weight: 600; }
+  .rsvp-cc-flag { font-size: 1.05rem; line-height: 1; }
+  .rsvp-cc-other {
+    margin-top: 0.9rem;
+    font-family: 'Inter', var(--sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .rsvp-cc-other summary {
+    cursor: pointer;
+    padding: 0.4rem 0;
+    list-style: none;
+    user-select: none;
+  }
+  .rsvp-cc-other summary::-webkit-details-marker { display: none; }
+  .rsvp-cc-other summary::before { content: '▸ '; display: inline-block; width: 1em; }
+  .rsvp-cc-other[open] summary::before { content: '▾ '; }
+  .rsvp-cc-other select {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    font-family: 'Inter', var(--sans);
+    font-size: 0.95rem;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .rsvp-phone-row {
+    display: flex; align-items: center; gap: 0.6rem;
+    border-bottom: 1px solid var(--line);
+    margin-top: 0.4rem;
+    transition: border-color 0.2s ease;
+  }
+  .rsvp-phone-row:focus-within { border-bottom-color: #3d2817; }
+  .rsvp-cc-display {
+    font-family: 'Inter', var(--sans);
+    font-size: 1.15rem;
+    color: #3d2817;
+    font-weight: 500;
+    min-width: 60px;
+    padding: 0.9rem 0;
+    white-space: nowrap;
+  }
+  .rsvp-phone-input {
+    flex: 1;
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    padding-left: 0;
+  }
+  @media (max-width: 540px) {
+    .rsvp-cc-grid { grid-template-columns: repeat(2, 1fr); }
+    .rsvp-cc-chip { font-size: 0.85rem; padding: 0.6rem 0.5rem; }
+  }
+  .rsvp-step-error {
+    margin-top: 0.9rem;
+    color: #b14949;
+    font-family: 'Inter', var(--sans);
+    font-size: 0.85rem;
+  }
+
+  .rsvp-fly-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem;
+    margin-top: 0.8rem;
+  }
+  @media (max-width: 540px) { .rsvp-fly-grid { grid-template-columns: 1fr; } }
+
+  /* Travel checklist on the thank-you page (flying-in guests only) */
+  .travel-list { margin-top: -1.5rem; text-align: left; }
+  .travel-list-title {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: 1.9rem; color: #3d2817; text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .travel-list-intro {
+    font-family: 'Inter', var(--sans); font-size: 0.92rem; color: var(--muted);
+    text-align: center; margin-bottom: 2rem; line-height: 1.6;
+  }
+  .travel-item {
+    display: grid; grid-template-columns: auto 1fr; gap: 1rem;
+    border: 1px solid var(--line); border-radius: 14px;
+    padding: 1.3rem 1.4rem; margin-bottom: 0.9rem;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .travel-item input { position: absolute; opacity: 0; pointer-events: none; }
+  .travel-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid #3d2817; color: #3d2817;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 1rem;
+  }
+  .travel-item:has(input:checked) { background: rgba(61, 40, 23, 0.05); }
+  .travel-list { counter-reset: travel-step; }
+  .travel-item:not([hidden]) { counter-increment: travel-step; }
+  .travel-item[hidden] { display: none; }
+  .travel-num::before { content: counter(travel-step); }
+  .travel-item:has(input:checked) .travel-num { background: #3d2817; color: var(--bg); }
+  .travel-item:has(input:checked) .travel-num::before { content: '✓'; font-size: 0.95rem; }
+  .travel-item:has(input:checked) strong { text-decoration: line-through; opacity: 0.6; }
+  .travel-body {
+    display: flex; flex-direction: column; gap: 0.35rem;
+    font-family: 'Inter', var(--sans); font-size: 0.92rem; color: var(--ink); line-height: 1.55;
+  }
+  .travel-body strong { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: #3d2817; }
+  .travel-when {
+    text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.68rem; color: var(--muted);
+  }
+  .travel-warn { color: #8a4b1f; font-size: 0.85rem; }
+  .travel-routes { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .fee-wrap { margin: 1.2rem 0 1rem; }
+  .fee-table {
+    width: 100%; border-collapse: collapse; margin-top: 0.4rem;
+    font-family: 'Inter', var(--sans); font-size: 0.85rem; color: var(--ink);
+  }
+  .fee-table th {
+    text-align: left; font-weight: 500; font-size: 0.66rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0.5rem 0.4rem; border-bottom: 1px solid var(--line);
+  }
+  .fee-table td { padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .fee-table tr:last-child td { border-bottom: none; }
+  .fee-note { display: block; font-size: 0.75rem; color: var(--muted); line-height: 1.5; margin-top: 0.5rem; font-style: italic; }
+  .hotel-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+  .hotel { display: flex; flex-direction: column; align-items: flex-start; }
+  .hotel p { flex: 1; }
+  .hotel-dist { font-family: 'Inter', var(--sans); font-size: 0.88rem; color: #3d2817; font-weight: 600; margin-bottom: 0.4rem; }
+  .hotel { border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1.3rem; }
+  .hotel-tag { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-family: 'Inter', var(--sans); }
+  .hotel-name { font-family: var(--serif); font-size: 1.35rem; color: #3d2817; margin: 0.25rem 0 0.4rem; }
+  .hotel p { font-size: 0.92rem; }
+  .modal-info .travel-btn { margin-top: 0.6rem; }
+  .travel-tabs {
+    position: sticky; top: 76px; z-index: 1; background: var(--bg);
+    display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none;
+    padding: 0.8rem 0; margin: 1.5rem 0 2rem; border-bottom: 1px solid var(--line);
+  }
+  .travel-tabs::-webkit-scrollbar { display: none; }
+  .travel-tab {
+    flex-shrink: 0; cursor: pointer;
+    font-family: 'Inter', var(--sans); font-size: 0.85rem; color: #3d2817;
+    background: transparent; border: 1px solid var(--line); border-radius: 999px;
+    padding: 0.5rem 1rem; transition: all 0.2s ease;
+  }
+  .travel-tab:hover { border-color: #3d2817; }
+  .travel-tab[aria-selected="true"] { background: #3d2817; border-color: #3d2817; color: var(--bg); }
+  .travel-panel[hidden] { display: none; }
+  .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .guide-card {
+    background: rgba(231, 219, 200, 0.4);
+    border-radius: 14px; padding: 1.2rem 1.3rem 1.4rem;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;
+  }
+  .guide-card-wide { grid-column: 1 / -1; }
+  .guide-card h5 {
+    font-family: 'Montserrat', var(--sans); font-weight: 700; font-size: 1.05rem;
+    color: var(--ink); margin-top: 0.4rem;
+  }
+  .guide-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
+  .guide-card p b { color: var(--ink); }
+  .guide-wear { border-top: 1px solid rgba(0,0,0,0.08); padding-top: 0.6rem; width: 100%; }
+  .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .slideshow { outline: none; margin: 0 auto; }
+  /* No letterbox bars: the stage is a fixed-height frame in the page colour, and each photo
+     (landscape or portrait) is shown whole and as large as fits, with its own rounded corners. */
+  .slide-stage { position: relative; height: 78vh; display: flex; align-items: center; justify-content: center; touch-action: pan-y; }
+  .slide-img { max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 14px; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.12); transition: opacity 0.25s ease; }
+  .slide-img.fading { opacity: 0; }
+  .slide-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(250, 246, 240, 0.85); color: #3d2817; font-size: 2rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center; padding-bottom: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: background 0.2s ease;
+  }
+  .slide-arrow:hover { background: #fff; }
+  .slide-prev { left: 14px; } .slide-next { right: 14px; }
+  .slide-meta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 0.8rem; gap: 1rem; }
+  .slide-caption { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: #3d2817; }
+  .slide-count { font-family: 'Inter', var(--sans); font-size: 0.8rem; letter-spacing: 0.12em; color: var(--muted); white-space: nowrap; }
+  .slide-thumbs { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.8rem 0 0.4rem; scrollbar-width: thin; }
+  .slide-thumbs button { flex-shrink: 0; width: 84px; aspect-ratio: 3/2; padding: 0; border: 2px solid transparent; border-radius: 8px; overflow: hidden; cursor: pointer; opacity: 0.6; background: none; transition: all 0.2s ease; }
+  .slide-thumbs button[aria-current="true"] { border-color: #3d2817; opacity: 1; }
+  .slide-thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 540px) {
+    .slide-stage { height: min(72vh, 130vw); }
+    .slide-arrow { width: 38px; height: 38px; font-size: 1.6rem; }
+    .slide-prev { left: 8px; } .slide-next { right: 8px; }
+    .slide-thumbs button { width: 64px; }
+  }
+  .photo-grid img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 14px; display: block; }
+  @media (max-width: 768px) {
+    .guide-grid { grid-template-columns: 1fr; gap: 0.8rem; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  }
+  .name-link { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; transition: opacity 0.2s ease; }
+  .name-link:hover { opacity: 0.7; }
+  .inline-link { color: #3d2817; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; margin-left: 0.25rem; }
+  .food-li { border-bottom: none !important; }
+  .food-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 0.4rem 0 0.4rem; }
+  .food-grid figure { margin: 0; }
+  .food-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; display: block; }
+  .food-grid figcaption { font-size: 0.82rem; line-height: 1.4; color: var(--muted); margin-top: 0.45rem; }
+  .food-grid figcaption b { display: block; color: var(--ink); font-size: 0.92rem; }
+  .photo-credit { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
+  @media (max-width: 540px) { .food-grid { grid-template-columns: repeat(2, 1fr); } .place-grid { grid-template-columns: 1fr; } .place-body h6 { font-size: 0.95rem; overflow-wrap: break-word; } }
+  .explore-tour { margin-top: 1rem; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
+  .phrase-table { width: 100%; border-collapse: collapse; font-family: 'Inter', var(--sans); font-size: 0.92rem; }
+  .phrase-table th {
+    text-align: left; font-weight: 500; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); padding: 0.5rem 0.5rem 0.5rem 0; border-bottom: 1px solid var(--line);
+  }
+  .phrase-table td { padding: 0.6rem 0.5rem 0.6rem 0; border-bottom: 1px solid var(--line); color: var(--muted); vertical-align: top; }
+  .phrase-table td b { color: #3d2817; }
+  .phrase-table td.ml { color: var(--ink); font-size: 1rem; }
+  .phrase-table tr:last-child td { border-bottom: none; }
+  .travel-disclaimer {
+    max-width: 720px; margin-top: 3rem; padding: 1.3rem 1.4rem;
+    border: 1px solid var(--line); border-radius: 14px; background: rgba(231, 219, 200, 0.25);
+  }
+  .travel-disclaimer h4 { font-family: 'Montserrat', var(--sans); font-weight: 700; font-size: 1.25rem; color: var(--ink); margin-bottom: 0.6rem; }
+  .travel-disclaimer p { color: var(--ink); font-size: 1.02rem; line-height: 1.6; }
+  .safety-list { list-style: none; padding: 0; margin: 0.8rem 0 1rem; }
+  .safety-list li {
+    font-family: 'Inter', var(--sans); font-size: 1.02rem; line-height: 1.6; color: var(--ink);
+    padding: 0.65rem 0 0.65rem 1.6rem; border-bottom: 1px solid var(--line); position: relative;
+  }
+  .safety-list li::before { content: '✓'; position: absolute; left: 0; top: 0.65rem; color: #3d2817; font-weight: 700; }
+  .safety-list li:last-child { border-bottom: none; }
+  .travel-disclaimer[hidden] { display: none; }
+  .event-venues { grid-template-columns: repeat(2, 1fr); margin: 0.6rem 0 1.4rem; max-width: 900px; }
+  @media (max-width: 768px) { .event-venues { grid-template-columns: 1fr; } }
+  .wifi-caution {
+    margin-top: 1.8rem; padding: 1.2rem 1.3rem; border-radius: 14px;
+    border: 1px solid #d9b48c; background: rgba(217, 180, 140, 0.15);
+  }
+  .sos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-top: 0.6rem; }
+  .sos-grid span {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 12px;
+    padding: 0.6rem 0.4rem; font-size: 0.8rem; color: var(--muted); line-height: 1.3;
+  }
+  .sos-grid span b { font-size: 1.5rem; color: #3d2817; font-family: 'Montserrat', var(--sans); }
+  @media (max-width: 540px) { .sos-grid { grid-template-columns: repeat(2, 1fr); } }
+  .travel-disclaimer .disclaimer-small { color: var(--muted); font-size: 0.85rem; font-style: italic; }
+  @media (max-width: 540px) {
+    .phrase-table { font-size: 0.82rem; }
+    .phrase-table td.ml { font-size: 0.9rem; }
+  }
+  .read-list { list-style: none; padding: 0; margin: 0.4rem 0 0; }
+  .read-list li { padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+  .read-list li:last-child { border-bottom: none; }
+  .read-list a { color: #3d2817; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+  .read-list span { display: block; color: var(--muted); font-size: 0.85rem; margin-top: 0.15rem; }
+  @media (max-width: 540px) { .travel-tabs { flex-wrap: wrap; position: static; } }
+  .modal-info-wide { max-width: 720px; }
+  /* Travel tabs use the full width of the page */
+  #modal-travel .travel-panel { max-width: none; }
+  #modal-travel .travel-panel > p, #modal-travel .explore-group > ul > li:not(.food-li) { max-width: 820px; }
+  .place-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 0.6rem; }
+  .place-card { background: rgba(231, 219, 200, 0.35); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+  .place-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+  .place-body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+  .place-body h6 { font-family: 'Montserrat', var(--sans); font-weight: 700; font-size: 1.02rem; color: var(--ink); margin: 0; }
+  .place-body p { color: var(--muted); font-size: 0.9rem; line-height: 1.55; margin: 0; flex: 1; }
+  .place-body p b { color: var(--ink); }
+  .place-links { display: flex; flex-wrap: wrap; gap: 0.3rem 0.8rem; font-size: 0.88rem; }
+  .place-links .inline-link { margin-left: 0; }
+  @media (max-width: 900px) { .place-grid { grid-template-columns: repeat(2, 1fr); } .food-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { #modal-travel .place-grid { grid-template-columns: 1fr; } }
+  .explore-group { margin-top: 1.6rem; }
+  .explore-group h5 {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: 1.35rem; color: #3d2817; margin-bottom: 0.5rem;
+  }
+  .explore-group ul { list-style: none; padding: 0; margin: 0; }
+  .explore-group li {
+    color: var(--muted); line-height: 1.55; font-size: 0.95rem;
+    padding: 0.55rem 0; border-bottom: 1px solid var(--line);
+  }
+  .explore-group li:last-child { border-bottom: none; }
+  .explore-group li b { color: var(--ink); font-weight: 600; }
+  @media (max-width: 540px) {
+    .fee-table { font-size: 0.78rem; }
+    .fee-table th, .fee-table td { padding: 0.5rem 0.25rem; }
+  }
+  .travel-from { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.4rem; }
+  .travel-from-label { font-size: 0.82rem; color: var(--muted); }
+  .travel-from select {
+    font-family: 'Inter', var(--sans); font-size: 0.95rem; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+    padding: 0.6rem 0.8rem; max-width: 320px;
+  }
+  .travel-links { display: flex; flex-wrap: wrap; align-items: center; }
+  #travel-airlines { display: contents; }
+  .travel-body .travel-links .travel-btn, .travel-body .travel-links .travel-btn + .travel-btn { margin-top: 0.5rem; }
+  .travel-btn {
+    display: inline-block; align-self: flex-start;
+    margin-top: 0.4rem; margin-right: 0.5rem;
+    padding: 0.55rem 1.1rem; border-radius: 999px;
+    background: #3d2817; color: var(--bg); border: 1px solid #3d2817;
+    font-family: 'Inter', var(--sans); font-size: 0.82rem;
+    text-decoration: none; cursor: pointer;
+  }
+  .travel-btn-ghost { background: transparent; color: #3d2817; }
+  .travel-body .travel-btn + .travel-btn { margin-top: 0.1rem; }
+  .travel-save {
+    text-align: center; margin-top: 2rem;
+    font-family: 'Inter', var(--sans); font-size: 0.9rem; color: var(--muted);
+  }
+  .travel-save p { margin-bottom: 0.4rem; }
+  .cal-panel {
+    margin: 1rem auto 0; max-width: 520px; text-align: left;
+    border: 1px solid var(--line); border-radius: 14px; padding: 0.4rem 1.1rem 1rem;
+  }
+  .cal-panel[hidden] { display: none; }
+  .cal-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;
+    padding: 0.8rem 0; border-bottom: 1px solid var(--line);
+  }
+  .cal-what { color: var(--ink); font-size: 0.88rem; line-height: 1.45; }
+  .cal-date { display: block; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .cal-links { display: flex; gap: 0.4rem; flex-shrink: 0; }
+  .travel-save .cal-links .travel-btn { margin: 0; padding: 0.45rem 0.85rem; }
+  .cal-ics {
+    background: none; border: none; cursor: pointer; margin-top: 0.9rem; padding: 0;
+    font-family: 'Inter', var(--sans); font-size: 0.82rem; color: #3d2817; text-decoration: underline;
+  }
+  @media (max-width: 540px) {
+    .cal-row { flex-direction: column; align-items: flex-start; }
+  }
+  .travel-save .travel-btn { align-self: auto; margin: 0.3rem; }
+  @media (max-width: 540px) {
+    .travel-item { padding: 1.1rem 1rem; gap: 0.8rem; }
+    .travel-list-title { font-size: 1.6rem; }
+  }
+
+  .rsvp-thanks-icon {
+    width: 64px; height: 64px;
+    border: 1px solid #3d2817;
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    color: #3d2817;
+  }
+  .rsvp-guest-heading {
+    font-family: 'Inter', var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin: 1.8rem 0 0.8rem;
+  }
+  .rsvp-needs-label {
+    font-family: 'Inter', var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    text-align: left;
+  }
+
+  /* ===== Mobile polish for the RSVP modal ===== */
+  @media (max-width: 720px) {
+    .rsvp-pair, .rsvp-choices, .rsvp-checkboxes { grid-template-columns: 1fr; }
+    .rsvp-stage { padding: 1rem 1.25rem; }
+    .rsvp-stage .modal-close { top: 0.85rem; right: 1.1rem; }
+    .rsvp-step { padding: 1.6rem 0; }
+    .rsvp-step h2 {
+      font-size: clamp(1.7rem, 7vw, 2.4rem);
+      margin-bottom: 0.4rem;
+      line-height: 1.15;
+    }
+    .rsvp-sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      margin-bottom: 2rem;
+    }
+    .rsvp-cc-card { padding: 1rem 1rem; }
+    .rsvp-cc-card-label { font-size: 0.66rem; margin-bottom: 0.7rem; }
+    .rsvp-cc-chip { font-size: 0.82rem; padding: 0.55rem 0.4rem; gap: 0.25rem; }
+    .rsvp-cc-display { font-size: 1.05rem; padding: 0.75rem 0; min-width: 50px; }
+    .rsvp-phone-input { font-size: 1.05rem; }
+    .rsvp-event-card { padding: 0.95rem 1rem; }
+    .rsvp-event-name { font-size: 1.2rem; }
+    .rsvp-event-meta { font-size: 0.78rem; }
+    .rsvp-event-card[aria-pressed="true"]::after { top: 0.7rem; right: 0.8rem; }
+    .rsvp-input { font-size: 1rem; }
+    textarea.rsvp-input { min-height: 90px; }
+    .rsvp-needs-label { font-size: 0.66rem; }
+    .rsvp-summary { padding: 1.1rem 1.1rem; }
+    .rsvp-summary-row {
+      flex-direction: column;
+      gap: 0.2rem;
+      align-items: flex-start;
+      padding: 0.6rem 0;
+    }
+    .rsvp-summary-value { text-align: left; font-size: 0.92rem; }
+    .rsvp-summary-label { letter-spacing: 0.15em; font-size: 0.68rem; }
+    .rsvp-nav { margin-top: 0.5rem; padding-bottom: 0.4rem; }
+    .rsvp-arrow { width: 50px; height: 50px; font-size: 1.1rem; }
+    .rsvp-progress { font-size: 0.65rem; letter-spacing: 0.18em; }
+    .rsvp-thanks-icon { width: 56px; height: 56px; margin-bottom: 1.2rem; font-size: 1.15rem; }
+    .rsvp-stepper { gap: 1.2rem; }
+    .rsvp-count { font-size: 2.2rem; }
+  }
+  @media (max-width: 380px) {
+    .rsvp-cc-grid { grid-template-columns: 1fr; }
+    .rsvp-stage { padding: 0.8rem 1rem; }
+    .rsvp-cc-chip { padding: 0.7rem 0.9rem; font-size: 0.9rem; }
+  }
+
+  /* VISION — full-screen quote section, same font as "our story" at half size */
+  section.vision {
+    max-width: none;
+    padding: 6rem 2rem;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg);
+  }
+  .vision p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 5.5vw, 5.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #3d2817;
+    text-align: center;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .vision-line1 { white-space: nowrap; }
+
+  /* FAQ — two-column: title + contact-prompt on left, accordion on right */
+  section.faq {
+    max-width: 1300px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5vw;
+    padding: 6rem 2rem;
+  }
+  .faq-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    color: #3d2817;
+    line-height: 1.05;
+    margin-bottom: 2rem;
+  }
+  .faq-help {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  .faq-help-link {
+    text-decoration: underline;
+    color: var(--ink);
+    font-size: 1rem;
+  }
+  .faq-list { width: 100%; }
+  .faq-list details {
+    border-bottom: 1px solid var(--line);
+    padding: 1.4rem 0;
+    cursor: pointer;
+  }
+  .faq-list summary {
+    font-family: 'Montserrat', var(--sans);
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--ink);
+    list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem;
+  }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary::after {
+    content: '⌄';
+    font-size: 1.4rem;
+    color: var(--ink);
+    line-height: 1;
+    transform: translateY(-4px);
+    transition: transform 0.2s;
+  }
+  .faq-list details[open] summary::after { transform: translateY(2px) rotate(180deg); }
+  .faq-list details p { margin-top: 1rem; color: var(--muted); }
+
+  /* CLOSING — full-bleed background photo + centered italic quote */
+  .closing {
+    height: 110vh; min-height: 700px;
+    /* EDIT ME: closing background image */
+    background-image: linear-gradient(rgba(0,0,0,0.30), rgba(0,0,0,0.30)), url('https://images.unsplash.com/photo-1525772764200-be829a350797?w=1920&q=80');
+    background-size: cover; background-position: center;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; text-align: center; padding: 2rem;
+  }
+  .closing blockquote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 4.5vw, 4rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    max-width: 900px;
+    color: #fff;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    text-wrap: balance;
+  }
+
+  footer { padding: 2rem; text-align: center; font-size: 0.85rem; color: var(--muted); }
+
+  /* Mobile hero strip — only visible on mobile, sits below the static hero */
+  .mobile-hero-strip { display: none; }
+
+  /* MOBILE — comprehensive overrides for ≤768px (iPhone 14/15 Pro Max & smaller) */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.2rem; }
+    nav ul { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: #fff; color: var(--ink); padding: 1rem 0; box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
+    nav ul.open { display: flex; }
+    nav ul li { padding: 0.8rem 1.5rem; border-bottom: 1px solid var(--line); }
+    nav ul li:last-child { border-bottom: none; }
+    .menu-toggle { display: block; }
+    section { padding: 4rem 1.2rem; }
+
+    /* HERO — kill the desktop scroll-collage choreography. Centerpiece becomes a
+       static full-bleed photo; satellites are hidden (they reappear in the strip below). */
+    .hero-scroll { height: 100vh; }
+    .hero-sticky { position: relative; }
+    .hero-main {
+      position: absolute !important;
+      top: 0 !important; left: 0 !important;
+      width: 100% !important; height: 100% !important;
+      border-radius: 0 !important;
+    }
+    .satellite { display: none; }
+    .hero-text .scroll { right: 50%; transform: translateX(50%); bottom: 1.5rem; }
+
+    /* Mobile photo strip — 2×2 grid of the satellite photos right below the hero */
+    .mobile-hero-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      padding: 0.6rem;
+      background: var(--bg);
+    }
+    .mobile-hero-strip img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      display: block;
+    }
+
+    /* INVITE LINE — shorter than desktop's 200vh but tall enough that
+       the word-by-word reveal still has scroll headroom to fire. */
+    .story-intro { min-height: 130vh; padding: 4rem 1.5rem; }
+    .story-intro p { font-size: 1.6rem; line-height: 1.25; }
+
+    /* OUR STORY — shorter sticky stage, tuned spacing for narrow viewport */
+    section.story-section { height: 280vh; }
+    .story-mega { top: 11vh; font-size: clamp(3.5rem, 16vw, 5.5rem); }
+    .polaroid {
+      width: 70vw; max-width: 320px;
+      padding: 12px 12px 48px;
+    }
+    .polaroid.portrait { width: 52vw; max-width: 240px; }
+    .polaroid figcaption { bottom: 14px; font-size: 0.85rem; }
+    .chapter-text {
+      bottom: 3% !important;
+      max-width: none !important;
+      padding: 0.8rem 1rem !important;
+      background: rgba(250, 247, 242, 0.94) !important;
+    }
+    .chapter-text h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+    .chapter-text p { font-size: 0.92rem; line-height: 1.45; }
+
+    /* EVENT — countdown becomes a clean 2×2 grid (no separators) */
+    .event-tagline { font-size: 1.2rem; }
+    .event-date { font-size: clamp(3.2rem, 16vw, 5rem); margin: 0 0 2rem; }
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem 1rem;
+      max-width: 280px;
+      margin: 1rem auto 2rem;
+    }
+    .countdown > div { min-width: 0; }
+    .countdown .num { font-size: 2.4rem; }
+    .cd-sep { display: none; }
+
+    /* VENUE — smaller padding so it doesn't feel airy */
+    section.venue-section { padding: 4rem 1.5rem; min-height: auto; }
+
+    /* CARDS — single column */
+    .cards { grid-template-columns: 1fr; }
+
+    /* FAQ — single column, title above the accordion */
+    section.faq {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 4rem 1.5rem;
+    }
+    .faq-title { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 0.5rem; }
+
+    /* CLOSING — tighter on mobile */
+    .closing { height: 90vh; min-height: 560px; }
+
+    /* Modal body: tighter padding on mobile so content has more breathing room */
+    .modal-body { padding: 0.5rem 1.2rem 5rem; }
+
+    /* Wedding Parties modal — 3-col grid overflows on mobile, drop to 2-col */
+    .party-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .member-card { padding: 0.9rem; }
+    .party-heading { font-size: 1.3rem; margin: 1.8rem 0 1rem; }
+
+    /* Legacy chapter grid (unused but kept for safety) */
+    .chapter { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 4rem; }
+    .chapter:nth-child(even) .chapter-img { order: 0; }
+  }
+
+  /* Readability floor — small caps labels never drop below ~11.5px (older guests) */
+  .fee-table th, .phrase-table th, .hotel-tag, .travel-when, .cal-date,
+  .rsvp-cc-card-label, .rsvp-progress, .slide-count { font-size: max(0.72rem, 11.5px); }
+  .read-list a, .faq-left a { display: inline-block; padding: 0.25rem 0; }
+  /* Tablets: info cards two per row instead of one */
+  @media (min-width: 541px) and (max-width: 900px) {
+    .cards { grid-template-columns: repeat(2, 1fr) !important; gap: 1.2rem; }
+  }
+  .credits { margin-top: 0.4rem; font-size: 0.7rem; color: var(--muted); opacity: 0.8; }
+  .credits summary { cursor: pointer; list-style: none; }
+  .credits summary::-webkit-details-marker { display: none; }
+  .credits p { max-width: 640px; margin: 0.4rem auto 0; line-height: 1.5; font-size: 0.7rem; }
+  .shop-grid { grid-template-columns: repeat(4, 1fr); margin-bottom: 1rem; }
+  @media (max-width: 1100px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .shop-grid { grid-template-columns: 1fr; } }
+  .rsvp-mail { text-align: center; margin: -1.5rem auto 2.5rem; font-family: 'Inter', var(--sans); color: var(--ink); }
+  .rsvp-mail[hidden] { display: none; }
+  .rsvp-mail p { margin-bottom: 0.8rem; }
+  .rsvp-mail .travel-btn { font-size: 1rem; padding: 0.8rem 1.6rem; }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<nav id="nav">
+  <!-- EDIT ME: couple's initials -->
+  <a href="#" class="logo">A&E</a>
+  <button class="lang-toggle" id="lang-toggle" type="button" aria-label="切换到中文 / Switch to Chinese">中文</button>
+  <button class="menu-toggle" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  <ul id="menu">
+    <li><a href="#" data-modal="modal-travel">Travel Logistics</a></li>
+    <li><a href="#" data-modal="modal-registry">Registry</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" class="nav-cta" data-modal="modal-rsvp">Submit RSVP</a></li>
+  </ul>
+</nav>
+
+<!-- ============ HERO (scroll-driven collage assembly) ============ -->
+<section class="hero-scroll" id="hero-scroll">
+  <div class="hero-sticky">
+    <!-- Centerpiece image: starts full-bleed, scales down to a centered card -->
+    <div class="hero-main" id="hero-main">
+      <!-- EDIT ME: hero (centerpiece) image -->
+      <img src="images/hero-zoom.jpg" alt="Alok and Elaine">
+    </div>
+
+    <!-- Satellite collage photos: slide in from offscreen as you scroll -->
+    <!-- EDIT ME: each satellite image -->
+    <img class="satellite sat-1" id="sat-1" data-from="left"  src="images/sat-groom.jpg" alt="">
+    <img class="satellite sat-2" id="sat-2" data-from="left"  src="images/sat-rings.jpg" alt="">
+    <img class="satellite sat-3" id="sat-3" data-from="right" src="images/sat-horse.jpg" alt="">
+    <img class="satellite sat-4" id="sat-4" data-from="right" src="images/sat-bride.jpg" alt="">
+
+    <!-- Title overlay: visible at start, fades out as collage assembles -->
+    <div class="hero-text" id="hero-text">
+      <!-- EDIT ME: couple's names -->
+      <h1>Alok &amp; Elaine</h1>
+      <span class="scroll">Scroll to explore ↓</span>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile-only photo strip — shows the 4 satellite photos as a 2×2 grid right under the hero
+     so the "collage" feel is preserved without the broken desktop choreography. Hidden ≥769px. -->
+<section class="mobile-hero-strip" aria-hidden="true">
+  <img src="images/sat-groom.jpg" alt="">
+  <img src="images/sat-horse.jpg" alt="">
+  <img src="images/sat-rings.jpg" alt="">
+  <img src="images/sat-bride.jpg" alt="">
+</section>
+
+<!-- ============ STORY INTRO (typographic word reveal) ============ -->
+<section class="story-intro" id="story-intro">
+  <!-- EDIT ME: invitation line. Each <span class="word"> reveals on scroll. -->
+  <p id="invite-line">
+    <span class="word">you're</span>
+    <span class="word">cordially</span>
+    <span class="word">invited</span>
+    <span class="word">to</span>
+    <span class="word">celebrate</span>
+    <span class="word">the</span>
+    <span class="word">story</span>
+    <span class="word">of</span>
+    <span class="word name">Alok</span>
+    <span class="word name">&amp;</span>
+    <span class="word name">Elaine.</span>
+  </p>
+</section>
+
+<!-- ============ OUR STORY (single sticky stage) ============ -->
+<section class="story-section" id="story">
+  <div class="story-stage">
+    <h2 class="story-mega">our story</h2>
+
+    <!-- Chapter text — only one visible at a time. Sides alternate L / R / L. -->
+    <div class="chapter-text" data-chapter="1" data-side="left">
+      <!-- EDIT ME: chapter 1 -->
+      <h3>chapter one: how we met</h3>
+      <p>A girl from Malaysia. A boy from India. A fintech festival in Singapore that neither of us walked into looking for anything at all. We found each other somewhere between the panels and the coffee queues, and at the end of the night we shook hands. Nobody shakes hands. We both went home knowing something had already started.</p>
+    </div>
+    <div class="chapter-text" data-chapter="2" data-side="right">
+      <!-- EDIT ME: chapter 2 -->
+      <h3>chapter two: everywhere we went</h3>
+      <p>It turned out we were both people who liked to leave. Weekends became trailheads and departure gates — helmets and headlamps underground, rice fields glowing outside a wooden window, temple spires on the far horizon. We got lost, got rained on, got hungry, and kept booking the next one. Somewhere in there, going anywhere together stopped being a plan and started being who we are.</p>
+    </div>
+    <div class="chapter-text" data-chapter="3" data-side="left">
+      <!-- EDIT ME: chapter 3 -->
+      <h3>chapter three: the next step</h3>
+      <p>Then came the question neither of us had to think very hard about. A yes, a date, a stretch of coast in Kerala — and a future with enough room in it for everyone we love.</p>
+    </div>
+
+    <!-- Polaroids — each rises from below into the centered stack as you scroll.
+         They must stay in chapter order; data-chapter drives which text is showing. -->
+    <div class="photos-stage">
+      <!-- EDIT ME: chapter 1 photos -->
+      <figure class="polaroid" data-chapter="1">
+        <img src="images/story-ch1.jpg" alt="">
+        <figcaption>Still laughing at nothing</figcaption>
+      </figure>
+
+      <!-- EDIT ME: chapter 2 photos -->
+      <figure class="polaroid portrait" data-chapter="2">
+        <img src="images/story-ch2.jpg" alt="">
+        <figcaption>Helmets on, underground</figcaption>
+      </figure>
+
+      <!-- EDIT ME: chapter 3 photos -->
+      <figure class="polaroid" data-chapter="3">
+        <img src="images/story-ch3.jpg" alt="">
+        <figcaption>Looking at what comes next</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVENT DETAILS ============ -->
+<section class="event" id="rsvp" style="max-width: none;">
+  <!-- EDIT ME: tagline above the date -->
+  <p class="event-tagline">so please join us...</p>
+  <!-- EDIT ME: wedding date (also update the JS countdown date below) -->
+  <h2 class="event-date">January 15, 2027</h2>
+
+  <div class="countdown">
+    <div><div class="num" id="cd-days">0</div><div class="label">Days</div></div>
+    <span class="cd-sep">:</span>
+    <div><div class="num" id="cd-hours">0</div><div class="label">Hours</div></div>
+    <span class="cd-sep">:</span>
+    <div><div class="num" id="cd-mins">0</div><div class="label">Minutes</div></div>
+    <span class="cd-sep">:</span>
+    <div><div class="num" id="cd-secs">0</div><div class="label">Seconds</div></div>
+  </div>
+</section>
+
+<!-- ============ VENUE / RSVP ============ -->
+<section class="venue-section">
+  <div class="venue">
+    <!-- EDIT ME: venue image -->
+    <img src="images/venue-trivandrum-club.jpg" alt="Trivandrum Club, Vazhuthacaud">
+    <!-- EDIT ME: venue name + address -->
+    <h4><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+Club+Vazhuthacaud+Thiruvananthapuram" target="_blank" rel="noopener">Trivandrum Club</a></h4>
+    <p class="venue-address">
+      <a href="https://www.google.com/maps/search/?api=1&query=Trivandrum+Club+Vazhuthacaud+Thiruvananthapuram" target="_blank">Vazhuthacaud, Thiruvananthapuram, Kerala 695010</a>
+    </p>
+    <a href="#" class="btn" data-modal="modal-rsvp">Submit RSVP</a>
+    <p class="venue-rsvp-note">RSVP by December 20, 2026</p>
+  </div>
+</section>
+
+<!-- ============ INFO CARDS ============ -->
+<section id="travel">
+  <h2 class="section-title">and now some additional details...</h2>
+  <p class="section-sub">The people, places, and practical details that will make the weekend feel effortless.</p>
+
+  <div class="cards">
+    <!-- EDIT ME: each card below -->
+    <!-- Wedding Parties card hidden until the photos and names are ready -->
+    <a class="card" href="#" data-modal="modal-travel">
+      <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=900&q=80" alt="">
+      <div class="card-overlay">
+        <div class="card-text">
+          <h4>Travel Logistics</h4>
+          <p>Plan your trip and stay.</p>
+        </div>
+        <span class="card-plus">+</span>
+      </div>
+    </a>
+    <a class="card" id="registry" href="#" data-modal="modal-registry">
+      <img src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=900&q=80" alt="">
+      <div class="card-overlay">
+        <div class="card-text">
+          <h4>Registry</h4>
+          <p>Your presence is enough, but if you insist...</p>
+        </div>
+        <span class="card-plus">+</span>
+      </div>
+    </a>
+    <a class="card" href="#" data-modal="modal-dress-code">
+      <img src="images/dress-code-kerala.jpg" alt="">
+      <div class="card-overlay">
+        <div class="card-text">
+          <h4>Weekend &amp; Dress Code</h4>
+          <p>What's on, and what to wear.</p>
+        </div>
+        <span class="card-plus">+</span>
+      </div>
+    </a>
+    <a class="card" href="#" data-modal="modal-kerala-101">
+      <img src="images/venue-trivandrum-club.jpg" alt="">
+      <div class="card-overlay">
+        <div class="card-text">
+          <h4>Kerala Wedding 101</h4>
+          <p>First Indian wedding? What to expect.</p>
+        </div>
+        <span class="card-plus">+</span>
+      </div>
+    </a>
+    <a class="card" href="#" data-modal="modal-photos">
+      <img src="images/gallery/lj-4193.jpg" alt="" style="object-position: 40% 30%;">
+      <div class="card-overlay">
+        <div class="card-text">
+          <h4>Photos</h4>
+          <p>Our favourite moments — and yours.</p>
+        </div>
+        <span class="card-plus">+</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="faq">
+  <div class="faq-left">
+    <h2 class="faq-title">Questions and answers</h2>
+    <p class="faq-help">Can't find the answer here?</p>
+    <!-- EDIT ME: contact email -->
+    <a href="mailto:alokelaine@gmail.com" class="faq-help-link">Reach out to Alok or Elaine</a>
+  </div>
+  <div class="faq-list">
+    <!-- EDIT ME: each FAQ item below -->
+    <details>
+      <summary>When should I RSVP by?</summary>
+      <p>Please RSVP by December 20, 2026 so we can finalize numbers with the venue.</p>
+    </details>
+    <details>
+      <summary>Is there a dress code?</summary>
+      <p>Summer garden party. Floor-length dresses or bright colors are welcome; linen suits are perfect for the gentlemen. Please avoid stilettos — much of the ceremony is on grass.</p>
+    </details>
+    <details>
+      <summary>Is the wedding outdoors?</summary>
+      <p>Yes — the ceremony is in the garden, and the reception is on the terrace. Expect a warm afternoon and a cool evening.</p>
+    </details>
+    <details>
+      <summary>What will the weather be like? What happens if it rains?</summary>
+      <p>Mid-January is one of the best times to visit Thiruvananthapuram — dry and sunny, around 23°C at night and 31–32°C during the day, and humid. Rain is rare at this time of year, but we'll have a covered plan just in case. Pack light, breathable clothes, sunglasses, sunscreen and mosquito repellent.</p>
+    </details>
+    <details>
+      <summary>Can I bring a plus one or my kids?</summary>
+      <p>Plus-ones are noted on your invitation. If you're unsure, just check with us directly.</p>
+    </details>
+    <details>
+      <summary>What time should I arrive at the ceremony?</summary>
+      <p>Please arrive 15 minutes before the ceremony to be seated comfortably.</p>
+    </details>
+    <details>
+      <summary>I have a food allergy, can I make a special request?</summary>
+      <p>Absolutely. Note it in your RSVP and we'll make sure the kitchen knows.</p>
+    </details>
+    <details>
+      <summary>Is there parking at the venue?</summary>
+      <p>On-site parking is free for guests. Overflow parking is available across the street.</p>
+    </details>
+    <details>
+      <summary>Help! I have other questions!</summary>
+      <p>Email us at <a href="mailto:alokelaine@gmail.com" style="color: var(--accent); text-decoration: underline;">alokelaine@gmail.com</a> any time.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section class="closing" style="max-width: none; padding: 0;">
+  <!-- EDIT ME: closing quote -->
+  <blockquote>you're my favorite person to do anything with for the rest of my life.</blockquote>
+</section>
+
+<!-- ============ WEDDING PARTIES MODAL ============ -->
+<div class="modal" id="modal-wedding-parties" aria-hidden="true">
+  <div class="modal-bar">
+    <h3>Wedding Parties</h3>
+    <button class="modal-close" aria-label="Close" data-modal-close>×</button>
+  </div>
+  <div class="modal-body">
+    <!-- EDIT ME: hero image for the modal -->
+    <img class="modal-hero" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=80" alt="Wedding party">
+    <h2>Wedding Parties</h2>
+    <p>Introduce the people standing with you on the wedding day and add their names, roles, and photos here.</p>
+
+    <h3 class="party-heading">Bridal Party</h3>
+    <div class="party-grid">
+      <!-- EDIT ME: each member card; replace src + name -->
+      <div class="member-card">
+        <span class="member-name">Member 1</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 2</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 3</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 4</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 5</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 6</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="party-heading">Groom's Party</h3>
+    <div class="party-grid">
+      <div class="member-card">
+        <span class="member-name">Member 1</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 2</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 3</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 4</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 5</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+      <div class="member-card">
+        <span class="member-name">Member 6</span>
+        <div class="member-placeholder">
+          <div class="member-icon">📷</div>
+          <p>Upload a portrait</p>
+          <p>Add a photo for this person.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DRESS CODE MODAL ============ -->
+<div class="modal" id="modal-dress-code" aria-hidden="true">
+  <div class="modal-bar">
+    <h3>Weekend &amp; Dress Code</h3>
+    <button class="modal-close" aria-label="Close" data-modal-close>×</button>
+  </div>
+  <div class="modal-body">
+    <img class="modal-hero" src="images/dress-code-kerala.jpg" alt="A Kerala wedding: the groom in a white mundu, the bride and guests in silk sarees">
+    <h2>Weekend &amp; Dress Code</h2>
+    <p>What's happening when, and what to wear to each. Never worn Indian clothes before? You're welcome either way — and if you'd like to try, we'd love to see it.</p>
+
+    <h3 class="party-heading">The Weekend</h3>
+    <div class="guide-grid">
+        <div class="guide-card">
+          <span class="member-name">Before the wedding</span>
+          <h5>Pre-wedding celebrations</h5>
+          <p><b>Haldi</b> (turmeric blessing), <b>Mehendi</b> (henna) and <b>Sangeet</b> (music &amp; dance). Dates and times to follow.</p><p class="guide-wear"><b>Wear:</b> Haldi — yellow, in clothes you don't mind staining. Mehendi — bright colours, short or loose sleeves. Sangeet — party wear you can dance in.</p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">Fri 15 January</span>
+          <h5>Reception</h5>
+          <p>An evening celebration at Trivandrum Club — dinner, toasts and dancing. Time to be confirmed.</p><p class="guide-wear"><b>Wear:</b> dress up — embellished sarees and lehengas, sherwanis, or glamorous evening wear.</p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">Sat 16 January</span>
+          <h5>The Wedding</h5>
+          <p>The traditional ceremony. Venue and time to be confirmed — please arrive a little early.</p><p class="guide-wear"><b>Wear:</b> classic and colourful — silk sarees, kurta or mundu, in lighter fabrics for the day.</p>
+        </div>
+    </div>
+
+    <h3 class="party-heading">What to Wear</h3>
+    <div class="guide-grid">
+        <div class="guide-card">
+          <span class="member-name">For the ladies</span>
+          <h5>Sarees, lehengas or a smart dress</h5>
+          <p>A <b>silk or cotton saree</b>, a <b>lehenga</b> or a <b>salwar / kurta set</b>. Rich, happy colours — maroon, mustard, emerald, pink, gold.</p><p>Prefer Western clothes? A bright, elegant midi or maxi dress with covered shoulders.</p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">For the gentlemen</span>
+          <h5>Kurta, mundu or a light suit</h5>
+          <p>A <b>kurta</b> with trousers, or a <b>sherwani / bandhgala</b> for the evening. For a Kerala touch, the <b>mundu</b> — a white cotton wrap with a gold border, worn with a shirt.</p><p>Prefer Western clothes? A linen suit in a lighter colour.</p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">Good to know</span>
+          <h5>A few gentle guidelines</h5>
+          <p><b>Colours:</b> avoid all-white and all-black, and leave bright red to the bride.</p><p><b>Cover up a little</b> for the ceremony; a scarf or dupatta is handy.</p><p><b>Shoes</b> may come off — choose slip-on sandals or flats. <b>Fabric:</b> cotton, linen and light silk for the warm weather.</p>
+        </div>
+    </div>
+
+    <h3 class="party-heading">Need an Outfit?</h3>
+    <p>Thiruvananthapuram has wonderful shops for Indian wear. Shop on your first day — alterations and blouse stitching usually take a day or two.</p>
+    <div class="guide-grid shop-grid">
+      <div class="guide-card">
+        <span class="member-name">Sarees</span>
+        <h5><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Pothys+MG+Road+Thiruvananthapuram" target="_blank" rel="noopener">Pothys, MG Road</a></h5>
+        <p>Six floors with three dedicated to sarees, plus kurtas and ready-made outfits for men and women.</p>
+        <p class="guide-wear"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Pothys+MG+Road+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">Kerala silk</span>
+        <h5><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Jayalakshmi+Silks+Thiruvananthapuram" target="_blank" rel="noopener">Jayalakshmi Silks</a></h5>
+        <p>Known for traditional Kerala sarees, silk and churidar sets.</p>
+        <p class="guide-wear"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Jayalakshmi+Silks+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">One-stop mall</span>
+        <h5><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Lulu+Mall+Thiruvananthapuram" target="_blank" rel="noopener">Lulu Mall</a></h5>
+        <p><b>Manyavar</b> for men's sherwanis and kurtas, plus Biba, Jaypore and Ritu Kumar for women. Near the airport.</p>
+        <p class="guide-wear"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Lulu+Mall+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">Handloom</span>
+        <h5><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Balaramapuram+handloom" target="_blank" rel="noopener">Balaramapuram</a></h5>
+        <p>The handloom village on the way to Kovalam, famous for cream-and-gold <b>kasavu</b> sarees and mundu.</p>
+        <p class="guide-wear"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Balaramapuram+handloom" target="_blank" rel="noopener">Open in Google Maps →</a></p>
+      </div>
+    </div>
+
+    <h3 class="party-heading">Get Inspired</h3>
+    <ul class="read-list">
+      <li><a href="https://vizagpellipoolajada.com/what-to-wear-in-a-south-indian-wedding/" target="_blank" rel="noopener">What to wear in a South Indian wedding: a complete guide</a><span>Vizag Pellipoolajada</span></li>
+      <li><a href="https://www.hitched.co.uk/wedding-planning/bridalwear-articles/what-to-wear-indian-wedding/" target="_blank" rel="noopener">What to wear to an Indian wedding</a><span>Hitched — written for first-time guests</span></li>
+      <li><a href="https://www.lashkaraa.com/blogs/lashkaraa/what-to-wear-to-an-indian-wedding-as-a-non-indian-guest" target="_blank" rel="noopener">What to wear to an Indian wedding as a non-Indian guest</a><span>Lashkaraa</span></li>
+      <li><a href="https://www.azafashions.com/blog/kerala-heritage-traditional-style-guide/" target="_blank" rel="noopener">Kerala heritage &amp; traditional style guide</a><span>Aza Fashions — sarees, mundu and Kerala looks</span></li>
+      <li><a href="https://studiovirupa.com/blogs/news/kerala-kasavu-guide" target="_blank" rel="noopener">Kasavu: Kerala's white-and-gold weave, explained</a><span>Studio Virupa</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ KERALA WEDDING 101 MODAL ============ -->
+<div class="modal" id="modal-kerala-101" aria-hidden="true">
+  <div class="modal-bar">
+    <h3>Kerala Wedding 101</h3>
+    <button class="modal-close" aria-label="Close" data-modal-close>×</button>
+  </div>
+  <div class="modal-body">
+    <img class="modal-hero" src="images/venue-trivandrum-club.jpg" alt="Trivandrum Club">
+    <h2>Kerala Wedding 101</h2>
+    <p>Your first Indian wedding? Here's what to expect, so you can relax and enjoy every moment.</p>
+
+    <h3 class="party-heading">On the Day</h3>
+    <div class="guide-grid">
+        <div class="guide-card">
+          <span class="member-name">Timing</span>
+          <h5>Be a little early</h5>
+          <p>The ceremony is set for an auspicious moment, the <b>muhurtham</b>, and it happens right on time — often quickly. Arrive 20–30 minutes early so you don't miss it.</p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">Shoes</span>
+          <h5>Shoes off for the rituals</h5>
+          <p>You may be asked to remove your shoes near the ceremony area. Slip-on sandals make this easy.</p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">Phones</span>
+          <h5>Watch with your eyes</h5>
+          <p>Our photographers will capture everything. During the key moments, please keep phones down and soak it in.</p>
+        </div>
+    </div>
+
+    <h3 class="party-heading">Customs &amp; Etiquette</h3>
+    <div class="guide-grid">
+        <div class="guide-card">
+          <span class="member-name">Greetings</span>
+          <h5>Namaste works everywhere</h5>
+          <p>Palms together with a small nod is a warm, respectful hello to elders. Handshakes are fine with friends.</p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">The feast</span>
+          <h5>Eating a sadya</h5>
+          <p>A Kerala feast is served on a <b>banana leaf</b> and eaten with the <b>right hand</b> — cutlery is always available if you'd prefer.</p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">Gifts</span>
+          <h5>Your presence is the gift</h5>
+          <p>If you'd like to give something, a cash gift in an envelope is customary. Amounts ending in <b>1</b> (like 101 or 1,001) are considered lucky.</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHOTOS MODAL ============ -->
+<div class="modal" id="modal-photos" aria-hidden="true">
+  <div class="modal-bar">
+    <h3>Photos</h3>
+    <button class="modal-close" aria-label="Close" data-modal-close>×</button>
+  </div>
+  <div class="modal-body">
+    <img class="modal-hero" src="images/hero-zoom.jpg" alt="Alok and Elaine">
+    <h2>Photos</h2>
+
+    <h3 class="party-heading">Our Photos</h3>
+    <!-- Slideshow — the photo list lives in GALLERY in the script below -->
+    <div class="slideshow" id="slideshow" tabindex="0" aria-roledescription="carousel" aria-label="Our photos">
+      <div class="slide-stage">
+        <img class="slide-img" id="slide-img" src="images/gallery/lj-5048.jpg" alt="">
+        <button class="slide-arrow slide-prev" id="slide-prev" type="button" aria-label="Previous photo">‹</button>
+        <button class="slide-arrow slide-next" id="slide-next" type="button" aria-label="Next photo">›</button>
+      </div>
+      <div class="slide-meta">
+        <span class="slide-caption" id="slide-caption"></span>
+        <span class="slide-count" id="slide-count"></span>
+      </div>
+      <div class="slide-thumbs" id="slide-thumbs"></div>
+    </div>
+
+    <h3 class="party-heading">Share Your Photos</h3>
+    <div class="guide-grid">
+      <div class="guide-card guide-card-wide">
+        <span class="member-name">After the wedding</span>
+        <h5>Add your photos to our album</h5>
+        <!-- EDIT ME: replace href="#" with the shared Google Photos album link, then remove the "coming soon" line -->
+        <p>We'd love to see the weekend through your eyes. Add your favourite photos and videos to our shared album — no account needed.</p>
+        <p class="guide-wear">Album link coming soon.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TRAVEL LOGISTICS MODAL ============ -->
+<div class="modal" id="modal-travel" aria-hidden="true">
+  <div class="modal-bar">
+    <h3>Travel Logistics</h3>
+    <button class="modal-close" aria-label="Close" data-modal-close>×</button>
+  </div>
+  <div class="modal-body">
+    <!-- EDIT ME: hero image -->
+    <img class="modal-hero" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1400&q=80" alt="Travel">
+    <h2>Travel &amp; Accommodations</h2>
+    <p>Everything you need for a first trip to Thiruvananthapuram (also called Trivandrum), on the southern tip of Kerala.</p>
+
+    <div class="travel-tabs" role="tablist" aria-label="Travel information">
+      <button class="travel-tab" role="tab" data-tab="visa" aria-selected="true">Visa</button>
+      <button class="travel-tab" role="tab" data-tab="flights" aria-selected="false">Flights</button>
+      <button class="travel-tab" role="tab" data-tab="hotels" aria-selected="false">Hotels</button>
+      <button class="travel-tab" role="tab" data-tab="weather" aria-selected="false">Weather &amp; health</button>
+      <button class="travel-tab" role="tab" data-tab="safety" aria-selected="false">Staying safe</button>
+      <button class="travel-tab" role="tab" data-tab="around" aria-selected="false">Getting around</button>
+      <button class="travel-tab" role="tab" data-tab="internet" aria-selected="false">SIM &amp; Wi-Fi</button>
+      <button class="travel-tab" role="tab" data-tab="explore" aria-selected="false">Explore</button>
+      <button class="travel-tab" role="tab" data-tab="language" aria-selected="false">Malayalam</button>
+    </div>
+
+    <div class="modal-info travel-panel" data-panel="visa">
+      <div class="modal-info-label">Before you fly</div>
+      <h4>Indian e-Visa</h4>
+      <p>Guests travelling on a non-Indian passport need a visa. The simplest is the <b>e-Tourist Visa</b>, applied for online — approval arrives by email, usually within a few days. Apply by mid-December, print the approval and carry it with your passport (valid for at least 6 months after arrival, with 2 blank pages).</p>
+      <div class="fee-wrap">
+            <table class="fee-table">
+              <thead><tr><th>Passport</th><th>30-day e-Tourist Visa</th><th>1-year</th><th>5-year</th></tr></thead>
+              <tbody>
+                <tr><td>🇲🇾 Malaysia</td><td><b>Free</b></td><td>US$40</td><td>US$200</td></tr>
+                <tr><td>🇸🇬 Singapore</td><td><b>US$25</b></td><td>US$25</td><td>US$200</td></tr>
+                <tr><td>🇩🇪 Germany</td><td><b>US$25</b></td><td>US$40</td><td>US$200</td></tr>
+                <tr><td>🇸🇪 Sweden</td><td><b>US$25</b></td><td>US$40</td><td>US$200</td></tr>
+                <tr><td>🇺🇸 United States</td><td><b>US$25</b></td><td>US$40</td><td>US$160</td></tr>
+              </tbody>
+            </table>
+            <span class="fee-note">Fees for travel between July and March, from the official Government of India e-Visa fee schedule. A 3% bank charge is added. Fees are set by the Government of India and may change without notice — please confirm the current fee on the official site before you apply. Other passports: see the full list on the official site.</span>
+      </div>
+      <p class="travel-warn">⚠️ Apply only on the official Government of India website, <b>indianvisaonline.gov.in</b>. Look-alike sites charge several times the real fee.</p>
+      <p><a class="travel-btn" href="https://indianvisaonline.gov.in/evisa/" target="_blank" rel="noopener">Official e-Visa site →</a></p>
+      <p>Within <b>72 hours before landing</b>, also fill in the free <b>India e-Arrival Card</b> online and keep the QR code for immigration. <a href="https://indianvisaonline.gov.in/earrival/" target="_blank" rel="noopener">e-Arrival Card →</a></p>
+    </div>
+
+    <div class="modal-info travel-panel" data-panel="flights">
+      <div class="modal-info-label">Flight</div>
+      <h4>Getting There</h4>
+      <p>Fly into <a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+International+Airport" target="_blank" rel="noopener"><b>Trivandrum International Airport (TRV)</b></a> — about 25 minutes by car from the venue. The celebrations begin with the reception on <b>Friday 15 January</b> and the wedding on <b>Saturday 16 January</b> — plan your arrival and departure however suits you. Direct flights: Singapore (Scoot), Kuala Lumpur (AirAsia, Malaysia Airlines), Colombo (SriLankan), and the Gulf. From Europe and the US, connect through Dubai, Doha, Abu Dhabi or Singapore. When you RSVP, you'll get a flight finder for your city. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+International+Airport" target="_blank" rel="noopener">Open in Google Maps →</a></p>
+      <p><b>From the airport, please use Uber.</b> Download the app before you fly and book your ride once you've collected your bags — the fare is fixed up front and the trip is tracked. If Uber isn't available at the pickup point, use the official <b>prepaid taxi counter</b> inside arrivals rather than drivers who approach you.</p>
+    </div>
+
+    <div class="modal-info travel-panel" data-panel="hotels">
+      <div class="modal-info-label">Where to stay</div>
+      <h4>Recommended Hotels</h4>
+      <p>Five hotels close to the reception at Trivandrum Club, so getting there is easy. Book early — mid-January is high season in Kerala.</p>
+      <div class="hotel-list">
+        <div class="hotel">
+          <div class="hotel-tag">Five-star</div>
+          <div class="hotel-name"><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Hyatt+Regency+Trivandrum" target="_blank" rel="noopener">Hyatt Regency Trivandrum</a></div>
+          <div class="hotel-dist">📍 About 1 km · 5 min to the reception</div>
+          <p>The closest to the reception, just down the road in Vazhuthacaud. Modern rooms, pool, spa and several restaurants.</p>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Hyatt%20Regency%20Trivandrum" target="_blank" rel="noopener">See rates →</a>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Hyatt+Regency+Trivandrum" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
+        <div class="hotel">
+          <div class="hotel-tag">Five-star · Taj group</div>
+          <div class="hotel-name"><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Vivanta+Thiruvananthapuram" target="_blank" rel="noopener">Vivanta Thiruvananthapuram</a></div>
+          <div class="hotel-dist">📍 About 2 km · 5–10 min to the reception</div>
+          <p>Taj's city hotel on C V Raman Pillai Road in Thycaud. Calm, polished and well located.</p>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Vivanta%20Thiruvananthapuram" target="_blank" rel="noopener">See rates →</a>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Vivanta+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
+        <div class="hotel">
+          <div class="hotel-tag">Upper mid-range</div>
+          <div class="hotel-name"><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Hilton+Garden+Inn+Trivandrum" target="_blank" rel="noopener">Hilton Garden Inn Trivandrum</a></div>
+          <div class="hotel-dist">📍 About 1.5 km · 5–10 min to the reception</div>
+          <p>Reliable international comfort near Palayam, with a rooftop pool and a good restaurant.</p>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Hilton%20Garden%20Inn%20Trivandrum" target="_blank" rel="noopener">See rates →</a>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Hilton+Garden+Inn+Trivandrum" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
+        <div class="hotel">
+          <div class="hotel-tag">Upper mid-range · heritage</div>
+          <div class="hotel-name"><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Mascot+Hotel+Thiruvananthapuram" target="_blank" rel="noopener">Mascot Hotel (KTDC)</a></div>
+          <div class="hotel-dist">📍 About 1.5 km · 5–10 min to the reception</div>
+          <p>A graceful old heritage hotel run by Kerala Tourism, opposite the museum gardens, with a large pool.</p>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Mascot%20Hotel%20Thiruvananthapuram" target="_blank" rel="noopener">See rates →</a>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Mascot+Hotel+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
+        <div class="hotel">
+          <div class="hotel-tag">Upper mid-range</div>
+          <div class="hotel-name"><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=The+South+Park+Thiruvananthapuram" target="_blank" rel="noopener">The South Park</a></div>
+          <div class="hotel-dist">📍 About 1.5 km · 5–10 min to the reception</div>
+          <p>A long-standing city-centre favourite on MG Road, close to shops and restaurants.</p>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=The%20South%20Park%20Thiruvananthapuram" target="_blank" rel="noopener">See rates →</a>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/maps/search/?api=1&query=The+South+Park+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
+      </div>
+      <p class="fee-note">Distances are approximate driving estimates to Trivandrum Club; allow extra time in evening traffic. All five are 15–25 minutes from the airport.</p>
+    </div>
+
+    <div class="modal-info travel-panel" data-panel="around">
+      <div class="modal-info-label">On the day</div>
+      <h4>Getting to the Celebrations</h4>
+      <div class="guide-grid event-venues">
+        <div class="guide-card">
+          <span class="member-name">Fri 15 January</span>
+          <h5>Reception</h5>
+          <p><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+Club+Vazhuthacaud+Thiruvananthapuram" target="_blank" rel="noopener"><b>Trivandrum Club</b></a>, Vazhuthacaud, Thiruvananthapuram, Kerala 695010.</p>
+          <p class="guide-wear">Time to be confirmed. About 25 minutes from the airport and 10 minutes from the city hotels. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+Club+Vazhuthacaud+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></p>
+        </div>
+        <div class="guide-card">
+          <span class="member-name">Sat 16 January</span>
+          <h5>Traditional ceremony</h5>
+          <!-- EDIT ME: add the ceremony venue name, address, Google Maps link and time once confirmed -->
+          <p>Venue and time to be confirmed — we'll share the details here and on WhatsApp as soon as they're set.</p>
+          <p class="guide-wear">Please plan to arrive a little early: the ceremony begins at an auspicious moment and starts right on time.</p>
+        </div>
+      </div>
+      <p><b>Please use Uber</b> to get around — it's the safest, simplest option: upfront prices, no haggling, and your trip is tracked. Your hotel can also book you a car.</p>
+      <p><b>Local transport, at your own risk:</b> you'll see plenty of <b>auto-rickshaws</b> ("autos") — the yellow-and-black three-wheelers — and <b>KSRTC</b> public buses. They're cheap and fun for short hops, but fares are often quoted higher for visitors: insist on the meter or agree the price before you get in. If you'd like the auto experience safely, book an <b>Uber Auto</b> in the app.</p>
+    </div>
+
+    <div class="modal-info travel-panel" data-panel="weather">
+      <div class="modal-info-label">Mid-January in Kerala</div>
+      <h4>Weather</h4>
+      <p>Mid-January is one of the best times to visit — <b>dry and sunny</b>, around <b>23°C at night</b> and <b>31–32°C during the day</b>, and humid. Rain is rare at this time of year. Pack light, breathable clothes (cotton and linen), sunglasses, a hat and sunscreen; a light shawl is handy for air-conditioned rooms.</p>
+      <div class="modal-info-label" style="margin-top:2rem;">Stay well</div>
+      <h4>Water &amp; Health</h4>
+      <p><b>Overseas guests: drink only sealed bottled water</b> — and use it for brushing your teeth too. Check the seal is unbroken, skip ice in drinks outside the hotels, and go easy on raw salads and cut fruit from street stalls. Mosquito repellent and sunscreen are worth packing; hand sanitiser is handy.</p>
+    </div>
+
+    <div class="modal-info modal-info-wide travel-panel" data-panel="internet">
+      <div class="modal-info-label">Stay connected</div>
+      <h4>Phone, eSIM &amp; Internet</h4>
+      <p>Having mobile data makes everything easier — Uber, maps, translating and staying in touch with us on WhatsApp.</p>
+
+      <div class="explore-group">
+        <h5>Your options</h5>
+        <ul>
+          <li><b>Travel eSIM (easiest)</b> — buy an India data eSIM online before you fly, install it at home, and switch it on when you land. Popular providers include <a class="inline-link" href="https://www.airalo.com/india-esim" target="_blank" rel="noopener">Airalo →</a> and <a class="inline-link" href="https://esim.holafly.com/esim-india/" target="_blank" rel="noopener">Holafly →</a>. First check your phone supports eSIM and is unlocked.</li>
+          <li><b>Roaming</b> — check with your mobile provider at home; many offer India day passes. Turn off data roaming if you don't have a plan, to avoid surprise charges.</li>
+          <li><b>Local SIM card</b> — <b>Airtel</b> and <b>Jio</b> have counters in the arrivals hall. Bring your passport and visa; activation can take a few hours, so it's best for longer stays.</li>
+          <li><b>Hotel Wi-Fi</b> — all our recommended hotels have free Wi-Fi in rooms and lobbies.</li>
+        </ul>
+      </div>
+
+      <div class="explore-group">
+        <h5>Apps worth downloading before you fly</h5>
+        <ul>
+          <li><b>Uber</b> — for every ride (sign in and add a payment card at home).</li>
+          <li><b>Google Maps</b> — download the Thiruvananthapuram area for offline use.</li>
+          <li><b>Google Translate</b> — download Malayalam for offline use; the camera can translate signs and menus.</li>
+          <li><b>WhatsApp</b> — the way everyone in India keeps in touch, including us.</li>
+        </ul>
+      </div>
+
+      <div class="explore-group">
+        <h5>Charging</h5>
+        <ul>
+          <li>India uses <b>230V</b> and plug types <b>C, D and M</b> (round pins). Bring a universal travel adapter.</li>
+        </ul>
+      </div>
+
+      <div class="wifi-caution">
+        <div class="modal-info-label">⚠️ Caution — free public Wi-Fi</div>
+        <ul class="safety-list">
+          <li><b>No banking on free Wi-Fi.</b> At airports, cafés and malls, avoid online banking, payments or entering passwords. Use your mobile data instead.</li>
+          <li><b>Check the network name.</b> Fake networks often copy real names (e.g. "Airport_Free_WiFi"). Ask staff for the exact name, and turn off "auto-join".</li>
+          <li><b>Never type an OTP or bank code</b> into a pop-up or login page — no genuine Wi-Fi will ask for it.</li>
+          <li><b>Avoid public USB charging points.</b> Use your own plug and cable, or a power bank.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal-info modal-info-wide travel-panel" data-panel="explore">
+      <div class="modal-info-label">Arriving a day early?</div>
+      <h4>Explore Thiruvananthapuram</h4>
+      <p>If you have a spare day before or after the celebrations, there's plenty to see, eat and shop for. A few of our favourites:</p>
+
+      <div class="explore-group">
+        <h5>Must-see places</h5>
+        <div class="place-grid">
+          <article class="place-card">
+            <img src="images/place-kovalam.jpg" alt="Kovalam Beach" loading="lazy">
+            <div class="place-body">
+              <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Kovalam+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Kovalam Beach</a></h6>
+              <p>Three crescent beaches and a red-and-white lighthouse — lovely at sunset. About 30 minutes south.</p>
+              <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Kovalam+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
+            </div>
+          </article>
+          <article class="place-card">
+            <img src="images/place-temple.jpg" alt="Sree Padmanabhaswamy Temple" loading="lazy">
+            <div class="place-body">
+              <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Sree+Padmanabhaswamy+Temple+Thiruvananthapuram" target="_blank" rel="noopener">Sree Padmanabhaswamy Temple</a></h6>
+              <p><b>The great Vishnu temple</b> and the city's landmark — the city is named after it. <i>For those interested:</i> entry is for Hindus only, with a strict traditional dress code (men in a mundu, bare-chested; women in a saree) and no phones inside. Everyone can admire the seven-tiered tower and the old East Fort streets from outside.</p>
+              <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Sree+Padmanabhaswamy+Temple+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
+            </div>
+          </article>
+          <article class="place-card">
+            <img src="images/place-napier.jpg" alt="Napier Museum &amp; Zoo" loading="lazy">
+            <div class="place-body">
+              <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Napier+Museum+Thiruvananthapuram" target="_blank" rel="noopener">Napier Museum &amp; Zoo</a></h6>
+              <p>Kerala architecture, art and leafy gardens in the city centre. Tickets at the gate.</p>
+              <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Napier+Museum+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
+            </div>
+          </article>
+          <article class="place-card">
+            <img src="images/place-poovar.jpg" alt="Poovar backwaters" loading="lazy">
+            <div class="place-body">
+              <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Poovar+Island+boat+ride" target="_blank" rel="noopener">Poovar backwaters</a></h6>
+              <p>A boat ride through mangroves to where the river meets the sea. About 45 minutes south.</p>
+              <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Poovar+Island+boat+ride" target="_blank" rel="noopener">Open in Google Maps →</a> <a class="inline-link" href="https://www.getyourguide.com/s/?q=Poovar" target="_blank" rel="noopener">Book a boat tour →</a></div>
+            </div>
+          </article>
+          <article class="place-card">
+            <img src="images/place-shanghumugham.jpg" alt="Shanghumugham Beach" loading="lazy">
+            <div class="place-body">
+              <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Shanghumugham+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Shanghumugham Beach</a></h6>
+              <p>The city beach near the airport, where locals gather for sunset.</p>
+              <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Shanghumugham+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
+            </div>
+          </article>
+          <article class="place-card">
+            <img src="images/place-varkala.jpg" alt="Varkala" loading="lazy">
+            <div class="place-body">
+              <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Varkala+Cliff" target="_blank" rel="noopener">Varkala</a></h6>
+              <p>Red cliffs above the Arabian Sea, with cafés along the cliff path. A half-day trip, about 1½ hours north.</p>
+              <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Varkala+Cliff" target="_blank" rel="noopener">Open in Google Maps →</a> <a class="inline-link" href="https://www.getyourguide.com/s/?q=Varkala" target="_blank" rel="noopener">Book a day trip →</a></div>
+            </div>
+          </article>
+        </div>
+        <p class="explore-tour">Short on time? A <b>guided full-day city tour</b> covers the temple area, palace, museum and zoo, and ends with a Poovar backwater cruise. <a class="inline-link" href="https://lokalee.app/en/tours/trivandrum-one-day-tour" target="_blank" rel="noopener">See the tour →</a></p>
+      </div>
+
+      <div class="explore-group">
+        <h5>What to eat — and where</h5>
+        <ul>
+          <li class="food-li">
+            <div class="food-grid">
+              <figure><img src="images/food-sadya.jpg" alt="Kerala sadya on a banana leaf" loading="lazy"><figcaption><b>Sadya</b>A vegetarian feast of 20+ dishes on a banana leaf</figcaption></figure>
+              <figure><img src="images/food-appam.jpg" alt="Appam with vegetable stew" loading="lazy"><figcaption><b>Appam &amp; stew</b>Lacy rice pancakes with a mild coconut stew</figcaption></figure>
+              <figure><img src="images/food-karimeen.jpg" alt="Karimeen pollichathu in banana leaf" loading="lazy"><figcaption><b>Karimeen pollichathu</b>Pearl-spot fish, spiced and cooked in banana leaf</figcaption></figure>
+              <figure><img src="images/food-parotta.jpg" alt="Kerala parotta" loading="lazy"><figcaption><b>Kerala parotta</b>Flaky layered flatbread, perfect with any curry</figcaption></figure>
+              <figure><img src="images/food-meencurry.jpg" alt="Kerala fish curry" loading="lazy"><figcaption><b>Meen curry</b>Kerala fish curry, tangy with kodampuli and coconut</figcaption></figure>
+              <figure><img src="images/food-puttu.jpg" alt="Puttu with kadala curry and banana" loading="lazy"><figcaption><b>Puttu &amp; kadala</b>Steamed rice cylinders with black-chickpea curry — breakfast</figcaption></figure>
+              <figure><img src="images/food-payasam.jpg" alt="Paal payasam" loading="lazy"><figcaption><b>Payasam</b>Sweet milk-and-rice pudding to finish</figcaption></figure>
+              <figure><img src="images/food-pazhampori.jpg" alt="Pazham pori banana fritters" loading="lazy"><figcaption><b>Pazham pori</b>Sweet banana fritters — Kerala's favourite tea-time snack</figcaption></figure>
+              <figure><img src="images/food-beef.jpg" alt="Kerala beef fry" loading="lazy"><figcaption><b>Beef fry</b>Slow-roasted beef with coconut slivers and curry leaves — Kerala's most famous dish</figcaption></figure>
+              <figure><img src="images/food-dosa.jpg" alt="Masala dosa with chutney" loading="lazy"><figcaption><b>Dosa (thosai)</b>Crisp rice-and-lentil crêpe with chutney and sambar</figcaption></figure>
+              <figure><img src="images/food-biryani.jpg" alt="Malabar chicken biryani" loading="lazy"><figcaption><b>Malabar biryani</b>Fragrant short-grain rice layered with spiced chicken</figcaption></figure>
+              <figure><img src="images/food-idiyappam.jpg" alt="Idiyappam with egg curry" loading="lazy"><figcaption><b>Idiyappam</b>Soft steamed rice noodles, lovely with egg curry or stew</figcaption></figure>
+            </div>
+          </li>
+          <li><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Villa+Maya+Thiruvananthapuram" target="_blank" rel="noopener"><b>Villa Maya</b></a> — fine dining in a restored 18th-century Dutch manor; seafood and Kerala dishes. Book ahead. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Villa+Maya+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></li>
+          <li><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Mother's+Veg+Plaza+Thiruvananthapuram" target="_blank" rel="noopener"><b>Mother's Veg Plaza</b></a> — a popular, good-value vegetarian restaurant for a proper Kerala sadya. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Mother's+Veg+Plaza+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></li>
+          <li><b>Your hotel's restaurants</b> — the Hyatt, Vivanta and Hilton Garden Inn all serve excellent Kerala food, and are the safest choice for sensitive stomachs.</li>
+        </ul>
+      </div>
+
+      <div class="explore-group">
+        <h5>Shopping for Indian wear</h5>
+        <ul>
+          <li><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Pothys+MG+Road+Thiruvananthapuram" target="_blank" rel="noopener"><b>Pothys, MG Road</b></a> — a six-storey store with three floors of sarees, plus kurtas and ready-made outfits. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Pothys+MG+Road+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></li>
+          <li><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Jayalakshmi+Silks+Thiruvananthapuram" target="_blank" rel="noopener"><b>Jayalakshmi Silks</b></a> — known for traditional Kerala sarees and churidar sets. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Jayalakshmi+Silks+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></li>
+          <li><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Lulu+Mall+Thiruvananthapuram" target="_blank" rel="noopener"><b>Lulu Mall, Akkulam</b></a> — one-stop shopping: <b>Manyavar</b> for men's sherwanis and kurtas, plus Biba, Jaypore and Ritu Kumar for women's wear. Near the airport. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Lulu+Mall+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></li>
+          <li><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Balaramapuram+handloom" target="_blank" rel="noopener"><b>Balaramapuram</b></a> — the handloom village on the way to Kovalam, famous for cream-and-gold <b>kasavu</b> sarees and mundu. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Balaramapuram+handloom" target="_blank" rel="noopener">Open in Google Maps →</a></li>
+          <li><b>Tip:</b> shop on your first day — alterations and blouse stitching usually take a day or two.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal-info modal-info-wide travel-panel" data-panel="language">
+      <div class="modal-info-label">Speak a little Malayalam</div>
+      <h4>Easy Phrases</h4>
+      <p>English is widely spoken in Thiruvananthapuram, but a few words of Malayalam (the language of Kerala) always earn a smile. Say the bold words as they're written; show the Malayalam script if someone doesn't understand.</p>
+
+      <div class="explore-group">
+        <h5>The essentials</h5>
+        <table class="phrase-table"><thead><tr><th>English</th><th>Say</th><th>Malayalam</th></tr></thead><tbody><tr><td>Hello</td><td><b>Namaskaram</b></td><td class="ml">നമസ്കാരം</td></tr><tr><td>Thank you</td><td><b>Nanni</b></td><td class="ml">നന്ദി</td></tr><tr><td>Yes / OK</td><td><b>Sheri</b></td><td class="ml">ശരി</td></tr><tr><td>No</td><td><b>Alla</b></td><td class="ml">അല്ല</td></tr><tr><td>Don't want / No thanks</td><td><b>Venda</b></td><td class="ml">വേണ്ട</td></tr><tr><td>Enough!</td><td><b>Mathi</b></td><td class="ml">മതി</td></tr><tr><td>Very good / Awesome</td><td><b>Kollaam / Adipoli</b></td><td class="ml">കൊള്ളാം / അടിപൊളി</td></tr><tr><td>Do you speak English?</td><td><b>English ariyamo?</b></td><td class="ml">ഇംഗ്ലീഷ് അറിയാമോ?</td></tr><tr><td>I don't know Malayalam</td><td><b>Enikku Malayalam ariyilla</b></td><td class="ml">എനിക്ക് മലയാളം അറിയില്ല</td></tr></tbody></table>
+      </div>
+
+      <div class="explore-group">
+        <h5>Ordering food</h5>
+        <table class="phrase-table"><thead><tr><th>English</th><th>Say</th><th>Malayalam</th></tr></thead><tbody><tr><td>Less spicy, please</td><td><b>Erivu kurachu</b></td><td class="ml">എരിവ് കുറച്ച്</td></tr><tr><td>Not spicy at all</td><td><b>Erivu venda</b></td><td class="ml">എരിവ് വേണ്ട</td></tr><tr><td>Water</td><td><b>Vellam</b></td><td class="ml">വെള്ളം</td></tr><tr><td>Bottled water</td><td><b>Bottle vellam</b></td><td class="ml">ബോട്ടിൽ വെള്ളം</td></tr><tr><td>No sugar</td><td><b>Panchasara venda</b></td><td class="ml">പഞ്ചസാര വേണ്ട</td></tr><tr><td>Very tasty!</td><td><b>Nalla ruchi!</b></td><td class="ml">നല്ല രുചി!</td></tr><tr><td>The bill, please</td><td><b>Bill tharumo?</b></td><td class="ml">ബിൽ തരുമോ?</td></tr></tbody></table>
+        <p class="fee-note">Tip: "Mathi" (enough) is the word you'll need at a sadya — the servers will keep refilling your banana leaf until you say it!</p>
+      </div>
+
+      <div class="explore-group">
+        <h5>Numbers</h5>
+        <table class="phrase-table"><thead><tr><th>English</th><th>Say</th><th>Malayalam</th></tr></thead><tbody><tr><td>One</td><td><b>Onnu</b></td><td class="ml">ഒന്ന്</td></tr><tr><td>Two</td><td><b>Randu</b></td><td class="ml">രണ്ട്</td></tr><tr><td>Three</td><td><b>Moonnu</b></td><td class="ml">മൂന്ന്</td></tr><tr><td>Four</td><td><b>Naalu</b></td><td class="ml">നാല്</td></tr><tr><td>Five</td><td><b>Anju</b></td><td class="ml">അഞ്ച്</td></tr></tbody></table>
+      </div>
+
+      <div class="explore-group">
+        <h5>Getting around &amp; shopping</h5>
+        <table class="phrase-table"><thead><tr><th>English</th><th>Say</th><th>Malayalam</th></tr></thead><tbody><tr><td>How much?</td><td><b>Ethra aayi?</b></td><td class="ml">എത്ര ആയി?</td></tr><tr><td>Stop here</td><td><b>Ivide nirthu</b></td><td class="ml">ഇവിടെ നിർത്തൂ</td></tr><tr><td>Slowly, please</td><td><b>Pathukke</b></td><td class="ml">പതുക്കെ</td></tr><tr><td>Where is the toilet?</td><td><b>Toilet evideya?</b></td><td class="ml">ടോയ്‌ലറ്റ് എവിടെയാ?</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <div class="travel-disclaimer travel-panel" data-panel="safety" data-show-on="safety">
+      <div class="modal-info-label">Please read — staying safe</div>
+      <h4>Keep yourself and your belongings safe</h4>
+      <p>Kerala is friendly and welcoming, but like anywhere busy, visitors can be targeted. A few simple habits make all the difference:</p>
+      <ul class="safety-list">
+        <li><b>Passport, cash and jewellery</b> — keep them in your hotel safe. Carry a photo or photocopy of your passport instead.</li>
+        <li><b>Bags and phones</b> — keep your bag zipped and in front of you, and your phone in a front pocket, especially in crowds, markets and temples.</li>
+        <li><b>Taxis</b> — only use <b>Uber</b> or a car booked by your hotel. Politely say no to drivers or "helpers" who approach you at the airport or on the street.</li>
+        <li><b>Friendly strangers</b> — be careful of anyone offering a tour, a shop, or saying a place is "closed today". A smile and "<b>Venda</b>" (no thanks) is enough.</li>
+        <li><b>Money</b> — use ATMs inside banks or hotels, carry small notes, and count your change. <b>Never share a bank code or OTP</b> with anyone, even by phone.</li>
+        <li><b>Roads</b> — traffic drives on the left and doesn't always stop. Cross slowly with others, and watch for uneven pavements and steps.</li>
+        <li><b>Heat</b> — drink sealed bottled water, rest in the shade, and bring any medicines you need, with their prescriptions.</li>
+        <li><b>Stay together</b> — go out in pairs, tell someone your plans, and keep your hotel's address and phone number with you.</li>
+        <li><b>Emergency numbers</b> (free from any phone in India):
+          <span class="sos-grid">
+            <span><b>112</b>All emergencies</span>
+            <span><b>100</b>Police</span>
+            <span><b>108</b>Ambulance</span>
+            <span><b>1363</b>Tourist helpline (English)</span>
+          </span>
+        </li>
+      </ul>
+      <p class="disclaimer-small">This guide is shared in good faith to help you plan, and was correct to the best of our knowledge when written. Visa fees, prices, timings and services can change — please check with the official source before relying on them. Flights, hotels, tours, transport and activities are booked directly with those providers, at your own discretion and risk, and we can't take responsibility for third-party services. We recommend travel insurance.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REGISTRY MODAL ============ -->
+<div class="modal" id="modal-registry" aria-hidden="true">
+  <div class="modal-bar">
+    <h3>Registry</h3>
+    <button class="modal-close" aria-label="Close" data-modal-close>×</button>
+  </div>
+  <div class="modal-body">
+    <!-- EDIT ME: hero image -->
+    <img class="modal-hero" src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=1400&q=80" alt="Registry">
+    <h2>Registry</h2>
+    <p>Your presence at our wedding is the greatest gift of all — truly, no gift is expected. If you would still like to bless us with something, here is how, whether you're travelling from overseas or joining us from India.</p>
+
+    <h3 class="party-heading">Guests from Overseas</h3>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <span class="member-name">Travel light</span>
+        <h5>No need to carry gifts</h5>
+        <p>Please don't pack presents or carry cash across borders for us — your journey here is already a gift.</p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">From abroad</span>
+        <h5>Bank transfer</h5>
+        <!-- EDIT ME: add international transfer details (e.g. Wise / bank account / PayPal), then remove the "to follow" line -->
+        <p>If you'd like to send a gift, an online transfer is easiest.</p>
+        <p class="guide-wear">Details to follow.</p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">On the day</span>
+        <h5>A card is perfect</h5>
+        <p>A handwritten card or a few words in our guest book means the world to us — and we'll keep them forever.</p>
+      </div>
+      <div class="guide-card guide-card-wide">
+        <span class="member-name">Ang pow</span>
+        <h5>A red envelope of good wishes</h5>
+        <p>If you'd like to mark the occasion, an <b>ang pow</b> — the red envelope given in Malaysia to wish a couple a blessed start — is warmly welcomed. You'll find the ang pow box at the reception entrance, or you're welcome to hand it to any member of our wedding party on the night.</p>
+      </div>
+    </div>
+
+    <h3 class="party-heading">Guests from India</h3>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <span class="member-name">Tradition</span>
+        <h5>A blessing in an envelope</h5>
+        <p>In keeping with custom, a cash gift in an envelope is warmly received. Amounts ending in <b>1</b> — such as ₹501, ₹1,001 or ₹5,001 — are considered auspicious, as the extra rupee is a blessing for a new beginning.</p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">Online</span>
+        <h5>UPI</h5>
+        <!-- EDIT ME: add the UPI ID / QR code, then remove the "to follow" line -->
+        <p>Prefer to send it digitally? A UPI transfer works just as well.</p>
+        <p class="guide-wear">UPI details to follow.</p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">At the venue</span>
+        <h5>Gift table</h5>
+        <p>There will be a box at the reception entrance for envelopes and gifts — no need to hand them to us during the ceremony.</p>
+      </div>
+    </div>
+
+    <h3 class="party-heading">Gift-Giving Customs</h3>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <span class="member-name">Wrapping</span>
+        <h5>Bright and happy</h5>
+        <p>Red, gold, yellow and green are lucky colours. Avoid black or plain white wrapping, which are linked with mourning.</p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">Giving</span>
+        <h5>Use your right hand</h5>
+        <p>Offer a gift or envelope with your right hand, or with both hands — it's the respectful way.</p>
+      </div>
+      <div class="guide-card">
+        <span class="member-name">Thank you</span>
+        <h5>With love</h5>
+        <p>We are so thankful for your love and support. Having you there is what matters most.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RSVP MODAL — multi-step questionnaire ============ -->
+<div class="modal modal-rsvp" id="modal-rsvp" aria-hidden="true">
+  <div class="rsvp-stage">
+    <button class="modal-close" aria-label="Close" data-modal-close>×</button>
+
+    <div class="rsvp-step" data-step="phone" data-active="true">
+      <h2>RSVP</h2>
+      <p class="rsvp-sub">Enter your WhatsApp number so we can reach you</p>
+
+      <div class="rsvp-cc-card">
+        <div class="rsvp-cc-card-label">Pick your country — examples</div>
+        <div class="rsvp-cc-grid">
+          <button class="rsvp-cc-chip" data-cc="+91"  data-flag="🇮🇳" type="button" aria-pressed="false"><span class="rsvp-cc-flag">🇮🇳</span> India <strong>+91</strong></button>
+          <button class="rsvp-cc-chip" data-cc="+65"  data-flag="🇸🇬" type="button" aria-pressed="false"><span class="rsvp-cc-flag">🇸🇬</span> Singapore <strong>+65</strong></button>
+          <button class="rsvp-cc-chip" data-cc="+60"  data-flag="🇲🇾" type="button" aria-pressed="false"><span class="rsvp-cc-flag">🇲🇾</span> Malaysia <strong>+60</strong></button>
+          <button class="rsvp-cc-chip" data-cc="+1"   data-flag="🇺🇸" type="button" aria-pressed="false"><span class="rsvp-cc-flag">🇺🇸</span> USA <strong>+1</strong></button>
+          <button class="rsvp-cc-chip" data-cc="+971" data-flag="🇦🇪" type="button" aria-pressed="false"><span class="rsvp-cc-flag">🇦🇪</span> UAE <strong>+971</strong></button>
+          <button class="rsvp-cc-chip" data-cc="+358" data-flag="🇫🇮" type="button" aria-pressed="false"><span class="rsvp-cc-flag">🇫🇮</span> Finland <strong>+358</strong></button>
+        </div>
+        <details class="rsvp-cc-other">
+          <summary>From a different country? Pick from the full list</summary>
+          <select id="rsvp-cc-select" aria-label="Country code">
+            <option value="">— Select country —</option>
+          </select>
+        </details>
+      </div>
+
+      <div class="rsvp-cc-card-label" style="margin-top:1.6rem; padding-left:0.2rem;">Your WhatsApp number</div>
+      <div class="rsvp-phone-row">
+        <span class="rsvp-cc-display" id="rsvp-cc-display">+ —</span>
+        <input type="tel" class="rsvp-input rsvp-phone-input" id="rsvp-phone" placeholder="Type your number here" inputmode="numeric" autocomplete="tel-national">
+      </div>
+
+      <!-- Flying in? — "yes" turns the thank-you page into the travel checklist -->
+      <div class="rsvp-cc-card-label" style="margin-top:1.8rem; padding-left:0.2rem;">Are you flying to Thiruvananthapuram?</div>
+      <div class="rsvp-fly-grid">
+        <button class="rsvp-cc-chip rsvp-fly-chip" data-fly="overseas" type="button" aria-pressed="false">🌏 Yes, from overseas</button>
+        <button class="rsvp-cc-chip rsvp-fly-chip" data-fly="india" type="button" aria-pressed="false">🇮🇳 Yes, from within India</button>
+        <button class="rsvp-cc-chip rsvp-fly-chip" data-fly="no" type="button" aria-pressed="false">🏠 No, I'm in Kerala</button>
+      </div>
+      <p class="rsvp-step-error" id="rsvp-phone-error" hidden></p>
+    </div>
+
+    <div class="rsvp-step" data-step="name">
+      <h2>What's your name?</h2>
+      <p class="rsvp-sub">So we know who's joining us</p>
+      <div class="rsvp-pair">
+        <input type="text" class="rsvp-input" id="rsvp-first" placeholder="First name" autocomplete="given-name">
+        <input type="text" class="rsvp-input" id="rsvp-last" placeholder="Last name" autocomplete="family-name">
+      </div>
+    </div>
+
+    <div class="rsvp-step" data-step="events">
+      <h2 id="rsvp-events-greeting">Which events will you join?</h2>
+      <p class="rsvp-sub">Tap the ones you'll attend</p>
+      <!-- TODO (later): replace greeting with name pulled from uploaded WhatsApp/name sheet -->
+
+      <div class="rsvp-events-grid">
+        <button class="rsvp-event-card" data-event="Haldi" type="button" aria-pressed="false">
+          <div class="rsvp-event-name">Haldi</div>
+          <div class="rsvp-event-meta">Turmeric blessing ceremony</div>
+        </button>
+        <button class="rsvp-event-card" data-event="Mehendi" type="button" aria-pressed="false">
+          <div class="rsvp-event-name">Mehendi</div>
+          <div class="rsvp-event-meta">Henna ceremony</div>
+        </button>
+        <button class="rsvp-event-card" data-event="Bairhana" type="button" aria-pressed="false">
+          <div class="rsvp-event-name">Bairhana</div>
+          <div class="rsvp-event-meta">Pre-wedding gathering</div>
+        </button>
+        <button class="rsvp-event-card" data-event="Sangeet" type="button" aria-pressed="false">
+          <div class="rsvp-event-name">Sangeet</div>
+          <div class="rsvp-event-meta">Music & dance night</div>
+        </button>
+        <button class="rsvp-event-card" data-event="Pheras" type="button" aria-pressed="false">
+          <div class="rsvp-event-name">Pheras</div>
+          <div class="rsvp-event-meta">Wedding ceremony</div>
+        </button>
+        <button class="rsvp-event-card" data-event="Reception" type="button" aria-pressed="false">
+          <div class="rsvp-event-name">Reception</div>
+          <div class="rsvp-event-meta">Celebration dinner</div>
+        </button>
+      </div>
+
+      <button class="rsvp-event-decline" id="rsvp-event-decline" type="button" aria-pressed="false">
+        I won't be able to attend any of the events
+      </button>
+    </div>
+
+    <div class="rsvp-step" data-step="party">
+      <h2>How many in your party?</h2>
+      <p class="rsvp-sub">Including yourself</p>
+      <div class="rsvp-stepper">
+        <button type="button" id="rsvp-party-minus" aria-label="Decrease">−</button>
+        <span class="rsvp-count" id="rsvp-party-count">1</span>
+        <button type="button" id="rsvp-party-plus" aria-label="Increase">+</button>
+      </div>
+      <div id="rsvp-guest-names"></div>
+      <p class="rsvp-step-error" id="rsvp-party-error" hidden></p>
+    </div>
+
+    <div class="rsvp-step" data-step="needs">
+      <h2>Anything we should know?</h2>
+      <p class="rsvp-sub">Dietary or accessibility needs</p>
+
+      <div class="rsvp-needs-label">Dietary</div>
+      <div class="rsvp-checkboxes" data-group="dietary">
+        <label class="rsvp-checkbox"><input type="checkbox" value="Vegetarian"> Vegetarian</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="Vegan"> Vegan</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="Gluten-free"> Gluten-free</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="Nut allergy"> Nut allergy</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="Dairy-free"> Dairy-free</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="No restrictions"> No restrictions</label>
+      </div>
+
+      <div class="rsvp-needs-label" style="margin-top:1.6rem;">Accessibility</div>
+      <div class="rsvp-checkboxes" data-group="accessibility">
+        <label class="rsvp-checkbox"><input type="checkbox" value="Wheelchair access"> Wheelchair access</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="Step-free access"> Step-free access</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="Hearing assistance"> Hearing assistance</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="Vision assistance"> Vision assistance</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="Seat near aisle"> Seat near aisle</label>
+        <label class="rsvp-checkbox"><input type="checkbox" value="No accessibility needs"> No accessibility needs</label>
+      </div>
+
+      <input type="text" class="rsvp-input" id="rsvp-needs-other" placeholder="Anything else? (optional)" style="margin-top:1.6rem;">
+    </div>
+
+    <div class="rsvp-step" data-step="note">
+      <h2>Anything you'd like to share with us?</h2>
+      <p class="rsvp-sub">Questions, comments, or kind words — we'd love to hear them</p>
+      <textarea class="rsvp-input" id="rsvp-note" placeholder="Share anything you'd like..."></textarea>
+    </div>
+
+    <div class="rsvp-step" data-step="review">
+      <h2>Ready to send?</h2>
+      <p class="rsvp-sub">Review your response</p>
+      <div class="rsvp-summary" id="rsvp-summary"></div>
+    </div>
+
+    <div class="rsvp-step" data-step="thanks">
+      <div class="rsvp-thanks-icon">✓</div>
+      <h2 id="rsvp-thanks-title">Thank you</h2>
+      <p class="rsvp-sub" id="rsvp-thanks-sub">Your response is on its way</p>
+      <!-- Shown only while the Google Sheet receiver isn't connected: the RSVP goes by email instead -->
+      <div class="rsvp-mail" id="rsvp-mail" hidden>
+        <p>One last step — tap below to send your RSVP to us by email.</p>
+        <a class="travel-btn" id="rsvp-mail-btn" href="#">Send my RSVP by email</a>
+      </div>
+
+      <!-- Travel checklist — shown only to guests who said they're flying in -->
+      <div class="travel-list" id="rsvp-travel" hidden>
+        <h3 class="travel-list-title">Before you fly — your checklist</h3>
+        <p class="travel-list-intro">First time in Kerala? Here's everything to sort out, in order. Tap each one as you finish it.</p>
+
+        <label class="travel-item travel-overseas">
+          <input type="checkbox">
+          <span class="travel-num"></span>
+          <span class="travel-body">
+            <span class="travel-when">Check now</span>
+            <strong>Passport</strong>
+            <span>Must be valid for at least <b>6 months after you land</b> (so until mid-July 2027), with 2 blank pages.</span>
+          </span>
+        </label>
+
+        <label class="travel-item travel-overseas">
+          <input type="checkbox">
+          <span class="travel-num"></span>
+          <span class="travel-body">
+            <span class="travel-when">Apply by mid-December</span>
+            <strong>Indian e-Visa</strong>
+            <span>Apply online for an <b>e-Tourist Visa</b> — approval comes by email in a few days. Print it and bring it. Indian passport or OCI card? Skip this one.</span>
+            <table class="fee-table">
+              <thead><tr><th>Passport</th><th>30-day e-Tourist Visa</th><th>1-year</th><th>5-year</th></tr></thead>
+              <tbody>
+                <tr><td>🇲🇾 Malaysia</td><td><b>Free</b></td><td>US$40</td><td>US$200</td></tr>
+                <tr><td>🇸🇬 Singapore</td><td><b>US$25</b></td><td>US$25</td><td>US$200</td></tr>
+                <tr><td>🇩🇪 Germany</td><td><b>US$25</b></td><td>US$40</td><td>US$200</td></tr>
+                <tr><td>🇸🇪 Sweden</td><td><b>US$25</b></td><td>US$40</td><td>US$200</td></tr>
+                <tr><td>🇺🇸 United States</td><td><b>US$25</b></td><td>US$40</td><td>US$160</td></tr>
+              </tbody>
+            </table>
+            <span class="fee-note">Fees for travel between July and March, from the official Government of India e-Visa fee schedule. A 3% bank charge is added. Fees are set by the Government of India and may change without notice — please confirm the current fee on the official site before you apply. Other passports: see the full list on the official site.</span>
+            <span class="travel-warn">⚠️ Use the official government site only. Look-alike sites charge US$100+ for the same visa.</span>
+            <a class="travel-btn" href="https://indianvisaonline.gov.in/evisa/" target="_blank" rel="noopener">Official e-Visa site →</a>
+          </span>
+        </label>
+
+        <label class="travel-item">
+          <input type="checkbox">
+          <span class="travel-num"></span>
+          <span class="travel-body">
+            <span class="travel-when">Book soon — January fills up</span>
+            <strong>Flights to Thiruvananthapuram (TRV)</strong>
+            <span>The reception is on <b>Friday 15 January</b> and the wedding on <b>Saturday 16 January</b>. Choose the travel dates that suit you.</span>
+            <span class="travel-from">
+              <span class="travel-from-label">Where are you flying from?</span>
+              <select id="travel-from" aria-label="Where are you flying from?">
+                <option value="">— Pick your city —</option>
+                <optgroup label="Overseas">
+                  <option value="SIN">Singapore</option>
+                  <option value="KUL">Kuala Lumpur</option>
+                  <option value="CMB">Colombo</option>
+                  <option value="ICN">Seoul</option>
+                  <option value="NRT">Tokyo</option>
+                  <option value="JFK">New York</option>
+                  <option value="SFO">San Francisco</option>
+                  <option value="LAX">Los Angeles</option>
+                  <option value="DXB">Dubai</option>
+                  <option value="DOH">Doha</option>
+                  <option value="LHR">London</option>
+                  <option value="FRA">Germany — Frankfurt</option>
+                  <option value="MUC">Germany — Munich</option>
+                </optgroup>
+                <optgroup label="Within India">
+                  <option value="DEL">Delhi</option>
+                  <option value="BOM">Mumbai</option>
+                  <option value="BLR">Bengaluru</option>
+                  <option value="MAA">Chennai</option>
+                  <option value="HYD">Hyderabad</option>
+                  <option value="CCU">Kolkata</option>
+                </optgroup>
+              </select>
+            </span>
+            <span class="travel-routes" id="travel-route-note">Pick your city to see today's flights and prices. You can change the dates on the next page.</span>
+            <span class="travel-links" id="travel-links">
+              <a class="travel-btn" id="travel-gf" href="https://www.google.com/travel/flights?q=Flights%20to%20TRV%20on%202027-01-14%20through%202027-01-17" target="_blank" rel="noopener">Live prices — Google Flights →</a>
+              <a class="travel-btn travel-btn-ghost" id="travel-sky" href="https://www.skyscanner.com/transport/flights/to/trv/270114/270117/" target="_blank" rel="noopener">Skyscanner →</a>
+              <span id="travel-airlines"></span>
+            </span>
+          </span>
+        </label>
+
+        <label class="travel-item">
+          <input type="checkbox">
+          <span class="travel-num"></span>
+          <span class="travel-body">
+            <span class="travel-when">Book with your flights</span>
+            <strong>Hotel</strong>
+            <!-- EDIT ME: replace with recommended hotels / room block once chosen -->
+            <span>Book for whichever nights suit your plans. Our picks, all close to the reception:</span>
+            <span class="travel-routes">
+              <b>Hyatt Regency Trivandrum</b> — five-star, about 1 km<br>
+              <b>Vivanta Thiruvananthapuram</b> (Taj) — five-star, about 2 km<br>
+              <b>Hilton Garden Inn</b>, <b>Mascot Hotel</b> or <b>The South Park</b> — upper mid-range, about 1.5 km
+            </span>
+            <span class="travel-links">
+              <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Hyatt%20Regency%20Trivandrum" target="_blank" rel="noopener">Hyatt →</a>
+              <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Vivanta%20Thiruvananthapuram" target="_blank" rel="noopener">Vivanta →</a>
+              <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Hilton%20Garden%20Inn%20Trivandrum" target="_blank" rel="noopener">Hilton Garden Inn →</a>
+            </span>
+          </span>
+        </label>
+
+        <label class="travel-item travel-overseas">
+          <input type="checkbox">
+          <span class="travel-num"></span>
+          <span class="travel-body">
+            <span class="travel-when">In the 3 days before you land</span>
+            <strong>India e-Arrival Card</strong>
+            <span>Compulsory and free. Fill it in online within <b>72 hours before landing</b> — you'll get a QR code to show at immigration.</span>
+            <a class="travel-btn" href="https://indianvisaonline.gov.in/earrival/" target="_blank" rel="noopener">e-Arrival Card →</a>
+          </span>
+        </label>
+
+        <label class="travel-item travel-overseas">
+          <input type="checkbox">
+          <span class="travel-num"></span>
+          <span class="travel-body">
+            <span class="travel-when">While you're in Kerala</span>
+            <strong>Drink only bottled water</strong>
+            <span>Sealed bottled water only — for brushing your teeth too. Skip ice outside the hotels. Pack mosquito repellent and sunscreen.</span>
+          </span>
+        </label>
+
+        <div class="travel-save">
+          <p>Don't lose this list —</p>
+          <a class="travel-btn" id="rsvp-travel-wa" href="#" target="_blank" rel="noopener">Send it to my WhatsApp</a>
+          <button class="travel-btn travel-btn-ghost" id="rsvp-travel-cal" type="button">Add reminders to my calendar</button>
+          <div class="cal-panel" id="rsvp-cal-panel" hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rsvp-nav">
+      <button class="rsvp-arrow invisible" id="rsvp-back" type="button" aria-label="Back">←</button>
+      <span class="rsvp-progress" id="rsvp-progress"></span>
+      <button class="rsvp-arrow" id="rsvp-next" type="button" aria-label="Next">→</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <!-- EDIT ME: footer -->
+  <p>Alok &amp; Elaine · January 15–16, 2027</p>
+  <details class="credits">
+    <summary>Photo credits</summary>
+    <p>Kerala food and place photos via Wikimedia Commons (CC BY-SA / CC BY): Solowomanwalks, ideowl, Nita Abbey, Viewfinder18, athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj.</p>
+  </details>
+</footer>
+
+<script src="zh.js"></script>
+<script>
+  /* ===== Language: English / 中文 =====
+     Every "unit" (an element holding only inline content) is looked up in I18N_ZH by its
+     English HTML. Text the page changes later (RSVP steps, flight notes, slideshow) is
+     caught by a MutationObserver while Chinese is on. */
+  (function () {
+    const ZH = window.I18N_ZH || {};
+    const INLINE = { A: 1, B: 1, I: 1, EM: 1, STRONG: 1, SPAN: 1, BR: 1, SMALL: 1, SUP: 1 };
+    const SKIP = /^(SCRIPT|STYLE|OPTION|SELECT|TEXTAREA|INPUT)$/;
+    const norm = h => h.replace(/\s+/g, ' ').trim();
+    let lang = 'en';
+    try { if (localStorage.getItem('lang') === 'zh') lang = 'zh'; } catch (e) {}
+
+    // Text built on the fly
+    const PATTERNS = [
+      [/^Photo (\d+): (.+)$/, m => `照片 ${m[1]}：${ZH[m[2]] || m[2]}`],
+      [/^Alok and Elaine — (.+)$/, m => `Alok 与 Elaine — ${ZH[m[1]] || m[1]}`],
+      [/^Hi, (.+) — which events will you join\?$/, m => `${m[1]}，您好！请问您会参加哪些活动？`],
+    ];
+    const lookup = k => {
+      if (ZH[k] !== undefined) return ZH[k];
+      for (const [re, fn] of PATTERNS) { const m = k.match(re); if (m) return fn(m); }
+      return null;
+    };
+    window.t = s => (lang === 'zh' && ZH[s]) || s;
+
+    const inlineOnly = el => [...el.querySelectorAll('*')].every(c => INLINE[c.tagName]);
+    const hasText = el => /[A-Za-z]/.test(el.textContent);
+    const isUnit = el => !SKIP.test(el.tagName) && !el.closest('svg') && el.id !== 'lang-toggle' &&
+      hasText(el) && inlineOnly(el) &&
+      !(el.parentElement && el.parentElement !== document.body && hasText(el.parentElement) && inlineOnly(el.parentElement));
+    const unitOf = el => {
+      while (el && el.parentElement && el.parentElement !== document.body && inlineOnly(el.parentElement)) el = el.parentElement;
+      return el;
+    };
+
+    // An element counts as "still showing our Chinese" while its text matches what we put in;
+    // class changes (e.g. the scroll animation's .lit) don't reset it.
+    function setZh(el, html) { el.__en = el.innerHTML; el.innerHTML = html; el.__zhText = el.textContent; }
+    function translateEl(el) {
+      if (el.__zhText !== undefined) {
+        if (el.textContent === el.__zhText) {                   // ours, untouched
+          if (lang === 'en') { el.innerHTML = el.__en; delete el.__zhText; }
+          return;
+        }
+        delete el.__zhText;                                     // the page rewrote it: treat as fresh English
+      }
+      if (lang !== 'zh') return;
+      const z = lookup(norm(el.innerHTML));
+      if (z !== null) { setZh(el, z); return; }
+      // no whole-unit match: try each direct child (e.g. "label + value" rows, button groups)
+      [...el.children].forEach(c => {
+        if (c.__zhText !== undefined && c.textContent === c.__zhText) return;
+        const zc = lookup(norm(c.innerHTML)); if (zc !== null) setZh(c, zc);
+      });
+    }
+    function translateAttrs(root) {
+      root.querySelectorAll('[placeholder],[aria-label],img[alt],option').forEach(el => {
+        if (el.id === 'lang-toggle') return;
+        ['placeholder', 'aria-label', 'alt'].forEach(a => {
+          if (!el.hasAttribute(a)) return;
+          const v = el.getAttribute(a);
+          if (el['__zh_' + a] === undefined || v !== el['__zh_' + a]) el['__en_' + a] = v;
+          const en = el['__en_' + a];
+          const z = lang === 'zh' ? (ZH['@' + en] !== undefined ? ZH['@' + en] : lookup(en)) : null;
+          if (z) { el.setAttribute(a, z); el['__zh_' + a] = z; }
+          else { el.setAttribute(a, en); delete el['__zh_' + a]; }
+        });
+        if (el.tagName === 'OPTION') {
+          if (el.__en === undefined) el.__en = el.textContent;
+          const z = ZH['@opt:' + el.__en.trim()];
+          el.textContent = lang === 'zh' && z ? z : el.__en;
+        }
+      });
+    }
+    function applyAll() {
+      observer.disconnect();
+      document.querySelectorAll('body *').forEach(el => { if (el.__zhText !== undefined || isUnit(el)) translateEl(el); });
+      translateAttrs(document);
+      if (!document.__enTitle) document.__enTitle = document.title;
+      document.title = lang === 'zh' ? (ZH['@title:' + document.__enTitle] || document.__enTitle) : document.__enTitle;
+      document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+      const btn = document.getElementById('lang-toggle');
+      btn.textContent = lang === 'zh' ? 'EN' : '中文';
+      btn.setAttribute('aria-label', lang === 'zh' ? 'Switch to English / 切换到英文' : '切换到中文 / Switch to Chinese');
+      document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
+      window.dispatchEvent(new Event('scroll'));
+      if (lang === 'zh') observe();
+    }
+    const pending = new Set(); let scheduled = false;
+    const observer = new MutationObserver(muts => {
+      muts.forEach(m => {
+        const el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+        if (el) pending.add(el);
+        m.addedNodes.forEach(n => { if (n.nodeType === 1) pending.add(n); });
+      });
+      if (!scheduled) { scheduled = true; requestAnimationFrame(flush); }
+    });
+    function flush() {
+      scheduled = false; observer.disconnect();
+      const units = new Set();
+      pending.forEach(el => {
+        if (!el.isConnected) return;
+        const u = unitOf(el); if (u && isUnit(u)) units.add(u);
+        el.querySelectorAll('*').forEach(d => { if (isUnit(d)) units.add(d); });
+        translateAttrs(el.parentElement || el);
+      });
+      pending.clear();
+      units.forEach(translateEl);
+      if (lang === 'zh') observe();
+    }
+    function observe() { observer.observe(document.body, { childList: true, subtree: true, characterData: true }); }
+
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      lang = lang === 'zh' ? 'en' : 'zh';
+      try { localStorage.setItem('lang', lang); } catch (e) {}
+      applyAll();
+    });
+    if (lang === 'zh') window.addEventListener('load', applyAll);
+  })();
+
+  /* ===== Photos slideshow ===== */
+  (function () {
+    // [file id, caption] — Lijiang pre-wedding shoot, in story order
+    const GALLERY = [
+      ['5033', 'Getting ready'], ['5046', 'Getting ready'], ['5048', 'Getting ready'],
+      ['5061', 'Getting ready'], ['4637', 'The flower boat'], ['4662', 'The flower boat'],
+      ['4674', 'The flower boat'], ['4712', 'The flower boat'], ['4715', 'The flower boat'],
+      ['4735', 'The flower boat'], ['4804', 'The flower boat'], ['4814', 'The flower boat'],
+      ['4820', 'The flower boat'], ['4853', 'The flower boat'], ['4854', 'The flower boat'],
+      ['4874', 'The flower boat'], ['4925', 'The flower boat'], ['4943', 'The flower boat'],
+      ['4433', 'The meadow'], ['4436', 'The meadow'], ['4444', 'The meadow'],
+      ['4454', 'The meadow'], ['4559', 'The meadow'], ['4585', 'The meadow'],
+      ['4586', 'The meadow'], ['4599', 'The meadow'], ['4270', 'The forest'],
+      ['4306', 'The forest'], ['4319', 'The forest'], ['4328', 'The forest'],
+      ['4330', 'The forest'], ['4347', 'The forest'], ['4359', 'The forest'],
+      ['4377', 'The forest'], ['4396', 'The forest'], ['4398', 'The forest'],
+      ['4401', 'The forest'], ['4410', 'The forest'], ['4412', 'The forest'],
+      ['4991', 'The forest at dusk'], ['4999', 'The forest at dusk'], ['5001', 'The forest at dusk'],
+      ['5006', 'The forest at dusk'], ['5028', 'The forest at dusk'], ['3882', 'The palace'],
+      ['3895', 'The palace'], ['3900', 'The palace'], ['3906', 'The palace'],
+      ['3924', 'The palace'], ['3968', 'The palace'], ['3973', 'The palace'],
+      ['3984', 'The palace'], ['3986', 'The palace'], ['4002', 'The palace'],
+      ['4006', 'The palace'], ['4016', 'The palace'], ['4017', 'The palace'],
+      ['4018', 'The palace'], ['4039', 'The Corvette'], ['4055', 'The Corvette'],
+      ['4091', 'The Corvette'], ['4094', 'The Corvette'], ['4106', 'The Corvette'],
+      ['4134', 'The Corvette'], ['4140', 'The Corvette'], ['4154', 'The Corvette'],
+      ['4171', 'The Corvette'], ['4185', 'The Corvette'], ['4193', 'The Corvette'],
+      ['4199', 'The Corvette'], ['4211', 'The Corvette'], ['4215', 'The Corvette'],
+      ['4223', 'The Corvette'], ['4251', 'The Corvette'], ['3820', 'The horse ranch'],
+      ['3822', 'The horse ranch'], ['3833', 'The horse ranch'], ['3844', 'The horse ranch'],
+      ['3850', 'The horse ranch'], ['3874', 'The horse ranch'], ['3597', 'Jade Dragon Snow Mountain'],
+      ['3604', 'Jade Dragon Snow Mountain'], ['3623', 'Jade Dragon Snow Mountain'], ['3647', 'Jade Dragon Snow Mountain'],
+      ['3649', 'Jade Dragon Snow Mountain'], ['3680', 'Jade Dragon Snow Mountain'], ['3696', 'Jade Dragon Snow Mountain'],
+      ['3736', 'Jade Dragon Snow Mountain'], ['3759', 'Jade Dragon Snow Mountain'], ['3778', 'Jade Dragon Snow Mountain'],
+      ['3801', 'Jade Dragon Snow Mountain'], ['3813', 'Jade Dragon Snow Mountain'], ['3816', 'Jade Dragon Snow Mountain']
+    ];
+    const img = document.getElementById('slide-img');
+    if (!img) return;
+    const caption = document.getElementById('slide-caption');
+    const count = document.getElementById('slide-count');
+    const thumbs = document.getElementById('slide-thumbs');
+    const full = id => `images/gallery/lj-${id}.jpg`;
+    let i = 0;
+
+    GALLERY.forEach(([id, cap], k) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Photo ${k + 1}: ${cap}`);
+      b.innerHTML = `<img src="images/gallery/lj-${id}-thumb.jpg" alt="" loading="lazy">`;
+      b.addEventListener('click', () => go(k));
+      thumbs.appendChild(b);
+    });
+
+    function go(k) {
+      i = (k + GALLERY.length) % GALLERY.length;
+      const [id, cap] = GALLERY[i];
+      img.classList.add('fading');
+      const next = new Image();
+      next.onload = next.onerror = () => {
+        img.src = full(id);
+        img.alt = `Alok and Elaine — ${cap}`;
+        img.classList.remove('fading');
+      };
+      next.src = full(id);
+      caption.textContent = t(cap);
+      count.textContent = `${i + 1} / ${GALLERY.length}`;
+      thumbs.querySelectorAll('button').forEach((b, k2) => b.setAttribute('aria-current', k2 === i ? 'true' : 'false'));
+      const active = thumbs.children[i];
+      thumbs.scrollTo({ left: active.offsetLeft - thumbs.clientWidth / 2 + active.clientWidth / 2, behavior: 'smooth' });
+      // warm the cache for the neighbours so arrows feel instant
+      [i + 1, i - 1].forEach(n => { new Image().src = full(GALLERY[(n + GALLERY.length) % GALLERY.length][0]); });
+    }
+
+    document.getElementById('slide-prev').addEventListener('click', () => go(i - 1));
+    document.getElementById('slide-next').addEventListener('click', () => go(i + 1));
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('modal-photos').classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') go(i - 1);
+      if (e.key === 'ArrowRight') go(i + 1);
+    });
+    // swipe on phones
+    let x0 = null;
+    const stage = img.parentElement;
+    stage.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) go(dx < 0 ? i + 1 : i - 1);
+      x0 = null;
+    });
+    go(0);
+    document.addEventListener('langchange', () => go(i));
+  })();
+
+  /* ===== Travel Logistics tabs ===== */
+  (function () {
+    const tabs = document.querySelectorAll('#modal-travel .travel-tab');
+    const panels = document.querySelectorAll('#modal-travel .travel-panel');
+    function showTab(name) {
+      tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.tab === name ? 'true' : 'false'));
+      panels.forEach(p => p.hidden = p.dataset.panel !== name);
+      // The safety notice only shows on the Visa and Flights tabs
+      const notice = document.querySelector('#modal-travel .travel-disclaimer');
+      if (notice) notice.hidden = !notice.dataset.showOn.split(' ').includes(name);
+    }
+    tabs.forEach(t => t.addEventListener('click', () => {
+      showTab(t.dataset.tab);
+      const modal = document.getElementById('modal-travel');
+      const bar = modal.querySelector('.travel-tabs');
+      if (bar.getBoundingClientRect().top < 80) modal.scrollTop = bar.offsetTop - 80;
+    }));
+    showTab('visa');
+  })();
+
+  /* ===== Countdown timer ===== */
+  // EDIT ME: target = reception, January 15, 2027 at 4:00 PM IST (UTC+5:30) = 10:30 UTC (time not yet confirmed)
+  // Date.UTC(year, monthIndex 0-11, day, hour, minute) — uses absolute UTC, timezone-agnostic.
+  const target = Date.UTC(2027, 0, 15, 10, 30);
+
+  // Server-time sync: pull current UTC time from a public API so the countdown is correct
+  // even if the viewer's computer clock is off. Falls back to local clock if API is blocked.
+  let serverOffset = 0;
+  async function syncTime() {
+    try {
+      const res = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC', { cache: 'no-store' });
+      if (!res.ok) return;
+      const data = await res.json();
+      serverOffset = new Date(data.utc_datetime).getTime() - Date.now();
+    } catch (e) { /* keep using local clock */ }
+  }
+  syncTime();
+  setInterval(syncTime, 60 * 1000); // resync every minute
+
+  function tick() {
+    const diff = Math.max(0, target - (Date.now() + serverOffset));
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = d;
+    document.getElementById('cd-hours').textContent = h;
+    document.getElementById('cd-mins').textContent = m;
+    document.getElementById('cd-secs').textContent = s;
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  /* ===== Scroll-driven hero collage + nav state + word reveal ===== */
+  const heroScroll = document.getElementById('hero-scroll');
+  const heroMain = document.getElementById('hero-main');
+  const heroText = document.getElementById('hero-text');
+  const heroImg = heroMain.querySelector('img');
+  const START_ZOOM = 2.4;   // how far into the bouquet the opening frame sits
+  const satellites = document.querySelectorAll('.satellite');
+  const nav = document.getElementById('nav');
+  const inviteLine = document.getElementById('invite-line');  // words re-read each frame: the language switch replaces them
+  const inviteSection = document.getElementById('story-intro');
+  const storySection = document.querySelector('.story-section');
+  const storyStage = document.querySelector('.story-stage');
+  const storyPolaroids = document.querySelectorAll('.polaroid');
+  const storyChapterTexts = document.querySelectorAll('.chapter-text');
+
+  // Per-photo resting offsets in the central stack — small jitter for messy-stack feel
+  const PHOTO_OFFSETS = [
+    { x: -50, y: -52, rot: -3 },
+    { x: -49, y: -50, rot:  2 },
+    { x: -52, y: -51, rot: -1 },
+    { x: -50, y: -53, rot:  3 },
+    { x: -51, y: -49, rot: -2 },
+    { x: -48, y: -52, rot:  1 },
+    { x: -52, y: -50, rot: -4 },
+    { x: -49, y: -53, rot:  2 },
+    { x: -50, y: -50, rot: -1 },
+  ];
+
+  // Each CHAPTER gets an equal share of the photo timeline, and its own photos
+  // divide that share between them. So a chapter holding one photo still stays
+  // on screen as long as a chapter holding three — add or remove photos from a
+  // chapter and the reading pace stays even on its own.
+  const PHOTO_WINDOWS = (function () {
+    const chapterOf = (p) => parseInt(p.dataset.chapter, 10) || 1;
+    const order = [];
+    const counts = {};
+    storyPolaroids.forEach((p) => {
+      const c = chapterOf(p);
+      if (!order.includes(c)) order.push(c);
+      counts[c] = (counts[c] || 0) + 1;
+    });
+    const share = 1 / (order.length || 1);
+    const placed = {};
+    return [...storyPolaroids].map((p) => {
+      const c = chapterOf(p);
+      const j = placed[c] = (placed[c] === undefined ? 0 : placed[c] + 1);
+      const slot = share / counts[c];
+      const start = order.indexOf(c) * share + j * slot;
+      return [start, start + slot];
+    });
+  })();
+
+  // Cubic ease-out — feels natural for assembly
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // Centerpiece final size — matched to screenshot 9 (narrow portrait, ~centered)
+  const FINAL_W = 35;   // % of viewport width
+  const FINAL_H = 80;   // % of viewport height
+
+  // Stagger windows: each satellite enters during a slice of the overall progress
+  // top-row pair (sat-1, sat-3) enters first; bottom-row pair (sat-2, sat-4) follows
+  const STAGGER = {
+    'sat-1': [0.05, 0.55],
+    'sat-3': [0.05, 0.55],
+    'sat-2': [0.30, 0.85],
+    'sat-4': [0.30, 0.85],
+  };
+
+  // On mobile we skip the desktop scroll-collage entirely — the centerpiece is a
+  // static full-bleed photo and satellites live in a 2×2 strip below (see CSS).
+  const isMobile = () => window.innerWidth <= 768;
+
+  function updateScroll() {
+    /* --- HERO collage assembly (desktop only) --- */
+    if (!isMobile()) {
+    const r = heroScroll.getBoundingClientRect();
+    const total = r.height - window.innerHeight;
+    const scrolled = clamp(-r.top, 0, total);
+    const raw = total > 0 ? scrolled / total : 0;
+    const p = ease(clamp(raw, 0, 1));   // 0 = full-bleed hero, 1 = collage assembled
+
+    // Centerpiece: animate width/height (no distortion) + center it + round corners
+    const w = 100 - p * (100 - FINAL_W);
+    const h = 100 - p * (100 - FINAL_H);
+    heroMain.style.width = w + '%';
+    heroMain.style.height = h + '%';
+    heroMain.style.left = ((100 - w) / 2) + '%';
+    heroMain.style.top = ((100 - h) / 2) + '%';
+    heroMain.style.borderRadius = (p * 22) + 'px';
+    heroImg.style.transform = 'scale(' + (START_ZOOM + (1 - START_ZOOM) * p) + ')';
+
+    // Title fades out as the centerpiece starts shrinking
+    heroText.style.opacity = 1 - clamp(p * 1.4, 0, 1);
+
+    // Satellites — two-phase animation:
+    //   Phase A (0 → 0.75 of local window): slide from offscreen IN PAST the final spot,
+    //     overshooting so they overlap the centerpiece
+    //   Phase B (0.75 → 1.0): ease back outward to final resting position (small gap)
+    const OVERSHOOT = 32;   // % of the satellite's own width that it overshoots past final
+    const PHASE_SPLIT = 0.75;
+    satellites.forEach(sat => {
+      const [start, end] = STAGGER[sat.id] || [0, 1];
+      const localRaw = clamp((raw - start) / (end - start), 0, 1);
+      const sign = sat.dataset.from === 'left' ? 1 : -1;   // direction of inward overshoot
+      const fromX = sat.dataset.from === 'left' ? -120 : 120;
+      const overshootX = sign * OVERSHOOT;
+      let tx;
+      if (localRaw < PHASE_SPLIT) {
+        // Phase A: offscreen → overshoot (overlapping centerpiece)
+        const t = ease(localRaw / PHASE_SPLIT);
+        tx = fromX + (overshootX - fromX) * t;
+      } else {
+        // Phase B: overshoot → final (translateX 0)
+        const t = ease((localRaw - PHASE_SPLIT) / (1 - PHASE_SPLIT));
+        tx = overshootX * (1 - t);
+      }
+      sat.style.transform = `translateX(${tx}%)`;
+      sat.style.opacity = clamp(localRaw * 2, 0, 1);
+    });
+    } /* end !isMobile hero block */
+
+    /* --- NAV: transparent over hero, white pill once past hero --- */
+    if (window.scrollY > window.innerHeight * 0.6) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+
+    /* --- INVITE LINE: light each word; finish lighting before story enters viewport --- */
+    const ir = inviteSection.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // Section is taller than viewport, so we have a "fully visible" zone where ir.top goes
+    // from 0 → (vh - ir.height). Map that zone to lighting progress 0 → 1, so all words
+    // finish lighting up roughly halfway through the section's scroll — well before the
+    // next section starts entering from below.
+    const fullPhase = ir.height - vh;          // total scroll while invite fills viewport
+    const enteredBy = clamp(-ir.top, 0, fullPhase);
+    const inviteP = clamp(enteredBy / (fullPhase * 0.7), 0, 1);
+    const inviteWords = inviteLine.querySelectorAll('.word');
+    const lit = Math.floor(inviteP * (inviteWords.length + 1));
+    inviteWords.forEach((w, i) => w.classList.toggle('lit', i < lit));
+
+    /* --- OUR STORY: single sticky stage. Photos rise into the centered stack and stay. --- */
+    if (storySection) {
+      const sr = storySection.getBoundingClientRect();
+      const sTotal = sr.height - window.innerHeight;
+      const sScrolled = clamp(-sr.top, 0, sTotal);
+      const sProgress = sTotal > 0 ? sScrolled / sTotal : 0;
+
+      /* Speedup: pull the stage up faster during entry so "our story" reaches the top
+         of the frame within ~30vh of scroll instead of the natural ~100vh. */
+      if (storyStage) {
+        const winH = window.innerHeight;
+        const speedupEnd = winH * 0.7;
+        let stageY = 0;
+        if (sr.top >= speedupEnd && sr.top < winH) {
+          const t = (winH - sr.top) / (winH - speedupEnd);
+          stageY = -t * speedupEnd;
+        } else if (sr.top > 0 && sr.top < speedupEnd) {
+          stageY = -sr.top;
+        }
+        storyStage.style.transform = stageY ? `translateY(${stageY}px)` : '';
+      }
+
+      // Sequenced intro: 1) title only, 2) title + chapter 1 text, 3) photos start rising
+      const TITLE_HOLD = 0.08;   // 0–8%: only "our story" visible
+      const PHOTO_HOLD = 0.16;   // 8–16%: chapter 1 text fades in, photos still hidden
+                                  // 16%+: photos start rising into the centered stack
+      const photoP = sProgress < PHOTO_HOLD
+        ? 0
+        : (sProgress - PHOTO_HOLD) / (1 - PHOTO_HOLD);
+
+      const N = storyPolaroids.length;       // 9
+      storyPolaroids.forEach((photo, i) => {
+        const off = PHOTO_OFFSETS[i] || PHOTO_OFFSETS[0];
+        const [startP, endP] = PHOTO_WINDOWS[i];
+        // Rise over the first part of the slot, then rest for the remainder, so a
+        // photo lands soon after its chapter text appears instead of still
+        // climbing while you read. Chapters holding one photo need this most.
+        const RISE = 0.55;
+        const localP = clamp((photoP - startP) / ((endP - startP) * RISE), 0, 1);
+        const e = ease(localP);
+        const riseY = (1 - e) * 130;          // 130vh below → 0 (rises to center)
+        photo.style.transform =
+          `translate(${off.x}%, calc(${off.y}% + ${riseY}vh)) rotate(${off.rot}deg)`;
+        photo.style.zIndex = i + 1;            // later photos land on top
+      });
+
+      // Active chapter text — none during title-hold; chapter 1 during pre-photo hold;
+      // then it follows whichever photo is currently landing, read off its data-chapter.
+      // This is what lets chapters hold different numbers of photos.
+      if (sProgress < TITLE_HOLD) {
+        storyChapterTexts.forEach(ct => ct.classList.remove('active'));
+      } else {
+        let curIdx = 0;
+        while (curIdx + 1 < N && photoP >= PHOTO_WINDOWS[curIdx + 1][0]) curIdx++;
+        const curPhoto = storyPolaroids[curIdx];
+        const chapterIdx = sProgress < PHOTO_HOLD
+          ? 0
+          : (parseInt(curPhoto.dataset.chapter, 10) || 1) - 1;
+        storyChapterTexts.forEach((ct, i) => ct.classList.toggle('active', i === chapterIdx));
+      }
+    }
+  }
+
+  /* Auto-close the mobile hamburger drawer whenever any link inside it is tapped
+     (links open modals or jump to anchors — the drawer would otherwise stay open
+     on top of the page until you tap the hamburger again). */
+  const mobileMenu = document.getElementById('menu');
+  if (mobileMenu) {
+    mobileMenu.addEventListener('click', e => { if (e.target.closest('a')) mobileMenu.classList.remove('open'); });
+  }
+
+  /* ===== Modal open/close (Wedding Parties / Travel / Registry) ===== */
+  function openModal(modal) {
+    modal.classList.add('open');
+    document.body.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
+    if (mobileMenu) mobileMenu.classList.remove('open');
+  }
+  function closeAllModals() {
+    document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+  }
+  // Delegated, so buttons keep working after the page text is swapped (e.g. into Chinese)
+  document.addEventListener('click', e => {
+    const trigger = e.target.closest('[data-modal]');
+    if (trigger) {
+      e.preventDefault();
+      const modal = document.getElementById(trigger.dataset.modal);
+      if (modal) openModal(modal);
+      return;
+    }
+    if (e.target.closest('[data-modal-close]')) closeAllModals();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeAllModals();
+  });
+
+  /* ===== RSVP Questionnaire ===== */
+  (function () {
+    const modal = document.getElementById('modal-rsvp');
+    if (!modal) return;
+
+    /* ~150 countries with flag + dialing code, sorted by name. The 6 quick-pick chips
+       handle 90% of cases; this dropdown is the long-tail fallback. */
+    const COUNTRIES = [
+      ['Afghanistan','+93','🇦🇫'],['Albania','+355','🇦🇱'],['Algeria','+213','🇩🇿'],['Andorra','+376','🇦🇩'],
+      ['Angola','+244','🇦🇴'],['Argentina','+54','🇦🇷'],['Armenia','+374','🇦🇲'],['Australia','+61','🇦🇺'],
+      ['Austria','+43','🇦🇹'],['Azerbaijan','+994','🇦🇿'],['Bahrain','+973','🇧🇭'],['Bangladesh','+880','🇧🇩'],
+      ['Belarus','+375','🇧🇾'],['Belgium','+32','🇧🇪'],['Belize','+501','🇧🇿'],['Benin','+229','🇧🇯'],
+      ['Bhutan','+975','🇧🇹'],['Bolivia','+591','🇧🇴'],['Bosnia & Herzegovina','+387','🇧🇦'],['Botswana','+267','🇧🇼'],
+      ['Brazil','+55','🇧🇷'],['Brunei','+673','🇧🇳'],['Bulgaria','+359','🇧🇬'],['Burkina Faso','+226','🇧🇫'],
+      ['Burundi','+257','🇧🇮'],['Cambodia','+855','🇰🇭'],['Cameroon','+237','🇨🇲'],['Canada','+1','🇨🇦'],
+      ['Chad','+235','🇹🇩'],['Chile','+56','🇨🇱'],['China','+86','🇨🇳'],['Colombia','+57','🇨🇴'],
+      ['Costa Rica','+506','🇨🇷'],['Croatia','+385','🇭🇷'],['Cuba','+53','🇨🇺'],['Cyprus','+357','🇨🇾'],
+      ['Czech Republic','+420','🇨🇿'],['Denmark','+45','🇩🇰'],['Dominican Republic','+1','🇩🇴'],['Ecuador','+593','🇪🇨'],
+      ['Egypt','+20','🇪🇬'],['El Salvador','+503','🇸🇻'],['Estonia','+372','🇪🇪'],['Ethiopia','+251','🇪🇹'],
+      ['Fiji','+679','🇫🇯'],['Finland','+358','🇫🇮'],['France','+33','🇫🇷'],['Gabon','+241','🇬🇦'],
+      ['Gambia','+220','🇬🇲'],['Georgia','+995','🇬🇪'],['Germany','+49','🇩🇪'],['Ghana','+233','🇬🇭'],
+      ['Greece','+30','🇬🇷'],['Guatemala','+502','🇬🇹'],['Guinea','+224','🇬🇳'],['Haiti','+509','🇭🇹'],
+      ['Honduras','+504','🇭🇳'],['Hong Kong','+852','🇭🇰'],['Hungary','+36','🇭🇺'],['Iceland','+354','🇮🇸'],
+      ['India','+91','🇮🇳'],['Indonesia','+62','🇮🇩'],['Iran','+98','🇮🇷'],['Iraq','+964','🇮🇶'],
+      ['Ireland','+353','🇮🇪'],['Israel','+972','🇮🇱'],['Italy','+39','🇮🇹'],['Jamaica','+1','🇯🇲'],
+      ['Japan','+81','🇯🇵'],['Jordan','+962','🇯🇴'],['Kazakhstan','+7','🇰🇿'],['Kenya','+254','🇰🇪'],
+      ['Kuwait','+965','🇰🇼'],['Kyrgyzstan','+996','🇰🇬'],['Laos','+856','🇱🇦'],['Latvia','+371','🇱🇻'],
+      ['Lebanon','+961','🇱🇧'],['Liberia','+231','🇱🇷'],['Libya','+218','🇱🇾'],['Lithuania','+370','🇱🇹'],
+      ['Luxembourg','+352','🇱🇺'],['Macau','+853','🇲🇴'],['Madagascar','+261','🇲🇬'],['Malawi','+265','🇲🇼'],
+      ['Malaysia','+60','🇲🇾'],['Maldives','+960','🇲🇻'],['Mali','+223','🇲🇱'],['Malta','+356','🇲🇹'],
+      ['Mauritius','+230','🇲🇺'],['Mexico','+52','🇲🇽'],['Moldova','+373','🇲🇩'],['Monaco','+377','🇲🇨'],
+      ['Mongolia','+976','🇲🇳'],['Montenegro','+382','🇲🇪'],['Morocco','+212','🇲🇦'],['Mozambique','+258','🇲🇿'],
+      ['Myanmar','+95','🇲🇲'],['Namibia','+264','🇳🇦'],['Nepal','+977','🇳🇵'],['Netherlands','+31','🇳🇱'],
+      ['New Zealand','+64','🇳🇿'],['Nicaragua','+505','🇳🇮'],['Niger','+227','🇳🇪'],['Nigeria','+234','🇳🇬'],
+      ['North Korea','+850','🇰🇵'],['North Macedonia','+389','🇲🇰'],['Norway','+47','🇳🇴'],['Oman','+968','🇴🇲'],
+      ['Pakistan','+92','🇵🇰'],['Palestine','+970','🇵🇸'],['Panama','+507','🇵🇦'],['Papua New Guinea','+675','🇵🇬'],
+      ['Paraguay','+595','🇵🇾'],['Peru','+51','🇵🇪'],['Philippines','+63','🇵🇭'],['Poland','+48','🇵🇱'],
+      ['Portugal','+351','🇵🇹'],['Qatar','+974','🇶🇦'],['Romania','+40','🇷🇴'],['Russia','+7','🇷🇺'],
+      ['Rwanda','+250','🇷🇼'],['Saudi Arabia','+966','🇸🇦'],['Senegal','+221','🇸🇳'],['Serbia','+381','🇷🇸'],
+      ['Singapore','+65','🇸🇬'],['Slovakia','+421','🇸🇰'],['Slovenia','+386','🇸🇮'],['Somalia','+252','🇸🇴'],
+      ['South Africa','+27','🇿🇦'],['South Korea','+82','🇰🇷'],['Spain','+34','🇪🇸'],['Sri Lanka','+94','🇱🇰'],
+      ['Sudan','+249','🇸🇩'],['Sweden','+46','🇸🇪'],['Switzerland','+41','🇨🇭'],['Syria','+963','🇸🇾'],
+      ['Taiwan','+886','🇹🇼'],['Tajikistan','+992','🇹🇯'],['Tanzania','+255','🇹🇿'],['Thailand','+66','🇹🇭'],
+      ['Trinidad & Tobago','+1','🇹🇹'],['Tunisia','+216','🇹🇳'],['Turkey','+90','🇹🇷'],['Turkmenistan','+993','🇹🇲'],
+      ['UAE','+971','🇦🇪'],['Uganda','+256','🇺🇬'],['UK','+44','🇬🇧'],['Ukraine','+380','🇺🇦'],
+      ['Uruguay','+598','🇺🇾'],['USA','+1','🇺🇸'],['Uzbekistan','+998','🇺🇿'],['Venezuela','+58','🇻🇪'],
+      ['Vietnam','+84','🇻🇳'],['Yemen','+967','🇾🇪'],['Zambia','+260','🇿🇲'],['Zimbabwe','+263','🇿🇼']
+    ];
+
+    const ALL_STEPS = ['phone', 'name', 'events', 'party', 'needs', 'note', 'review', 'thanks'];
+    const data = {
+      countryCode: '', flag: '', phone: '',
+      flyingIn: '',               // 'overseas' | 'india' | 'no' — flyers get the travel checklist after sending
+      firstName: '', lastName: '',
+      events: [], declined: false,
+      attending: null,            // derived from events/declined
+      partyCount: 1, partyNames: [],
+      dietary: [], dietaryOther: '',
+      accessibility: [], accessibilityOther: '',
+      note: ''
+    };
+    let current = 0;
+
+    const stepEls = {};
+    modal.querySelectorAll('[data-step]').forEach(el => stepEls[el.dataset.step] = el);
+    const backBtn = document.getElementById('rsvp-back');
+    const nextBtn = document.getElementById('rsvp-next');
+    const progressEl = document.getElementById('rsvp-progress');
+    const navBar = modal.querySelector('.rsvp-nav');
+
+    /* Populate the country dropdown once */
+    const ccSelect = document.getElementById('rsvp-cc-select');
+    COUNTRIES.forEach(([name, cc, flag]) => {
+      const opt = document.createElement('option');
+      opt.value = cc;
+      opt.dataset.flag = flag;
+      opt.textContent = `${flag}  ${name}  ${cc}`;
+      ccSelect.appendChild(opt);
+    });
+
+    function setCountry(cc, flag) {
+      data.countryCode = cc;
+      data.flag = flag;
+      document.getElementById('rsvp-cc-display').textContent = `${flag} ${cc}`;
+      modal.querySelectorAll('.rsvp-cc-chip[data-cc]').forEach(c =>
+        c.setAttribute('aria-pressed',
+          c.dataset.cc === cc && c.dataset.flag === flag ? 'true' : 'false'));
+    }
+
+    modal.querySelectorAll('.rsvp-cc-chip[data-cc]').forEach(chip => {
+      chip.addEventListener('click', () => setCountry(chip.dataset.cc, chip.dataset.flag));
+    });
+    ccSelect.addEventListener('change', e => {
+      const opt = e.target.options[e.target.selectedIndex];
+      if (opt && opt.value) setCountry(opt.value, opt.dataset.flag || '');
+    });
+
+    /* Flying in? — yes / no, one at a time */
+    const flyChips = modal.querySelectorAll('.rsvp-fly-chip');
+    function setFlying(v) {
+      data.flyingIn = v;
+      flyChips.forEach(c => c.setAttribute('aria-pressed', c.dataset.fly === v ? 'true' : 'false'));
+    }
+    flyChips.forEach(chip => chip.addEventListener('click', () => {
+      setFlying(chip.dataset.fly);
+      if (phoneErr) { phoneErr.hidden = true; phoneErr.textContent = ''; }
+    }));
+
+    /* Phone input: strip anything that isn't a digit (handles typing + paste); clear error on edit */
+    const phoneInput = document.getElementById('rsvp-phone');
+    const phoneErr = document.getElementById('rsvp-phone-error');
+    phoneInput.addEventListener('input', e => {
+      const cleaned = e.target.value.replace(/\D+/g, '');
+      if (cleaned !== e.target.value) e.target.value = cleaned;
+      if (phoneErr) { phoneErr.hidden = true; phoneErr.textContent = ''; }
+    });
+    /* Also clear error when user picks a country */
+    modal.querySelectorAll('.rsvp-cc-chip').forEach(c =>
+      c.addEventListener('click', () => { if (phoneErr) { phoneErr.hidden = true; phoneErr.textContent = ''; } }));
+    ccSelect.addEventListener('change', () => { if (phoneErr) { phoneErr.hidden = true; phoneErr.textContent = ''; } });
+
+    function activeSteps() {
+      if (data.attending === 'no') return ['phone', 'name', 'events', 'note', 'review', 'thanks'];
+      return ALL_STEPS;
+    }
+    /* Note: 'needs' step replaces 'dietary' + 'accessibility' as a single combined page */
+
+    function show(idx) {
+      const seq = activeSteps();
+      current = Math.max(0, Math.min(idx, seq.length - 1));
+      Object.values(stepEls).forEach(el => el.dataset.active = 'false');
+      const stepName = seq[current];
+      stepEls[stepName].dataset.active = 'true';
+
+      navBar.style.display = stepName === 'thanks' ? 'none' : 'flex';
+      backBtn.classList.toggle('invisible', current === 0 || stepName === 'thanks');
+      nextBtn.innerHTML = stepName === 'review' ? '✓' : '→';
+      nextBtn.setAttribute('aria-label', stepName === 'review' ? 'Send' : 'Next');
+
+      const totalForCount = seq.length - 1; // exclude thanks
+      progressEl.textContent = current < totalForCount ? `${current + 1} of ${totalForCount}` : '';
+
+      const input = stepEls[stepName].querySelector('input:not([type=checkbox]), textarea');
+      if (input) setTimeout(() => input.focus(), 350);
+
+      if (stepName === 'review') buildSummary();
+      if (stepName === 'events') {
+        const greeting = document.getElementById('rsvp-events-greeting');
+        greeting.textContent = data.firstName
+          ? `Hi, ${data.firstName} — which events will you join?`
+          : 'Which events will you join?';
+      }
+    }
+
+    function validate() {
+      const seq = activeSteps();
+      const stepName = seq[current];
+      if (stepName === 'phone') {
+        data.phone = document.getElementById('rsvp-phone').value.trim().replace(/[\s-]/g, '');
+        return !!(data.countryCode && data.phone && data.phone.length >= 5 && /^\d+$/.test(data.phone) && data.flyingIn);
+      }
+      if (stepName === 'name') {
+        data.firstName = document.getElementById('rsvp-first').value.trim();
+        data.lastName = document.getElementById('rsvp-last').value.trim();
+        return data.firstName && data.lastName;
+      }
+      if (stepName === 'events') {
+        // Pass if at least one event selected OR explicit decline
+        if (!data.events.length && !data.declined) return false;
+        data.attending = data.declined ? 'no' : 'yes';
+        return true;
+      }
+      if (stepName === 'party') {
+        const inputs = Array.from(document.querySelectorAll('#rsvp-guest-names input'));
+        const names = inputs.map(i => i.value.trim());
+        // Every additional guest needs a name — no blanks allowed
+        if (data.partyCount > 1 && names.some(n => !n)) {
+          inputs.forEach(i => { if (!i.value.trim()) i.style.borderBottomColor = '#b14949'; });
+          return false;
+        }
+        data.partyNames = names.filter(Boolean);
+        return true;
+      }
+      if (stepName === 'needs') {
+        const needsStep = modal.querySelector('[data-step="needs"]');
+        data.dietary = Array.from(needsStep.querySelectorAll('[data-group="dietary"] input[type=checkbox]:checked')).map(c => c.value);
+        data.accessibility = Array.from(needsStep.querySelectorAll('[data-group="accessibility"] input[type=checkbox]:checked')).map(c => c.value);
+        data.dietaryOther = document.getElementById('rsvp-needs-other').value.trim();
+        data.accessibilityOther = '';
+        return true;
+      }
+      if (stepName === 'note') { data.note = document.getElementById('rsvp-note').value.trim(); return true; }
+      return true;
+    }
+
+    /* Events multi-select — clicking a card toggles attendance, also clears decline */
+    const declineBtn = document.getElementById('rsvp-event-decline');
+    modal.querySelectorAll('.rsvp-event-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const ev = card.dataset.event;
+        const idx = data.events.indexOf(ev);
+        if (idx >= 0) data.events.splice(idx, 1);
+        else data.events.push(ev);
+        card.setAttribute('aria-pressed', idx >= 0 ? 'false' : 'true');
+        if (data.declined) {
+          data.declined = false;
+          declineBtn.setAttribute('aria-pressed', 'false');
+        }
+      });
+    });
+    /* Decline — mutually exclusive with event selections */
+    declineBtn.addEventListener('click', () => {
+      data.declined = !data.declined;
+      declineBtn.setAttribute('aria-pressed', String(data.declined));
+      if (data.declined) {
+        data.events = [];
+        modal.querySelectorAll('.rsvp-event-card').forEach(c => c.setAttribute('aria-pressed', 'false'));
+      }
+    });
+
+    /* Party stepper + dynamic guest name inputs */
+    const partyErrEl = document.getElementById('rsvp-party-error');
+    function clearPartyError() {
+      if (partyErrEl) { partyErrEl.hidden = true; partyErrEl.textContent = ''; }
+      document.querySelectorAll('#rsvp-guest-names input').forEach(i => i.style.borderBottomColor = '');
+    }
+    function renderGuestInputs() {
+      const wrap = document.getElementById('rsvp-guest-names');
+      wrap.innerHTML = '';
+      if (data.partyCount <= 1) return;
+      const heading = document.createElement('p');
+      heading.className = 'rsvp-guest-heading';
+      heading.textContent = 'Additional guest names (required)';
+      wrap.appendChild(heading);
+      for (let i = 1; i < data.partyCount; i++) {
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.className = 'rsvp-input';
+        inp.placeholder = `Guest ${i + 1} full name`;
+        inp.value = data.partyNames[i - 1] || '';
+        inp.addEventListener('input', clearPartyError);
+        wrap.appendChild(inp);
+      }
+    }
+    document.getElementById('rsvp-party-minus').addEventListener('click', () => {
+      if (data.partyCount > 1) data.partyCount--;
+      document.getElementById('rsvp-party-count').textContent = data.partyCount;
+      renderGuestInputs();
+      clearPartyError();
+    });
+    document.getElementById('rsvp-party-plus').addEventListener('click', () => {
+      if (data.partyCount < 6) data.partyCount++;
+      document.getElementById('rsvp-party-count').textContent = data.partyCount;
+      renderGuestInputs();
+      clearPartyError();
+    });
+
+    function buildSummary() {
+      const sum = document.getElementById('rsvp-summary');
+      const row = (label, value) =>
+        `<div class="rsvp-summary-row"><span class="rsvp-summary-label">${label}</span><span class="rsvp-summary-value">${value || '—'}</span></div>`;
+      let html = row('WhatsApp', `${data.flag} ${data.countryCode} ${data.phone}`);
+      html += row('Name', `${data.firstName} ${data.lastName}`);
+      if (data.attending === 'yes') {
+        html += row('Flying in', { overseas: 'Yes — from overseas', india: 'Yes — from within India', no: 'No — already in Kerala' }[data.flyingIn]);
+        html += row('Events', data.events.join(', '));
+        html += row('Party size', data.partyCount);
+        if (data.partyNames.length) html += row('Guests', data.partyNames.join(', '));
+        const diet = [...data.dietary, data.dietaryOther].filter(Boolean).join(', ');
+        if (diet) html += row('Dietary', diet);
+        const access = [...data.accessibility, data.accessibilityOther].filter(Boolean).join(', ');
+        if (access) html += row('Accessibility', access);
+      } else {
+        html += row('Attending', "Won't be attending — we'll miss you");
+      }
+      if (data.note) html += row('Note', data.note);
+      sum.innerHTML = html;
+    }
+
+    /* Submit — sends to the Google Sheet receiver (rsvp-backend/Code.gs), which records the
+       row, flags duplicates and emails/WhatsApps the couple. A copy stays in this browser too.
+       text/plain + no-cors: Apps Script accepts it without a CORS preflight. */
+    const RSVP_ENDPOINT = '';   // EDIT ME: paste the Apps Script "Web app URL" here
+    function submit() {
+      if (RSVP_ENDPOINT) {
+        fetch(RSVP_ENDPOINT, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ ...data, submittedAt: new Date().toISOString() })
+        }).catch(() => {});
+      }
+      try {
+        const all = JSON.parse(localStorage.getItem('wedding-rsvps') || '[]');
+        all.push({ ...data, submittedAt: new Date().toISOString() });
+        localStorage.setItem('wedding-rsvps', JSON.stringify(all));
+      } catch (e) { /* ignore quota errors */ }
+      console.log('RSVP submitted:', data);
+      document.getElementById('rsvp-thanks-title').textContent =
+        data.attending === 'yes' ? 'Thank you' : "We'll miss you";
+      const mailBox = document.getElementById('rsvp-mail');
+      mailBox.hidden = !!RSVP_ENDPOINT;
+      if (!RSVP_ENDPOINT) {
+        const lines = [
+          `Name: ${data.firstName} ${data.lastName}`,
+          `WhatsApp: ${data.countryCode} ${data.phone}`,
+          `Flying in: ${{ overseas: 'from overseas', india: 'from within India', no: 'already in Kerala' }[data.flyingIn] || ''}`,
+          `Attending: ${data.attending === 'yes' ? 'Yes' : 'No'}`
+        ];
+        if (data.attending === 'yes') {
+          lines.push(`Events: ${data.events.join(', ')}`, `Party size: ${data.partyCount}`);
+          if (data.partyNames.length) lines.push(`Other guests: ${data.partyNames.join(', ')}`);
+          const diet = [...data.dietary, data.dietaryOther].filter(Boolean).join(', ');
+          if (diet) lines.push(`Dietary: ${diet}`);
+          if (data.accessibility.length) lines.push(`Accessibility: ${data.accessibility.join(', ')}`);
+        }
+        if (data.note) lines.push(`Note: ${data.note}`);
+        document.getElementById('rsvp-mail-btn').href = 'mailto:alokelaine@gmail.com?subject='
+          + encodeURIComponent(`RSVP — ${data.firstName} ${data.lastName}`) + '&body=' + encodeURIComponent(lines.join('\n'));
+      }
+      document.getElementById('rsvp-thanks-sub').textContent =
+        data.attending === 'yes'
+          ? "We can't wait to celebrate with you"
+          : 'Thank you for letting us know';
+      const travel = document.getElementById('rsvp-travel');
+      const showTravel = data.attending === 'yes' && (data.flyingIn === 'overseas' || data.flyingIn === 'india');
+      travel.hidden = !showTravel;
+      document.getElementById('rsvp-cal-panel').hidden = true;
+      travel.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
+      // Passport, visa and e-Arrival card only matter to overseas guests
+      travel.querySelectorAll('.travel-overseas').forEach(el => el.hidden = data.flyingIn !== 'overseas');
+      document.getElementById('rsvp-travel-wa').href = 'https://wa.me/?text=' + encodeURIComponent(travelText());
+      // Guess their departure city from their phone's country code; they can change it
+      const guess = { '+65': 'SIN', '+60': 'KUL', '+94': 'CMB', '+82': 'ICN', '+81': 'NRT',
+                      '+1': 'JFK', '+971': 'DXB', '+974': 'DOH', '+44': 'LHR', '+49': 'FRA' }[data.countryCode];
+      fromSelect.value = data.flyingIn === 'overseas' && guess ? guess : '';
+      updateFlights();
+      if (showTravel) document.getElementById('rsvp-thanks-sub').textContent =
+        "We can't wait to celebrate with you in Kerala";
+    }
+
+    /* Travel checklist — "send to my WhatsApp" (opens WhatsApp with the list ready to send) */
+    function travelText() {
+      const overseas = data.flyingIn === 'overseas';
+      const items = overseas ? [
+        'Passport: valid 6+ months after landing, 2 blank pages',
+        'Indian e-Visa (by mid-December), official site only: https://indianvisaonline.gov.in/evisa/'
+      ] : [];
+      items.push('Flights to Thiruvananthapuram (TRV): reception Fri 15 Jan, wedding Sat 16 Jan',
+                 'Hotel in Thiruvananthapuram for the nights you need');
+      if (overseas) items.push('India e-Arrival Card, within 72 hours before landing: https://indianvisaonline.gov.in/earrival/',
+                               'In Kerala: drink only sealed bottled water');
+      return ["Alok & Elaine's wedding: Thiruvananthapuram, Kerala, 15–16 January 2027", '', 'My travel checklist:']
+        .concat(items.map((t, i) => `${i + 1}. ${t}`)).join('\n');
+    }
+
+    /* Flights — live search links for the guest's city (Google Flights / Skyscanner show today's
+       schedules and prices when opened), plus the direct airlines where there are any */
+    const FLIGHTS = {
+      SIN: ['Singapore', 'Direct: Scoot, about 4 hours.', [['Scoot', 'https://www.flyscoot.com/en']]],
+      KUL: ['Kuala Lumpur', 'Direct: AirAsia and Malaysia Airlines, about 4 hours.',
+            [['AirAsia', 'https://www.airasia.com'], ['Malaysia Airlines', 'https://www.malaysiaairlines.com']]],
+      CMB: ['Colombo', 'Direct: SriLankan Airlines, about 1 hour.', [['SriLankan', 'https://www.srilankan.com']]],
+      ICN: ['Seoul', 'No direct flight — usually one stop via Singapore or Kuala Lumpur.', []],
+      NRT: ['Tokyo', 'No direct flight — usually one stop via Singapore or Kuala Lumpur.', []],
+      JFK: ['New York', 'No direct flight — usually one stop via Dubai, Doha or Abu Dhabi.', []],
+      SFO: ['San Francisco', 'No direct flight — usually one or two stops via Singapore or the Gulf.', []],
+      LAX: ['Los Angeles', 'No direct flight — usually one or two stops via Singapore or the Gulf.', []],
+      DXB: ['Dubai', 'Direct flights run most days.', []],
+      DOH: ['Doha', 'Direct flights run most days.', []],
+      LHR: ['London', 'No direct flight — usually one stop via Dubai, Doha or Abu Dhabi.', []],
+      FRA: ['Frankfurt', 'No direct flight — usually one stop via Dubai, Doha or Abu Dhabi.', []],
+      MUC: ['Munich', 'No direct flight — usually one stop via Dubai, Doha or Abu Dhabi.', []],
+      DEL: ['Delhi', 'Several flights a day; compare direct and one-stop.', []],
+      BOM: ['Mumbai', 'Several flights a day.', []],
+      BLR: ['Bengaluru', 'Several flights a day, about 1 hour.', []],
+      MAA: ['Chennai', 'Several flights a day, about 1 hour.', []],
+      HYD: ['Hyderabad', 'Several flights a day.', []],
+      CCU: ['Kolkata', 'Usually one stop; compare on the links below.', []]
+    };
+    const fromSelect = document.getElementById('travel-from');
+    function updateFlights() {
+      const code = fromSelect.value;
+      const f = FLIGHTS[code];
+      const from = code ? `%20from%20${code}` : '';
+      document.getElementById('travel-gf').href =
+        `https://www.google.com/travel/flights?q=Flights${from}%20to%20TRV%20on%202027-01-14%20through%202027-01-17`;
+      document.getElementById('travel-sky').href =
+        `https://www.skyscanner.com/transport/flights/${code ? code.toLowerCase() : 'to'}/trv/270114/270117/`;
+      document.getElementById('travel-route-note').textContent = f
+        ? `${f[0]} → Thiruvananthapuram (TRV). ${f[1]} The links open today's live flights and prices; change the dates to suit you.`
+        : "Pick your city to see today's flights and prices. You can change the dates on the next page.";
+      document.getElementById('travel-airlines').innerHTML = f
+        ? f[2].map(([name, url]) =>
+            `<a class="travel-btn travel-btn-ghost" href="${url}" target="_blank" rel="noopener">Book ${name} →</a>`).join('')
+        : '';
+    }
+    fromSelect.addEventListener('change', updateFlights);
+
+    /* Travel checklist — calendar reminders: one-tap Google Calendar / Outlook links per reminder,
+       plus an .ics file for Apple Calendar and anything else */
+    function reminders() {
+      return data.flyingIn === 'overseas' ? [
+        ['20261201', 'Wedding trip: check visa, flights & hotel',
+         'Indian e-Visa applied? (https://indianvisaonline.gov.in/evisa/) Flights to Thiruvananthapuram (TRV) booked? Hotel booked?'],
+        ['20261215', 'Last call: apply for your Indian e-Visa',
+         'Official site only: https://indianvisaonline.gov.in/evisa/'],
+        ['20270113', 'Fill in your India e-Arrival Card',
+         'Within 72 hours before landing. Free: https://indianvisaonline.gov.in/earrival/']
+      ] : [
+        ['20261201', 'Wedding trip: book flights & hotel',
+         'Flights to Thiruvananthapuram (TRV) booked? Hotel booked?']
+      ];
+    }
+    const nextDay = d => {
+      const t = new Date(Date.UTC(+d.slice(0, 4), +d.slice(4, 6) - 1, +d.slice(6, 8) + 1));
+      return t.toISOString().slice(0, 10).replace(/-/g, '');
+    };
+    const isoDay = d => `${d.slice(0, 4)}-${d.slice(4, 6)}-${d.slice(6, 8)}`;
+    const enc = encodeURIComponent;
+    function renderCalPanel() {
+      const panel = document.getElementById('rsvp-cal-panel');
+      panel.innerHTML = reminders().map(([day, title, desc]) => {
+        const g = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${enc(title)}&dates=${day}/${nextDay(day)}&details=${enc(desc)}`;
+        const o = `https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=${enc(title)}&startdt=${isoDay(day)}&enddt=${isoDay(nextDay(day))}&allday=true&body=${enc(desc)}`;
+        const when = new Date(isoDay(day) + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        return `<div class="cal-row"><div class="cal-what"><span class="cal-date">${when}</span>${title}</div>
+          <div class="cal-links"><a class="travel-btn travel-btn-ghost" href="${g}" target="_blank" rel="noopener">Google</a>
+          <a class="travel-btn travel-btn-ghost" href="${o}" target="_blank" rel="noopener">Outlook</a></div></div>`;
+      }).join('') + `<button class="cal-ics" id="rsvp-cal-ics" type="button">Apple Calendar or other — download all reminders</button>`;
+      document.getElementById('rsvp-cal-ics').addEventListener('click', downloadIcs);
+    }
+    function downloadIcs() {
+      const ev = ([day, title, desc]) => [
+        'BEGIN:VEVENT',
+        `UID:${day}-${title.replace(/\W+/g, '')}@alok-elaine-wedding`,
+        'DTSTAMP:20261019T000000Z',
+        `DTSTART;VALUE=DATE:${day}`,
+        `SUMMARY:${title}`,
+        `DESCRIPTION:${desc}`,
+        'BEGIN:VALARM', 'TRIGGER:PT9H', 'ACTION:DISPLAY', `DESCRIPTION:${title}`, 'END:VALARM',
+        'END:VEVENT'
+      ].join('\r\n');
+      const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Alok & Elaine//Wedding//EN',
+        ...reminders().map(ev), 'END:VCALENDAR'].join('\r\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+      a.download = 'alok-elaine-wedding-reminders.ics';
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+    document.getElementById('rsvp-travel-cal').addEventListener('click', () => {
+      const panel = document.getElementById('rsvp-cal-panel');
+      if (panel.hidden) renderCalPanel();
+      panel.hidden = !panel.hidden;
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const seq = activeSteps();
+      const stepName = seq[current];
+      if (!validate()) {
+        /* Step-specific inline error so the user knows WHY the arrow didn't advance */
+        if (stepName === 'phone' && phoneErr) {
+          let msg;
+          if (!data.countryCode) msg = 'Please pick your country first.';
+          else if (!data.phone) msg = 'Please enter your phone number.';
+          else if (data.phone.length < 5) msg = 'That number looks too short — please check it.';
+          else if (!/^\d+$/.test(data.phone)) msg = 'Numbers only please.';
+          else msg = 'Please tell us if you are flying to Thiruvananthapuram.';
+          phoneErr.textContent = msg;
+          phoneErr.hidden = false;
+        }
+        if (stepName === 'party') {
+          const partyErr = document.getElementById('rsvp-party-error');
+          if (partyErr) {
+            partyErr.textContent = 'Please add a name for each additional guest.';
+            partyErr.hidden = false;
+          }
+        }
+        nextBtn.animate(
+          [{ transform: 'translateX(0)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(0)' }],
+          { duration: 220 }
+        );
+        return;
+      }
+      if (stepName === 'review') { submit(); show(current + 1); return; }
+      show(current + 1);
+    });
+    backBtn.addEventListener('click', () => show(current - 1));
+
+    modal.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        nextBtn.click();
+      }
+    });
+
+    /* Reset state every time the RSVP modal is opened */
+    document.addEventListener('click', e => {
+      if (!e.target.closest('[data-modal="modal-rsvp"]')) return;
+      {
+        Object.assign(data, {
+          countryCode: '', flag: '', phone: '', flyingIn: '',
+          firstName: '', lastName: '',
+          events: [], declined: false, attending: null,
+          partyCount: 1, partyNames: [],
+          dietary: [], dietaryOther: '',
+          accessibility: [], accessibilityOther: '',
+          note: ''
+        });
+        current = 0;
+        document.getElementById('rsvp-phone').value = '';
+        document.getElementById('rsvp-cc-display').textContent = '+ —';
+        if (ccSelect) ccSelect.selectedIndex = 0;
+        const detailsEl = modal.querySelector('.rsvp-cc-other');
+        if (detailsEl) detailsEl.open = false;
+        modal.querySelectorAll('.rsvp-cc-chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+        document.getElementById('rsvp-travel').hidden = true;
+        document.getElementById('rsvp-first').value = '';
+        document.getElementById('rsvp-last').value = '';
+        document.getElementById('rsvp-party-count').textContent = '1';
+        document.getElementById('rsvp-guest-names').innerHTML = '';
+        document.getElementById('rsvp-needs-other').value = '';
+        document.getElementById('rsvp-note').value = '';
+        modal.querySelectorAll('[data-step="needs"] input[type=checkbox]').forEach(c => c.checked = false);
+        modal.querySelectorAll('.rsvp-event-card').forEach(c => c.setAttribute('aria-pressed', 'false'));
+        const declineBtnEl = document.getElementById('rsvp-event-decline');
+        if (declineBtnEl) declineBtnEl.setAttribute('aria-pressed', 'false');
+        show(0);
+      }
+    });
+  })();
+
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => { updateScroll(); ticking = false; });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', updateScroll);
+  updateScroll();
+</script>
+
+</body>
+</html>
