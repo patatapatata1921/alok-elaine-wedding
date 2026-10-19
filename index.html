@@ -3040,6 +3040,15 @@
     });
     go(0);
     document.addEventListener('langchange', () => go(i));
+    // Mouse wheel scrolls the thumbnail strip sideways; at either end the page scrolls as normal
+    thumbs.addEventListener('wheel', e => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;          // trackpad side-swipe already works
+      const max = thumbs.scrollWidth - thumbs.clientWidth;
+      if (max <= 0) return;
+      if ((e.deltaY < 0 && thumbs.scrollLeft <= 0) || (e.deltaY > 0 && thumbs.scrollLeft >= max - 1)) return;
+      e.preventDefault();
+      thumbs.scrollLeft += e.deltaY;
+    }, { passive: false });
   })();
 
   /* ===== Travel Logistics tabs ===== */
