@@ -67,8 +67,13 @@
     border: 1px solid currentColor; border-radius: 999px;
     padding: 0.35rem 0.85rem; font-size: 0.85rem; font-family: 'Inter', var(--sans);
     letter-spacing: 0.04em; line-height: 1;
+    -webkit-appearance: none; appearance: none;
+    padding-right: 1.7rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.7rem center;
   }
-  .lang-toggle:hover { background: rgba(0,0,0,0.06); }
+  .lang-toggle option { color: #2b2622; background: #fff; }
+  .lang-toggle:hover { background-color: rgba(0,0,0,0.06); }
   @media (max-width: 768px) { .lang-toggle { margin-right: 0.9rem; } }
   .menu-toggle { display: none; background: none; border: none; color: inherit; font-size: 1.5rem; cursor: pointer; }
 
@@ -1533,6 +1538,8 @@
   .rsvp-mail[hidden] { display: none; }
   .rsvp-mail p { margin-bottom: 0.8rem; }
   .rsvp-mail .travel-btn { font-size: 1rem; padding: 0.8rem 1.6rem; }
+  /* Malayalam letters join up — spacing them out breaks the words apart */
+  html:lang(ml) body * { letter-spacing: normal !important; }
 </style>
 </head>
 <body>
@@ -1541,7 +1548,11 @@
 <nav id="nav">
   <!-- EDIT ME: couple's initials -->
   <a href="#" class="logo">A&E</a>
-  <button class="lang-toggle" id="lang-toggle" type="button" aria-label="切换到中文 / Switch to Chinese">中文</button>
+  <select class="lang-toggle" id="lang-toggle" aria-label="Language / 语言 / ഭാഷ">
+    <option value="en">English</option>
+    <option value="zh">中文</option>
+    <option value="ml">മലയാളം</option>
+  </select>
   <button class="menu-toggle" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
   <ul id="menu">
     <li><a href="#" data-modal="modal-travel">Travel Logistics</a></li>
@@ -2852,21 +2863,30 @@
 </footer>
 
 <script src="zh.js"></script>
+<script src="ml.js"></script>
 <script>
-  /* ===== Language: English / 中文 =====
-     Every "unit" (an element holding only inline content) is looked up in I18N_ZH by its
-     English HTML. Text the page changes later (RSVP steps, flight notes, slideshow) is
-     caught by a MutationObserver while Chinese is on. */
+  /* ===== Language: English / 中文 / മലയാളം =====
+     Every "unit" (an element holding only inline content) is looked up in I18N_ZH / I18N_ML by
+     its English HTML. Text the page changes later (RSVP steps, flight notes, slideshow) is
+     caught by a MutationObserver while a translation is on. */
   (function () {
-    const ZH = window.I18N_ZH || {};
+    const DICTS = { zh: window.I18N_ZH || {}, ml: window.I18N_ML || {} };
+    let ZH = {};
     const INLINE = { A: 1, B: 1, I: 1, EM: 1, STRONG: 1, SPAN: 1, BR: 1, SMALL: 1, SUP: 1 };
     const SKIP = /^(SCRIPT|STYLE|OPTION|SELECT|TEXTAREA|INPUT)$/;
     const norm = h => h.replace(/\s+/g, ' ').trim();
     let lang = 'en';
-    try { if (localStorage.getItem('lang') === 'zh') lang = 'zh'; } catch (e) {}
+    try { const l = localStorage.getItem('lang'); if (DICTS[l]) lang = l; } catch (e) {}
+    ZH = DICTS[lang] || {};
 
     // Text built on the fly
-    const PATTERNS = [
+    const PATTERNS_ML = [
+      [/^Photo (\d+): (.+)$/, m => `ഫോട്ടോ ${m[1]}: ${ZH[m[2]] || m[2]}`],
+      [/^Alok and Elaine — (.+)$/, m => `Alok & Elaine — ${ZH[m[1]] || m[1]}`],
+      [/^📍 About (.+?) · (?:(a short walk)|(.+) drive) from (.+)$/, m => `📍 ${m[4]}-ൽ നിന്ന് ഏകദേശം ${m[1].replace(' km', ' കി.മീ.').replace(' m', ' മീ.')} · ${m[2] ? 'നടന്നെത്താവുന്ന ദൂരം' : m[3].replace(' hr', ' മണിക്കൂർ').replace(' min', ' മിനിറ്റ്') + ' ഡ്രൈവ്'}`],
+      [/^Hi, (.+) — which events will you join\?$/, m => `നമസ്കാരം ${m[1]}! ഏതെല്ലാം ചടങ്ങുകളിൽ നിങ്ങൾ പങ്കെടുക്കും?`],
+    ];
+    const PATTERNS_ZH = [
       [/^Photo (\d+): (.+)$/, m => `照片 ${m[1]}：${ZH[m[2]] || m[2]}`],
       [/^Alok and Elaine — (.+)$/, m => `Alok 与 Elaine — ${ZH[m[1]] || m[1]}`],
       [/^📍 About (.+?) · (?:(a short walk)|(.+) drive) from (.+)$/, m => `📍 距 ${m[4]} 约 ${m[1].replace(' km', ' 公里').replace(' m', ' 米')} · ${m[2] ? '步行即到' : '车程约 ' + m[3].replace(' hr', ' 小时').replace(' min', ' 分钟')}`],
@@ -2874,10 +2894,10 @@
     ];
     const lookup = k => {
       if (ZH[k] !== undefined) return ZH[k];
-      for (const [re, fn] of PATTERNS) { const m = k.match(re); if (m) return fn(m); }
+      for (const [re, fn] of (lang === 'ml' ? PATTERNS_ML : PATTERNS_ZH)) { const m = k.match(re); if (m) return fn(m); }
       return null;
     };
-    window.t = s => (lang === 'zh' && ZH[s]) || s;
+    window.t = s => (lang !== 'en' && ZH[s]) || s;
 
     const inlineOnly = el => [...el.querySelectorAll('*')].every(c => INLINE[c.tagName]);
     const hasText = el => /[A-Za-z]/.test(el.textContent);
@@ -2889,42 +2909,45 @@
       return el;
     };
 
-    // An element counts as "still showing our Chinese" while its text matches what we put in;
+    // An element counts as "still showing our translation" while its text matches what we put in;
     // class changes (e.g. the scroll animation's .lit) don't reset it.
-    function setZh(el, html) { el.__en = el.innerHTML; el.innerHTML = html; el.__zhText = el.textContent; }
+    function setZh(el, html) { el.__en = el.innerHTML; el.innerHTML = html; el.__zhText = el.textContent; el.__lang = lang; }
     function translateEl(el) {
       if (el.__zhText !== undefined) {
         if (el.textContent === el.__zhText) {                   // ours, untouched
-          if (lang === 'en') { el.innerHTML = el.__en; delete el.__zhText; }
-          return;
+          if (el.__lang === lang) return;
+          el.innerHTML = el.__en;                               // back to English, then into the new language
         }
-        delete el.__zhText;                                     // the page rewrote it: treat as fresh English
+        delete el.__zhText;                                     // (or the page rewrote it: treat as fresh English)
       }
-      if (lang !== 'zh') return;
+      if (lang === 'en') return;
       const z = lookup(norm(el.innerHTML));
       if (z !== null) { setZh(el, z); return; }
       // no whole-unit match: try each direct child (e.g. "label + value" rows, button groups)
       [...el.children].forEach(c => {
-        if (c.__zhText !== undefined && c.textContent === c.__zhText) return;
+        if (c.__zhText !== undefined && c.textContent === c.__zhText) {
+          if (c.__lang === lang) return;
+          c.innerHTML = c.__en; delete c.__zhText;
+        }
         const zc = lookup(norm(c.innerHTML)); if (zc !== null) setZh(c, zc);
       });
     }
     function translateAttrs(root) {
       root.querySelectorAll('[placeholder],[aria-label],img[alt],option').forEach(el => {
-        if (el.id === 'lang-toggle') return;
+        if (el.closest('#lang-toggle')) return;
         ['placeholder', 'aria-label', 'alt'].forEach(a => {
           if (!el.hasAttribute(a)) return;
           const v = el.getAttribute(a);
           if (el['__zh_' + a] === undefined || v !== el['__zh_' + a]) el['__en_' + a] = v;
           const en = el['__en_' + a];
-          const z = lang === 'zh' ? (ZH['@' + en] !== undefined ? ZH['@' + en] : lookup(en)) : null;
+          const z = lang !== 'en' ? (ZH['@' + en] !== undefined ? ZH['@' + en] : lookup(en)) : null;
           if (z) { el.setAttribute(a, z); el['__zh_' + a] = z; }
           else { el.setAttribute(a, en); delete el['__zh_' + a]; }
         });
         if (el.tagName === 'OPTION') {
           if (el.__en === undefined) el.__en = el.textContent;
           const z = ZH['@opt:' + el.__en.trim()];
-          el.textContent = lang === 'zh' && z ? z : el.__en;
+          el.textContent = lang !== 'en' && z ? z : el.__en;
         }
       });
     }
@@ -2933,14 +2956,12 @@
       document.querySelectorAll('body *').forEach(el => { if (el.__zhText !== undefined || isUnit(el)) translateEl(el); });
       translateAttrs(document);
       if (!document.__enTitle) document.__enTitle = document.title;
-      document.title = lang === 'zh' ? (ZH['@title:' + document.__enTitle] || document.__enTitle) : document.__enTitle;
-      document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
-      const btn = document.getElementById('lang-toggle');
-      btn.textContent = lang === 'zh' ? 'EN' : '中文';
-      btn.setAttribute('aria-label', lang === 'zh' ? 'Switch to English / 切换到英文' : '切换到中文 / Switch to Chinese');
+      document.title = lang !== 'en' ? (ZH['@title:' + document.__enTitle] || document.__enTitle) : document.__enTitle;
+      document.documentElement.lang = { en: 'en', zh: 'zh-Hans', ml: 'ml' }[lang];
+      document.getElementById('lang-toggle').value = lang;
       document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
       window.dispatchEvent(new Event('scroll'));
-      if (lang === 'zh') observe();
+      if (lang !== 'en') observe();
     }
     const pending = new Set(); let scheduled = false;
     const observer = new MutationObserver(muts => {
@@ -2962,16 +2983,18 @@
       });
       pending.clear();
       units.forEach(translateEl);
-      if (lang === 'zh') observe();
+      if (lang !== 'en') observe();
     }
     function observe() { observer.observe(document.body, { childList: true, subtree: true, characterData: true }); }
 
-    document.getElementById('lang-toggle').addEventListener('click', () => {
-      lang = lang === 'zh' ? 'en' : 'zh';
+    const picker = document.getElementById('lang-toggle');
+    picker.value = lang;
+    picker.addEventListener('change', () => {
+      lang = picker.value; ZH = DICTS[lang] || {};
       try { localStorage.setItem('lang', lang); } catch (e) {}
       applyAll();
     });
-    if (lang === 'zh') window.addEventListener('load', applyAll);
+    if (lang !== 'en') window.addEventListener('load', applyAll);
   })();
 
   /* ===== Photos slideshow ===== */

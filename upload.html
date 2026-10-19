@@ -15,7 +15,8 @@
   .wrap { max-width: 560px; margin: 0 auto; padding: 1.2rem 1.25rem 3rem; }
   .top { display: flex; justify-content: space-between; align-items: center; }
   .logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 500; color: var(--ink); text-decoration: none; }
-  .lang { font: inherit; font-size: 0.85rem; border: 1px solid var(--ink); background: none; color: var(--ink); border-radius: 999px; padding: 0.25rem 0.8rem; cursor: pointer; }
+  .lang { font: inherit; font-size: 0.85rem; border: 1px solid var(--ink); background: none; color: var(--ink); border-radius: 999px; padding: 0.3rem 1.7rem 0.3rem 0.8rem; cursor: pointer; -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.7rem center; }
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2.4rem, 9vw, 3.2rem); line-height: 1.1; margin: 2rem 0 0.6rem; text-align: center; }
   .sub { text-align: center; color: var(--muted); margin-bottom: 1.8rem; }
   label.field { display: block; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.4rem; }
@@ -42,13 +43,19 @@
   .code-box { margin-bottom: 1.4rem; }
   .closed { text-align: center; padding: 2rem 1rem; background: var(--card); border-radius: 14px; color: var(--muted); }
   [hidden] { display: none !important; }
+  /* Malayalam letters join up — spacing them out breaks the words apart */
+  html:lang(ml) body * { letter-spacing: normal !important; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
     <a class="logo" href="./">A&amp;E</a>
-    <button class="lang" id="lang" type="button">中文</button>
+    <select class="lang" id="lang" aria-label="Language / 语言 / ഭാഷ">
+      <option value="en">English</option>
+      <option value="zh">中文</option>
+      <option value="ml">മലയാളം</option>
+    </select>
   </div>
 
   <h1 data-t="title">Share your photos</h1>
@@ -116,20 +123,35 @@
       progress: (d, n) => `正在发送第 ${d} 张，共 ${n} 张…`, allDone: n => `谢谢！已发送 ${n} 张 ✓`,
       someFailed: (d, f) => `已发送 ${d} 张，${f} 张未成功。`, badCode: '宾客码好像不对——请再检查一下。',
       needCode: '请先输入宾客码。'
+    },
+    ml: {
+      title: 'നിങ്ങളുടെ ഫോട്ടോകൾ പങ്കിടൂ',
+      sub: 'ആഘോഷങ്ങളിൽ നിങ്ങൾ എടുത്ത ചിത്രങ്ങൾ ഇവിടെ ചേർക്കൂ — അവ നേരെ Alok &amp; Elaine-ന് എത്തും, വലിയ സ്ക്രീനിലും കാണിക്കും.',
+      closed: 'വിവാഹത്തോട് അടുക്കുമ്പോൾ ഫോട്ടോ പങ്കിടൽ തുറക്കും. ദയവായി പിന്നീട് വീണ്ടും നോക്കൂ!',
+      codeLabel: 'ഗസ്റ്റ് കോഡ്', codeHint: 'നിങ്ങളുടെ മേശയിലെ കാർഡിലോ ഞങ്ങളുടെ WhatsApp സന്ദേശത്തിലോ ഉണ്ട്.',
+      nameLabel: 'നിങ്ങളുടെ പേര് (നിർബന്ധമില്ല)', nameHint: 'ആരാണ് ഇവ എടുത്തതെന്ന് അറിയാൻ — വലിയ സ്ക്രീനിൽ നിങ്ങളുടെ ഫോട്ടോകൾക്കൊപ്പം കാണിക്കും.',
+      pick: 'ഫോട്ടോകൾ തിരഞ്ഞെടുക്കൂ', pickMore: 'കൂടുതൽ ഫോട്ടോകൾ ചേർക്കൂ', retry: 'പോകാത്തവ വീണ്ടും അയയ്ക്കൂ',
+      note1: 'എല്ലാ ഫോട്ടോയിലും ✓ കാണുന്നതുവരെ <b>ഈ പേജ് തുറന്നുവെക്കൂ</b>. എപ്പോൾ വേണമെങ്കിലും കൂടുതൽ ചേർക്കാം.',
+      note2: 'ചെറിയ വീഡിയോകളും അയയ്ക്കാം (ഓരോന്നും ഏകദേശം 30 MB വരെ). നീളമുള്ള വീഡിയോകൾ WhatsApp-ൽ ഞങ്ങൾക്ക് അയയ്ക്കൂ.',
+      waiting: 'കാത്തിരിക്കുന്നു', sending: 'അയയ്ക്കുന്നു…', done: '✓ അയച്ചു', failed: 'പോയില്ല', tooBig: 'വളരെ വലുത്',
+      progress: (d, n) => `${n}-ൽ ${d} അയയ്ക്കുന്നു…`, allDone: n => `നന്ദി! ${n} എണ്ണം അയച്ചു ✓`,
+      someFailed: (d, f) => `${d} എണ്ണം അയച്ചു, ${f} എണ്ണം പോയില്ല.`, badCode: 'ഈ ഗസ്റ്റ് കോഡ് ശരിയല്ലെന്ന് തോന്നുന്നു — ദയവായി ഒന്നുകൂടി നോക്കൂ.',
+      needCode: 'ആദ്യം ഗസ്റ്റ് കോഡ് നൽകൂ.'
     }
   };
+  const TITLES = { en: 'Share your photos — Alok & Elaine', zh: '分享您的照片 — Alok & Elaine', ml: 'ഫോട്ടോകൾ പങ്കിടൂ — Alok & Elaine' };
   let lang = 'en';
-  try { if (localStorage.getItem('lang') === 'zh') lang = 'zh'; } catch (e) {}
+  try { const l = localStorage.getItem('lang'); if (T[l]) lang = l; } catch (e) {}
   const t = k => T[lang][k];
   function applyLang() {
     document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = t(el.dataset.t); });
-    document.getElementById('lang').textContent = lang === 'zh' ? 'EN' : '中文';
-    document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
-    document.title = lang === 'zh' ? '分享您的照片 — Alok & Elaine' : 'Share your photos — Alok & Elaine';
+    document.getElementById('lang').value = lang;
+    document.documentElement.lang = { en: 'en', zh: 'zh-Hans', ml: 'ml' }[lang];
+    document.title = TITLES[lang];
     if (queue.length) { render(); updateStatus(); }
   }
-  document.getElementById('lang').addEventListener('click', () => {
-    lang = lang === 'zh' ? 'en' : 'zh';
+  document.getElementById('lang').addEventListener('change', e => {
+    lang = e.target.value;
     try { localStorage.setItem('lang', lang); } catch (e) {}
     applyLang();
   });
