@@ -1140,6 +1140,10 @@
   /* Travel tabs use the full width of the page */
   #modal-travel .travel-panel { max-width: none; }
   #modal-travel .travel-panel > p, #modal-travel .explore-group > ul > li:not(.food-li) { max-width: 820px; }
+  .explore-from { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.8rem; margin: 0.4rem 0 1rem; font-family: 'Inter', var(--sans); }
+  .explore-from label { font-weight: 600; color: #3d2817; font-size: 0.95rem; }
+  .explore-from select { font: inherit; font-size: 0.95rem; padding: 0.55rem 2.2rem 0.55rem 0.9rem; border: 1px solid #3d2817; border-radius: 999px; background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233d2817' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 0.9rem center; -webkit-appearance: none; appearance: none; color: #3d2817; max-width: 100%; cursor: pointer; }
+  .explore-from-note { flex-basis: 100%; color: var(--muted); font-size: 0.85rem; }
   .place-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 0.6rem; }
   .place-card { background: rgba(231, 219, 200, 0.35); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
   .place-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
@@ -1784,7 +1788,7 @@
     </details>
     <details>
       <summary>How do I get to the venues?</summary>
-      <p>We recommend Uber — it's safe, the price is fixed upfront, and there's no parking to worry about. Addresses and maps are in Travel Logistics under <b>Getting around</b>.</p>
+      <p>We recommend Uber — it's safe and the price is fixed upfront. <b>Coming by car?</b> Trivandrum Club has parking on its grounds; it can fill up on a busy evening, so please arrive a little early. All six of our recommended hotels have guest parking too — just mention your car when you book. Addresses and maps are in Travel Logistics under <b>Getting around</b>.</p>
     </details>
     <details>
       <summary>Help! I have other questions!</summary>
@@ -2043,7 +2047,7 @@
     <div class="guide-grid">
         <div class="guide-card">
           <span class="member-name">Greetings</span>
-          <h5>Namaste works everywhere</h5>
+          <h5>Say "Namaskaram"</h5>
           <p>Palms together with a small nod is a warm, respectful hello to elders. Handshakes are fine with friends.</p>
         </div>
         <div class="guide-card">
@@ -2154,7 +2158,7 @@
     <div class="modal-info travel-panel" data-panel="hotels">
       <div class="modal-info-label">Where to stay</div>
       <h4>Recommended Hotels</h4>
-      <p>Five hotels close to the reception at Trivandrum Club, so getting there is easy. Book early — mid-January is high season in Kerala.</p>
+      <p>Six hotels close to the reception at Trivandrum Club, so getting there is easy. Book early — mid-January is high season in Kerala.</p>
       <div class="hotel-list">
         <div class="hotel">
           <div class="hotel-tag">Five-star</div>
@@ -2196,8 +2200,16 @@
           <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=The%20South%20Park%20Thiruvananthapuram" target="_blank" rel="noopener">See rates →</a>
           <a class="travel-btn travel-btn-ghost" href="https://www.google.com/maps/search/?api=1&query=The+South+Park+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a>
         </div>
+        <div class="hotel">
+          <div class="hotel-tag">Upper mid-range</div>
+          <div class="hotel-name"><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Hycinth+by+Sparsa+Thiruvananthapuram" target="_blank" rel="noopener">Hycinth by Sparsa</a></div>
+          <div class="hotel-dist">📍 About 2.5 km · 10 min to the reception</div>
+          <p>A modern hotel in Thampanoor, steps from the central railway and bus stations — handy if you plan day trips by train.</p>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Hycinth%20by%20Sparsa%20Trivandrum" target="_blank" rel="noopener">See rates →</a>
+          <a class="travel-btn travel-btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Hycinth+by+Sparsa+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </div>
       </div>
-      <p class="fee-note">Distances are approximate driving estimates to Trivandrum Club; allow extra time in evening traffic. All five are 15–25 minutes from the airport.</p>
+      <p class="fee-note">Distances are approximate driving estimates to Trivandrum Club; allow extra time in evening traffic. All six are 15–25 minutes from the airport.</p>
     </div>
 
     <div class="modal-info travel-panel" data-panel="around">
@@ -2287,12 +2299,24 @@
 
       <div class="explore-group">
         <h5>Must-see places</h5>
+        <div class="explore-from">
+          <label for="explore-from">Travelling from</label>
+          <select id="explore-from">
+            <option value="hyatt">Hyatt Regency Trivandrum</option>
+            <option value="vivanta">Vivanta Thiruvananthapuram</option>
+            <option value="hilton">Hilton Garden Inn Trivandrum</option>
+            <option value="mascot">Mascot Hotel (KTDC)</option>
+            <option value="southpark">The South Park</option>
+            <option value="hycinth">Hycinth by Sparsa</option>
+          </select>
+          <span class="explore-from-note">Distances update for your hotel. Drive times are typical daytime traffic.</span>
+        </div>
         <div class="place-grid">
           <article class="place-card">
             <img src="images/place-kovalam.jpg" alt="Kovalam Beach" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Kovalam+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Kovalam Beach</a></h6>
-              <div class="hotel-dist">📍 About 15 km · 30–40 min from the Hyatt Regency</div>
+              <div class="hotel-dist" data-place="kovalam">📍 About 15 km · 30–40 min from the Hyatt Regency</div>
               <p>Three crescent beaches and a red-and-white lighthouse — lovely at sunset.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Kovalam+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
             </div>
@@ -2301,7 +2325,7 @@
             <img src="images/place-temple.jpg" alt="Sree Padmanabhaswamy Temple" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Sree+Padmanabhaswamy+Temple+Thiruvananthapuram" target="_blank" rel="noopener">Sree Padmanabhaswamy Temple</a></h6>
-              <div class="hotel-dist">📍 About 3 km · 10 min from the Hyatt Regency</div>
+              <div class="hotel-dist" data-place="temple">📍 About 3 km · 10 min from the Hyatt Regency</div>
               <p><b>The great Vishnu temple</b> and the city's landmark — the city is named after it. <i>For those interested:</i> entry is for Hindus only, with a strict traditional dress code (men in a mundu, bare-chested; women in a saree) and no phones inside. Everyone can admire the seven-tiered tower and the old East Fort streets from outside.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Sree+Padmanabhaswamy+Temple+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
             </div>
@@ -2310,7 +2334,7 @@
             <img src="images/place-napier.jpg" alt="Napier Museum &amp; Zoo" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Napier+Museum+Thiruvananthapuram" target="_blank" rel="noopener">Napier Museum &amp; Zoo</a></h6>
-              <div class="hotel-dist">📍 About 2 km · 5–10 min from the Hyatt Regency</div>
+              <div class="hotel-dist" data-place="napier">📍 About 2 km · 5–10 min from the Hyatt Regency</div>
               <p>Kerala architecture, art and leafy gardens in the city centre. Tickets at the gate.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Napier+Museum+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
             </div>
@@ -2319,7 +2343,7 @@
             <img src="images/place-poovar.jpg" alt="Poovar backwaters" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Poovar+Island+boat+ride" target="_blank" rel="noopener">Poovar backwaters</a></h6>
-              <div class="hotel-dist">📍 About 28 km · about 1 hour from the Hyatt Regency</div>
+              <div class="hotel-dist" data-place="poovar">📍 About 28 km · about 1 hour from the Hyatt Regency</div>
               <p>A boat ride through mangroves to where the river meets the sea.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Poovar+Island+boat+ride" target="_blank" rel="noopener">Open in Google Maps →</a> <a class="inline-link" href="https://www.getyourguide.com/s/?q=Poovar" target="_blank" rel="noopener">Book a boat tour →</a></div>
             </div>
@@ -2328,7 +2352,7 @@
             <img src="images/place-shanghumugham.jpg" alt="Shanghumugham Beach" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Shanghumugham+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Shanghumugham Beach</a></h6>
-              <div class="hotel-dist">📍 About 7 km · 20 min from the Hyatt Regency</div>
+              <div class="hotel-dist" data-place="shang">📍 About 7 km · 20 min from the Hyatt Regency</div>
               <p>The city beach near the airport, where locals gather for sunset.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Shanghumugham+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
             </div>
@@ -2337,7 +2361,7 @@
             <img src="images/place-varkala.jpg" alt="Varkala" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Varkala+Cliff" target="_blank" rel="noopener">Varkala</a></h6>
-              <div class="hotel-dist">📍 About 50 km · about 1½ hours from the Hyatt Regency</div>
+              <div class="hotel-dist" data-place="varkala">📍 About 50 km · about 1½ hours from the Hyatt Regency</div>
               <p>Red cliffs above the Arabian Sea, with cafés along the cliff path. Best as a half-day trip.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Varkala+Cliff" target="_blank" rel="noopener">Open in Google Maps →</a> <a class="inline-link" href="https://www.getyourguide.com/s/?q=Varkala" target="_blank" rel="noopener">Book a day trip →</a></div>
             </div>
@@ -2749,7 +2773,7 @@
             <span class="travel-routes">
               <b>Hyatt Regency Trivandrum</b> — five-star, about 1 km<br>
               <b>Vivanta Thiruvananthapuram</b> (Taj) — five-star, about 2 km<br>
-              <b>Hilton Garden Inn</b>, <b>Mascot Hotel</b> or <b>The South Park</b> — upper mid-range, about 1.5 km
+              <b>Hilton Garden Inn</b>, <b>Mascot Hotel</b>, <b>The South Park</b> or <b>Hycinth</b> — upper mid-range, about 1.5–2.5 km
             </span>
             <span class="travel-links">
               <a class="travel-btn travel-btn-ghost" href="https://www.google.com/travel/search?q=Hyatt%20Regency%20Trivandrum" target="_blank" rel="noopener">Hyatt →</a>
@@ -2824,6 +2848,7 @@
     const PATTERNS = [
       [/^Photo (\d+): (.+)$/, m => `照片 ${m[1]}：${ZH[m[2]] || m[2]}`],
       [/^Alok and Elaine — (.+)$/, m => `Alok 与 Elaine — ${ZH[m[1]] || m[1]}`],
+      [/^📍 About (.+?) · (?:(a short walk)|(.+) drive) from (.+)$/, m => `📍 距 ${m[4]} 约 ${m[1].replace(' km', ' 公里').replace(' m', ' 米')} · ${m[2] ? '步行即到' : '车程约 ' + m[3].replace(' hr', ' 小时').replace(' min', ' 分钟')}`],
       [/^Hi, (.+) — which events will you join\?$/, m => `${m[1]}，您好！请问您会参加哪些活动？`],
     ];
     const lookup = k => {
@@ -3856,5 +3881,34 @@
   updateScroll();
 </script>
 
+<script>
+  /* Explore → "Travelling from": driving distances (OpenStreetMap routing, km) from each recommended hotel.
+     Times add typical Thiruvananthapuram traffic on top of the distance. */
+  (function () {
+    const KM = {"hyatt": {"kovalam": 15.7, "temple": 2.9, "napier": 2.8, "poovar": 27.7, "shang": 9.0, "varkala": 46.2}, "vivanta": {"kovalam": 14.7, "temple": 1.9, "napier": 3.6, "poovar": 26.7, "shang": 8.0, "varkala": 45.9}, "hilton": {"kovalam": 15.2, "temple": 2.3, "napier": 2.1, "poovar": 27.2, "shang": 8.1, "varkala": 44.5}, "mascot": {"kovalam": 16.3, "temple": 3.3, "napier": 0.5, "poovar": 28.3, "shang": 9.1, "varkala": 44.4}, "southpark": {"kovalam": 15.2, "temple": 2.2, "napier": 2.1, "poovar": 27.2, "shang": 8.1, "varkala": 44.5}, "hycinth": {"kovalam": 15.4, "temple": 2.2, "napier": 2.8, "poovar": 27.4, "shang": 8.7, "varkala": 46.1}};
+    const NAMES = { hyatt: 'Hyatt Regency', vivanta: 'Vivanta', hilton: 'Hilton Garden Inn', mascot: 'Mascot Hotel', southpark: 'The South Park', hycinth: 'Hycinth' };
+    const sel = document.getElementById('explore-from');
+    if (!sel) return;
+    const drive = km => {
+      let m = Math.round((km * (km < 10 ? 2 : 1.8) + 5) / 5) * 5;
+      if (m < 60) return m + ' min';
+      const h = Math.floor(m / 60); m = m % 60;
+      return h + ' hr' + (m ? ' ' + m + ' min' : '');
+    };
+    function render() {
+      const from = KM[sel.value];
+      document.querySelectorAll('.hotel-dist[data-place]').forEach(el => {
+        const km = from[el.dataset.place];
+        el.textContent = km < 1
+          ? `📍 About ${Math.round(km * 10) * 100} m · a short walk from ${NAMES[sel.value]}`
+          : `📍 About ${Math.round(km)} km · ${drive(km)} drive from ${NAMES[sel.value]}`;
+      });
+      try { localStorage.setItem('explore-from', sel.value); } catch (e) {}
+    }
+    try { const saved = localStorage.getItem('explore-from'); if (saved && KM[saved]) sel.value = saved; } catch (e) {}
+    sel.addEventListener('change', render);
+    render();
+  })();
+</script>
 </body>
 </html>
