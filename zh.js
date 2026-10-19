@@ -831,5 +831,13 @@ window.I18N_ZH = {
 "Staying at": "入住酒店",
 "@Two women in cream-and-gold Kerala kasavu sarees": "两位身穿米白金边喀拉拉 kasavu 纱丽的女士",
 "@A man in a white mundu with a green kurta": "身穿白色 mundu 搭配绿色 kurta 的男士",
-"@A pair of embroidered slip-on sandals": "一双刺绣一脚蹬凉鞋"
+"@A pair of embroidered slip-on sandals": "一双刺绣一脚蹬凉鞋",
+"In the Tibetan house": "藏式小屋里",
+"On the grasslands": "草原上",
+"A new friend": "新朋友",
+"With the goats": "与羊群一起",
+"Under the prayer flags": "经幡之下",
+"The black horses": "黑骏马",
+"Riding high": "策马",
+"Into the hills": "走向山间"
 };
