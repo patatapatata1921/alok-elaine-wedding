@@ -773,7 +773,8 @@
   }
   .rsvp-events-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    max-width: 32rem; margin: 0 auto;
     gap: 0.8rem;
   }
   .rsvp-event-card {
@@ -1701,7 +1702,7 @@
       </div>
     </a>
     <a class="card" href="#" data-modal="modal-dress-code">
-      <img src="images/dress-code-kerala.jpg" alt="">
+      <img src="images/dress-code-wedding-party.jpg" alt="">
       <div class="card-overlay">
         <div class="card-text">
           <h4>Weekend &amp; Dress Code</h4>
@@ -1915,16 +1916,16 @@
     <button class="modal-close" aria-label="Close" data-modal-close>×</button>
   </div>
   <div class="modal-body">
-    <img class="modal-hero" src="images/dress-code-kerala.jpg" alt="A Kerala wedding: the groom in a white mundu, the bride and guests in silk sarees">
+    <img class="modal-hero" src="images/dress-code-wedding-party.jpg" alt="A Kerala wedding: the couple with their friends, the men in cream kurtas and mundus, the women in silk sarees and lehengas">
     <h2>Weekend &amp; Dress Code</h2>
     <p>What's happening when, and what to wear to each. Never worn Indian clothes before? You're welcome either way — and if you'd like to try, we'd love to see it.</p>
 
     <h3 class="party-heading">The Weekend</h3>
     <div class="guide-grid">
         <div class="guide-card">
-          <span class="member-name">Before the wedding</span>
-          <h5>Pre-wedding celebrations</h5>
-          <p><b>Haldi</b> (turmeric blessing), <b>Mehendi</b> (henna) and <b>Sangeet</b> (music &amp; dance). Dates and times to follow.</p><p class="guide-wear"><b>Wear:</b> Haldi — yellow, in clothes you don't mind staining. Mehendi — bright colours, short or loose sleeves. Sangeet — party wear you can dance in.</p>
+          <span class="member-name">Fri 15 January, morning</span>
+          <h5>Mehendi</h5>
+          <p>The henna ceremony — intricate designs are painted on the bride's hands, and guests are welcome to have a little henna too. Venue and time to be confirmed.</p><p class="guide-wear"><b>Wear:</b> bright colours, with short or loose sleeves so the henna can dry.</p>
         </div>
         <div class="guide-card">
           <span class="member-name">Fri 15 January</span>
@@ -1933,8 +1934,8 @@
         </div>
         <div class="guide-card">
           <span class="member-name">Sat 16 January</span>
-          <h5>The Wedding</h5>
-          <p>The traditional ceremony. Venue and time to be confirmed — please arrive a little early.</p><p class="guide-wear"><b>Wear:</b> classic and colourful — silk sarees, kurta or mundu, in lighter fabrics for the day.</p>
+          <h5>Grihapravesham</h5>
+          <p>The bride is welcomed into the groom's family home for the first time, traditionally carrying a lit brass lamp (nilavilakku). Venue and time to be confirmed — please arrive a little early.</p><p class="guide-wear"><b>Wear:</b> classic and colourful — silk sarees, kurta or mundu, in lighter fabrics for the day.</p>
         </div>
     </div>
 
@@ -2193,6 +2194,12 @@
       <h4>Getting to the Celebrations</h4>
       <div class="guide-grid event-venues">
         <div class="guide-card">
+          <span class="member-name">Fri 15 January, morning</span>
+          <h5>Mehendi</h5>
+          <!-- EDIT ME: add the Mehendi venue, Google Maps link and time once confirmed -->
+          <p>The henna ceremony. Venue and time to be confirmed — we'll share the details here and on WhatsApp.</p>
+        </div>
+        <div class="guide-card">
           <span class="member-name">Fri 15 January</span>
           <h5>Reception</h5>
           <p><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+Club+Vazhuthacaud+Thiruvananthapuram" target="_blank" rel="noopener"><b>Trivandrum Club</b></a>, Vazhuthacaud, Thiruvananthapuram, Kerala 695010.</p>
@@ -2200,9 +2207,9 @@
         </div>
         <div class="guide-card">
           <span class="member-name">Sat 16 January</span>
-          <h5>Traditional ceremony</h5>
+          <h5>Grihapravesham</h5>
           <!-- EDIT ME: add the ceremony venue name, address, Google Maps link and time once confirmed -->
-          <p>Venue and time to be confirmed — we'll share the details here and on WhatsApp as soon as they're set.</p>
+          <p>Welcoming the bride into the groom's home. Venue and time to be confirmed — we'll share the details here and on WhatsApp as soon as they're set.</p>
           <p class="guide-wear">Please plan to arrive a little early: the ceremony begins at an auspicious moment and starts right on time.</p>
         </div>
       </div>
@@ -2551,29 +2558,17 @@
       <!-- TODO (later): replace greeting with name pulled from uploaded WhatsApp/name sheet -->
 
       <div class="rsvp-events-grid">
-        <button class="rsvp-event-card" data-event="Haldi" type="button" aria-pressed="false">
-          <div class="rsvp-event-name">Haldi</div>
-          <div class="rsvp-event-meta">Turmeric blessing ceremony</div>
-        </button>
         <button class="rsvp-event-card" data-event="Mehendi" type="button" aria-pressed="false">
           <div class="rsvp-event-name">Mehendi</div>
-          <div class="rsvp-event-meta">Henna ceremony</div>
-        </button>
-        <button class="rsvp-event-card" data-event="Bairhana" type="button" aria-pressed="false">
-          <div class="rsvp-event-name">Bairhana</div>
-          <div class="rsvp-event-meta">Pre-wedding gathering</div>
-        </button>
-        <button class="rsvp-event-card" data-event="Sangeet" type="button" aria-pressed="false">
-          <div class="rsvp-event-name">Sangeet</div>
-          <div class="rsvp-event-meta">Music & dance night</div>
-        </button>
-        <button class="rsvp-event-card" data-event="Pheras" type="button" aria-pressed="false">
-          <div class="rsvp-event-name">Pheras</div>
-          <div class="rsvp-event-meta">Wedding ceremony</div>
+          <div class="rsvp-event-meta">Henna ceremony · Fri 15 Jan, morning</div>
         </button>
         <button class="rsvp-event-card" data-event="Reception" type="button" aria-pressed="false">
           <div class="rsvp-event-name">Reception</div>
-          <div class="rsvp-event-meta">Celebration dinner</div>
+          <div class="rsvp-event-meta">Celebration dinner · Fri 15 Jan, evening</div>
+        </button>
+        <button class="rsvp-event-card" data-event="Grihapravesham" type="button" aria-pressed="false">
+          <div class="rsvp-event-name">Grihapravesham</div>
+          <div class="rsvp-event-meta">Welcoming the bride into the groom's home · Sat 16 Jan</div>
         </button>
       </div>
 

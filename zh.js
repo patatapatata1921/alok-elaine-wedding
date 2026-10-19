@@ -801,5 +801,15 @@ window.I18N_ZH = {
 "Kerala food and place photos via Wikimedia Commons (CC BY-SA / CC BY): Solowomanwalks, ideowl, Nita Abbey, Viewfinder18, athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj.": "喀拉拉美食与景点照片来自 Wikimedia Commons（CC BY-SA）：Solowomanwalks、ideowl、Nita Abbey、Viewfinder18、athulvis, Nithajay, Anupama1002, Ganesh Mohan T, Samphotography, Jyothishbabu, Ross thres, Vis M, Tanweer Morshed, Shishirdasika, Prasanth Prakash, Arindambasu2, Aravind Sivaraj。",
 "One last step — tap below to send your RSVP to us by email.": "最后一步——请点击下方按钮，通过电子邮件把回复发送给我们。",
 "Send my RSVP by email": "通过电子邮件发送我的回复",
-"@A Kerala wedding: the groom in a white mundu, the bride and guests in silk sarees": "喀拉拉邦婚礼：新郎身穿白色 mundu 围裹，新娘和宾客身穿丝绸纱丽"
+"@A Kerala wedding: the couple with their friends, the men in cream kurtas and mundus, the women in silk sarees and lehengas": "喀拉拉邦婚礼：新人与朋友们，男士身穿米色 kurta 和 mundu，女士身穿丝绸纱丽和 lehenga",
+"Grihapravesham": "Grihapravesham（新娘入门礼）",
+"Henna ceremony · Fri 15 Jan, morning": "指甲花彩绘仪式 · 1月15日（周五）上午",
+"Celebration dinner · Fri 15 Jan, evening": "庆祝晚宴 · 1月15日（周五）晚上",
+"Welcoming the bride into the groom's home · Sat 16 Jan": "迎接新娘进入新郎家 · 1月16日（周六）",
+"Fri 15 January, morning": "1月15日（周五）上午",
+"The henna ceremony — intricate designs are painted on the bride's hands, and guests are welcome to have a little henna too. Venue and time to be confirmed.": "指甲花彩绘仪式——新娘的双手会绘上精美的图案，宾客也欢迎画上一点指甲花。地点和时间待定。",
+"<b>Wear:</b> bright colours, with short or loose sleeves so the henna can dry.": "<b>着装：</b>鲜艳色彩，穿短袖或宽松袖，方便指甲花晾干。",
+"The bride is welcomed into the groom's family home for the first time, traditionally carrying a lit brass lamp (nilavilakku). Venue and time to be confirmed — please arrive a little early.": "新娘第一次被迎入新郎家中，传统上她会手捧一盏点亮的黄铜灯（nilavilakku）。地点和时间待定——请稍早到场。",
+"Welcoming the bride into the groom's home. Venue and time to be confirmed — we'll share the details here and on WhatsApp as soon as they're set.": "迎接新娘进入新郎家。地点和时间待定——确定后我们会在这里和 WhatsApp 上通知大家。",
+"The henna ceremony. Venue and time to be confirmed — we'll share the details here and on WhatsApp.": "指甲花彩绘仪式。地点和时间待定——我们会在这里和 WhatsApp 上通知大家。"
 };
