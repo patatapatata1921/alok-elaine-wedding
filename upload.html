@@ -40,6 +40,7 @@
   .retry { display: none; margin: 1rem auto 0; font: 600 1rem 'Inter', sans-serif; padding: 0.8rem 1.6rem; border-radius: 999px; border: 1px solid var(--dark); background: none; color: var(--dark); cursor: pointer; }
   .note { margin-top: 1.6rem; padding: 1rem 1.1rem; border-radius: 12px; background: var(--card); font-size: 0.9rem; color: var(--muted); }
   .note b { color: var(--ink); }
+  .rules { margin: 1.4rem 0 0; padding: 0.9rem 1.1rem; border-radius: 12px; border: 1px solid #d9c6a5; background: #fbf3e4; font-size: 0.92rem; line-height: 1.5; color: var(--ink); }
   .code-box { margin-bottom: 1.4rem; }
   .closed { text-align: center; padding: 2rem 1rem; background: var(--card); border-radius: 14px; color: var(--muted); }
   [hidden] { display: none !important; }
@@ -74,6 +75,8 @@
     <input type="text" id="from" autocomplete="name" maxlength="40">
     <p class="hint" data-t="nameHint">So we know who took these — shown next to your photos on the big screen.</p>
 
+    <p class="rules" data-t="rules">🧒 <b>Kids are watching too!</b> Everything you send shows on the big screen, so please share only family-friendly photos from the celebrations — no screenshots, memes or unrelated pictures.</p>
+
     <label class="pick" id="pick" for="files"><span aria-hidden="true">📷</span> <span data-t="pick">Choose photos</span></label>
     <input type="file" id="files" accept="image/*,video/*" multiple>
 
@@ -102,6 +105,7 @@
       closed: 'Photo sharing opens closer to the wedding. Please check back soon!',
       codeLabel: 'Guest code', codeHint: "It's on the card at your table, or in our WhatsApp message.",
       nameLabel: 'Your name (optional)', nameHint: 'So we know who took these — shown next to your photos on the big screen.',
+      rules: '🧒 <b>Kids are watching too!</b> Everything you send shows on the big screen, so please share only family-friendly photos from the celebrations — no screenshots, memes or unrelated pictures.',
       pick: 'Choose photos', pickMore: 'Add more photos', retry: 'Try the failed ones again',
       note1: '<b>Keep this page open</b> until every photo shows ✓. You can add more any time.',
       note2: 'Short videos are welcome (up to about 30 MB each). For longer videos, send them to us on WhatsApp.',
@@ -116,6 +120,7 @@
       closed: '照片分享将在婚礼临近时开放，请稍后再来！',
       codeLabel: '宾客码', codeHint: '写在您桌上的卡片上，或我们发的 WhatsApp 消息里。',
       nameLabel: '您的名字（选填）', nameHint: '让我们知道是谁拍的——会和您的照片一起显示在大屏幕上。',
+      rules: '🧒 <b>小朋友也在看哦！</b>您发送的照片都会显示在大屏幕上，请只分享适合全家观看的婚礼照片——请勿上传截图、表情包或与婚礼无关的图片。',
       pick: '选择照片', pickMore: '继续添加照片', retry: '重新发送失败的照片',
       note1: '<b>请保持此页面打开</b>，直到每张照片都显示 ✓。之后随时可以继续添加。',
       note2: '欢迎上传短视频（每个约 30 MB 以内）。较长的视频请通过 WhatsApp 发给我们。',
@@ -130,6 +135,7 @@
       closed: 'വിവാഹത്തോട് അടുക്കുമ്പോൾ ഫോട്ടോ പങ്കിടൽ തുറക്കും. ദയവായി പിന്നീട് വീണ്ടും നോക്കൂ!',
       codeLabel: 'ഗസ്റ്റ് കോഡ്', codeHint: 'നിങ്ങളുടെ മേശയിലെ കാർഡിലോ ഞങ്ങളുടെ WhatsApp സന്ദേശത്തിലോ ഉണ്ട്.',
       nameLabel: 'നിങ്ങളുടെ പേര് (നിർബന്ധമില്ല)', nameHint: 'ആരാണ് ഇവ എടുത്തതെന്ന് അറിയാൻ — വലിയ സ്ക്രീനിൽ നിങ്ങളുടെ ഫോട്ടോകൾക്കൊപ്പം കാണിക്കും.',
+      rules: '🧒 <b>കുട്ടികളും കാണുന്നുണ്ട്!</b> നിങ്ങൾ അയയ്ക്കുന്നതെല്ലാം വലിയ സ്ക്രീനിൽ കാണിക്കും. അതിനാൽ ആഘോഷങ്ങളിൽ നിന്നുള്ള, കുടുംബത്തോടൊപ്പം കാണാൻ പറ്റുന്ന ഫോട്ടോകൾ മാത്രം പങ്കിടൂ — സ്ക്രീൻഷോട്ടുകളും മീമുകളും ബന്ധമില്ലാത്ത ചിത്രങ്ങളും വേണ്ട.',
       pick: 'ഫോട്ടോകൾ തിരഞ്ഞെടുക്കൂ', pickMore: 'കൂടുതൽ ഫോട്ടോകൾ ചേർക്കൂ', retry: 'പോകാത്തവ വീണ്ടും അയയ്ക്കൂ',
       note1: 'എല്ലാ ഫോട്ടോയിലും ✓ കാണുന്നതുവരെ <b>ഈ പേജ് തുറന്നുവെക്കൂ</b>. എപ്പോൾ വേണമെങ്കിലും കൂടുതൽ ചേർക്കാം.',
       note2: 'ചെറിയ വീഡിയോകളും അയയ്ക്കാം (ഓരോന്നും ഏകദേശം 30 MB വരെ). നീളമുള്ള വീഡിയോകൾ WhatsApp-ൽ ഞങ്ങൾക്ക് അയയ്ക്കൂ.',

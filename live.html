@@ -25,6 +25,7 @@
   .qr { position: fixed; right: 2.2vw; bottom: 2.5vh; display: flex; align-items: center; gap: 1rem; background: rgba(250, 247, 242, 0.96); color: #2b2622; padding: 0.8rem 1rem 0.8rem 1.2rem; border-radius: 16px; z-index: 5; }
   .qr p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1rem, 1.7vw, 1.6rem); line-height: 1.15; text-align: right; }
   .qr p small { display: block; font-family: 'Inter', sans-serif; font-style: normal; font-size: 0.55em; letter-spacing: 0.1em; text-transform: uppercase; color: #6b6258; margin-top: 0.3rem; }
+  .qr p small.kid { text-transform: none; letter-spacing: 0.02em; font-size: 0.5em; color: #8a6d4b; margin-top: 0.45rem; }
   #qr { width: clamp(90px, 11vw, 170px); height: clamp(90px, 11vw, 170px); }
   #qr img, #qr canvas { width: 100% !important; height: 100% !important; }
   .count { position: fixed; left: 3vw; bottom: 1.2vh; font-size: clamp(0.7rem, 1vw, 0.9rem); color: var(--muted); letter-spacing: 0.08em; z-index: 5; }
@@ -45,7 +46,7 @@
   <p>Scan the code to share your photos — they'll appear here.</p>
 </div>
 <div class="qr">
-  <p>Share your photos<small>Scan with your camera</small></p>
+  <p>Share your photos<small>Scan with your camera</small><small class="kid">Family-friendly photos only, please 💛</small></p>
   <div id="qr"></div>
 </div>
 <div class="count" id="count"></div>
