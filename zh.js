@@ -819,5 +819,12 @@ window.I18N_ZH = {
 "📍 About 30 km · about 1 hour from the reception": "📍 距晚宴场地约30公里 · 车程约1小时",
 "📍 About 8 km · 20 min from the reception": "📍 距晚宴场地约8公里 · 车程20分钟",
 "📍 About 50 km · about 1½ hours from the reception": "📍 距晚宴场地约50公里 · 车程约1.5小时",
-"Reach out to Alok and Elaine at alokelaine@gmail.com": "联系 Alok 和 Elaine：alokelaine@gmail.com"
+"Reach out to Alok and Elaine at alokelaine@gmail.com": "联系 Alok 和 Elaine：alokelaine@gmail.com",
+"What are the events?": "有哪些活动？",
+"There are three: the <b>Mehendi</b> (henna ceremony) on the morning of Friday 15 January, the <b>Reception</b> at Trivandrum Club that evening, and the <b>Grihapravesham</b> — welcoming the bride into the groom's home — on Saturday 16 January. Times and the remaining venues will be confirmed soon. See <a href=\"#\" data-modal=\"modal-dress-code\" style=\"color: var(--accent); text-decoration: underline;\">Weekend &amp; Dress Code</a> for what happens at each.": "共有三场：1月15日（周五）上午的 <b>Mehendi</b>（指甲花彩绘仪式）、当晚在 Trivandrum Club 举行的<b>婚宴招待会</b>，以及1月16日（周六）的 <b>Grihapravesham</b>——迎接新娘进入新郎家。时间和其余场地将很快确认。每场活动的详情请见<a href=\"#\" data-modal=\"modal-dress-code\" style=\"color: var(--accent); text-decoration: underline;\">周末安排与着装</a>。",
+"Colourful and festive — Indian wear is very welcome but never expected, and a smart dress or light suit is perfect too. Please avoid all-white and all-black, and leave bright red to the bride. See <a href=\"#\" data-modal=\"modal-dress-code\" style=\"color: var(--accent); text-decoration: underline;\">Weekend &amp; Dress Code</a> for outfit ideas for each event and where to shop in the city.": "色彩缤纷、喜庆即可——非常欢迎穿印度服装，但绝不强求；优雅的连衣裙或轻便西装也很合适。请避免全白和全黑，并把鲜红色留给新娘。各场活动的着装建议和市内购物地点请见<a href=\"#\" data-modal=\"modal-dress-code\" style=\"color: var(--accent); text-decoration: underline;\">周末安排与着装</a>。",
+"What time should I arrive?": "我应该几点到达？",
+"Please arrive about 15 minutes early for each event — the Grihapravesham begins at an auspicious moment and starts right on time. Times will be shared here and on WhatsApp once confirmed.": "每场活动请提前约15分钟到场——Grihapravesham 会在吉时开始，准时进行。时间确认后会在这里和 WhatsApp 上通知大家。",
+"How do I get to the venues?": "怎么去各个场地？",
+"We recommend Uber — it's safe, the price is fixed upfront, and there's no parking to worry about. Addresses and maps are in Travel Logistics under <b>Getting around</b>.": "我们推荐使用 Uber——安全、价格事先确定，也不用担心停车。地址和地图请见“旅行安排”中的<b>出行交通</b>。"
 };
