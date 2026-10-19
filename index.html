@@ -456,7 +456,7 @@
     visibility: visible;
   }
   /* Blur the underlying page (every direct child of body except the modals themselves) */
-  body.modal-open > *:not(.modal) {
+  body.modal-open > *:not(.modal):not(.lightbox) {
     filter: blur(10px);
     transition: filter 0.45s ease;
     pointer-events: none;
@@ -889,15 +889,7 @@
     font-size: 0.85rem;
     color: var(--muted);
   }
-  .rsvp-cc-other summary {
-    cursor: pointer;
-    padding: 0.4rem 0;
-    list-style: none;
-    user-select: none;
-  }
-  .rsvp-cc-other summary::-webkit-details-marker { display: none; }
-  .rsvp-cc-other summary::before { content: '▸ '; display: inline-block; width: 1em; }
-  .rsvp-cc-other[open] summary::before { content: '▾ '; }
+  .rsvp-cc-other label { display: block; padding: 0.4rem 0 0; }
   .rsvp-cc-other select {
     width: 100%;
     margin-top: 0.5rem;
@@ -1029,7 +1021,14 @@
   .travel-tab[aria-selected="true"] { background: #3d2817; border-color: #3d2817; color: var(--bg); }
   .travel-panel[hidden] { display: none; }
   .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
-  .wear-photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; display: block; margin-bottom: 0.9rem; }
+  .parking-note { margin-top: 1.2rem; }
+  .wear-zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; margin-bottom: 0.9rem; border-radius: 10px; }
+  .wear-photo { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; display: block; }
+  .wear-zoom-hint { position: absolute; right: 0.6rem; bottom: 0.6rem; background: rgba(42, 30, 20, 0.72); color: #fff; font: 600 0.78rem 'Inter', sans-serif; padding: 0.3rem 0.65rem; border-radius: 999px; pointer-events: none; }
+  .lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(20, 14, 10, 0.92); display: flex; align-items: center; justify-content: center; padding: 3.5rem 1rem 1rem; cursor: zoom-out; }
+  .lightbox[hidden] { display: none; }
+  .lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
+  .lightbox-close { position: absolute; top: 0.8rem; right: 1rem; width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 0; background: #fff; color: #2a1e14; font-size: 1.4rem; cursor: pointer; }
   .guide-card {
     background: rgba(231, 219, 200, 0.4);
     border-radius: 14px; padding: 1.2rem 1.3rem 1.4rem;
@@ -1724,7 +1723,7 @@
       <img src="images/dress-code-wedding-party.jpg" alt="">
       <div class="card-overlay">
         <div class="card-text">
-          <h4>Weekend &amp; Dress Code</h4>
+          <h4>The Wedding Weekend &amp; Dress Code</h4>
           <p>What's on, and what to wear.</p>
         </div>
         <span class="card-plus">+</span>
@@ -1770,11 +1769,11 @@
     </details>
     <details>
       <summary>What are the events?</summary>
-      <p>There are three: the <b>Mehendi</b> (henna ceremony) on the evening of Thursday 14 January, the <b>Reception</b> at Trivandrum Club on the evening of Friday 15 January, and the <b>Grihapravesham</b> — welcoming the bride into the groom's home — on Saturday 16 January. Times and the remaining venues will be confirmed soon. See <a href="#" data-modal="modal-dress-code" style="color: var(--accent); text-decoration: underline;">Weekend &amp; Dress Code</a> for what happens at each.</p>
+      <p>There are three: the <b>Mehendi</b> (henna ceremony) on the evening of Thursday 14 January, the <b>Reception</b> at Trivandrum Club on the evening of Friday 15 January, and the <b>Grihapravesham</b> — welcoming the bride into the groom's home — on Saturday 16 January. Times and the remaining venues will be confirmed soon. See <a href="#" data-modal="modal-dress-code" style="color: var(--accent); text-decoration: underline;">The Wedding Weekend &amp; Dress Code</a> for what happens at each.</p>
     </details>
     <details>
       <summary>Is there a dress code?</summary>
-      <p>Colourful and festive — Indian wear is very welcome but never expected, and a smart dress or light suit is perfect too. Please avoid all-white and all-black, and leave bright red to the bride. See <a href="#" data-modal="modal-dress-code" style="color: var(--accent); text-decoration: underline;">Weekend &amp; Dress Code</a> for outfit ideas for each event and where to shop in the city.</p>
+      <p>Colourful and festive — Indian wear is very welcome but never expected, and a smart dress or light suit is perfect too. Please avoid all-white and all-black, and leave bright red to the bride. See <a href="#" data-modal="modal-dress-code" style="color: var(--accent); text-decoration: underline;">The Wedding Weekend &amp; Dress Code</a> for outfit ideas for each event and where to shop in the city.</p>
     </details>
     <details>
       <summary>What will the weather be like? What happens if it rains?</summary>
@@ -1794,7 +1793,7 @@
     </details>
     <details>
       <summary>How do I get to the venues?</summary>
-      <p>We recommend Uber — it's safe and the price is fixed upfront. <b>Coming by car?</b> Trivandrum Club has parking on its grounds; it can fill up on a busy evening, so please arrive a little early. All six of our recommended hotels have guest parking too — just mention your car when you book. Addresses and maps are in Travel Logistics under <b>Getting around</b>.</p>
+      <p>We recommend Uber — it's safe and the price is fixed upfront. <b>Coming by car?</b> Trivandrum Club has parking on its grounds; it can fill up on a busy evening, so please arrive a little early. Addresses and maps are in Travel Logistics under <b>Getting around</b>.</p>
     </details>
     <details>
       <summary>Help! I have other questions!</summary>
@@ -1933,15 +1932,15 @@
 <!-- ============ DRESS CODE MODAL ============ -->
 <div class="modal" id="modal-dress-code" aria-hidden="true">
   <div class="modal-bar">
-    <h3>Weekend &amp; Dress Code</h3>
+    <h3>The Wedding Weekend &amp; Dress Code</h3>
     <button class="modal-close" aria-label="Close" data-modal-close>×</button>
   </div>
   <div class="modal-body">
     <img class="modal-hero" src="images/dress-code-wedding-party.jpg" alt="A Kerala wedding: the couple with their friends, the men in cream kurtas and mundus, the women in silk sarees and lehengas">
-    <h2>Weekend &amp; Dress Code</h2>
+    <h2>The Wedding Weekend &amp; Dress Code</h2>
     <p>What's happening when, and what to wear to each. Never worn Indian clothes before? You're welcome either way — and if you'd like to try, we'd love to see it.</p>
 
-    <h3 class="party-heading">The Weekend</h3>
+    <h3 class="party-heading">The Wedding Weekend</h3>
     <div class="guide-grid">
         <div class="guide-card">
           <span class="member-name">Thu 14 January, evening</span>
@@ -1960,22 +1959,24 @@
         </div>
     </div>
 
+    <p class="parking-note"><b>Parking:</b> Trivandrum Club has parking on its grounds for guests driving to the reception. It can fill up on a busy evening, so please arrive a little early — or take an Uber and skip parking altogether. Parking details for the Mehendi and the Grihapravesham will be shared with the venues.</p>
+
     <h3 class="party-heading">What to Wear</h3>
     <div class="guide-grid">
         <div class="guide-card">
-          <img class="wear-photo" src="images/wear-ladies.jpg" alt="Two women in cream-and-gold Kerala kasavu sarees" loading="lazy" style="object-position:center 20%">
+          <button class="wear-zoom" type="button" aria-label="Enlarge photo"><img class="wear-photo" src="images/wear-ladies.jpg" alt="Two women in cream-and-gold Kerala kasavu sarees" loading="lazy" style="object-position:center 20%"><span class="wear-zoom-hint">⤢ Tap to enlarge</span></button>
           <span class="member-name">For the ladies</span>
           <h5>Sarees, lehengas or a smart dress</h5>
           <p>A <b>silk or cotton saree</b>, a <b>lehenga</b> or a <b>salwar / kurta set</b>. Rich, happy colours — maroon, mustard, emerald, pink, gold.</p><p>Prefer Western clothes? A bright, elegant midi or maxi dress with covered shoulders.</p>
         </div>
         <div class="guide-card">
-          <img class="wear-photo" src="images/wear-gentlemen.jpg" alt="A man in a white mundu with a green kurta" loading="lazy" style="object-position:center 8%">
+          <button class="wear-zoom" type="button" aria-label="Enlarge photo"><img class="wear-photo" src="images/wear-gentlemen.jpg" alt="A man in a white mundu with a green kurta" loading="lazy" style="object-position:center 8%"><span class="wear-zoom-hint">⤢ Tap to enlarge</span></button>
           <span class="member-name">For the gentlemen</span>
           <h5>Kurta, mundu or a light suit</h5>
           <p>A <b>kurta</b> with trousers, or a <b>sherwani / bandhgala</b> for the evening. For a Kerala touch, the <b>mundu</b> — a white cotton wrap with a gold border, worn with a shirt.</p><p>Prefer Western clothes? A linen suit in a lighter colour.</p>
         </div>
         <div class="guide-card">
-          <img class="wear-photo" src="images/wear-sandals.jpg" alt="A pair of embroidered slip-on sandals" loading="lazy" style="object-position:center">
+          <button class="wear-zoom" type="button" aria-label="Enlarge photo"><img class="wear-photo" src="images/wear-sandals.jpg" alt="A pair of embroidered slip-on sandals" loading="lazy" style="object-position:center"><span class="wear-zoom-hint">⤢ Tap to enlarge</span></button>
           <span class="member-name">Good to know</span>
           <h5>A few gentle guidelines</h5>
           <p><b>Colours:</b> avoid all-white and all-black, and leave bright red to the bride.</p><p><b>Cover up a little</b> for the ceremony; a scarf or dupatta is handy.</p><p><b>Shoes</b> may come off — choose slip-on sandals or flats. <b>Fabric:</b> cotton, linen and light silk for the warm weather.</p>
@@ -2500,7 +2501,7 @@
     <!-- EDIT ME: hero image -->
     <img class="modal-hero" src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=1400&q=80" alt="Registry">
     <h2>Registry</h2>
-    <p>Your presence at our wedding is the greatest gift of all — truly, no gift is expected. If you would still like to bless us with something, here is how, whether you're travelling from overseas or joining us from India.</p>
+    <p>Your presence at our wedding is the greatest gift of all — truly, no gift is expected. If you would still like to bless us with something, here is how.</p>
 
     <h3 class="party-heading">Guests from Overseas</h3>
     <div class="guide-grid">
@@ -2525,27 +2526,6 @@
         <span class="member-name">Ang pow</span>
         <h5>A red envelope of good wishes</h5>
         <p>If you'd like to mark the occasion, an <b>ang pow</b> — the red envelope given in Malaysia to wish a couple a blessed start — is warmly welcomed. You'll find the ang pow box at the reception entrance, or you're welcome to hand it to any member of our wedding party on the night.</p>
-      </div>
-    </div>
-
-    <h3 class="party-heading">Guests from India</h3>
-    <div class="guide-grid">
-      <div class="guide-card">
-        <span class="member-name">Tradition</span>
-        <h5>A blessing in an envelope</h5>
-        <p>In keeping with custom, a cash gift in an envelope is warmly received. Amounts ending in <b>1</b> — such as ₹501, ₹1,001 or ₹5,001 — are considered auspicious, as the extra rupee is a blessing for a new beginning.</p>
-      </div>
-      <div class="guide-card">
-        <span class="member-name">Online</span>
-        <h5>UPI</h5>
-        <!-- EDIT ME: add the UPI ID / QR code, then remove the "to follow" line -->
-        <p>Prefer to send it digitally? A UPI transfer works just as well.</p>
-        <p class="guide-wear">UPI details to follow.</p>
-      </div>
-      <div class="guide-card">
-        <span class="member-name">At the venue</span>
-        <h5>Gift table</h5>
-        <p>There will be a box at the reception entrance for envelopes and gifts — no need to hand them to us during the ceremony.</p>
       </div>
     </div>
 
@@ -2589,12 +2569,12 @@
           <button class="rsvp-cc-chip" data-cc="+971" data-flag="🇦🇪" type="button" aria-pressed="false"><span class="rsvp-cc-flag">🇦🇪</span> UAE <strong>+971</strong></button>
           <button class="rsvp-cc-chip" data-cc="+358" data-flag="🇫🇮" type="button" aria-pressed="false"><span class="rsvp-cc-flag">🇫🇮</span> Finland <strong>+358</strong></button>
         </div>
-        <details class="rsvp-cc-other">
-          <summary>From a different country? Pick from the full list</summary>
+        <div class="rsvp-cc-other">
+          <label for="rsvp-cc-select">From a different country? Pick from the full list</label>
           <select id="rsvp-cc-select" aria-label="Country code">
             <option value="">— Select country —</option>
           </select>
-        </details>
+        </div>
       </div>
 
       <div class="rsvp-cc-card-label" style="margin-top:1.6rem; padding-left:0.2rem;">Your WhatsApp number</div>
@@ -2999,9 +2979,9 @@
       ['4193', 'The Corvette'], ['4199', 'The Corvette'], ['4223', 'The Corvette'],
       ['3833', 'The horse ranch'], ['3874', 'The horse ranch'], ['3604', 'Jade Dragon Snow Mountain'],
       ['3649', 'Jade Dragon Snow Mountain'], ['3759', 'Jade Dragon Snow Mountain'], ['3801', 'Jade Dragon Snow Mountain'],
-      ['3816', 'Jade Dragon Snow Mountain'], ['h5570', 'In the Tibetan house'], ['h5574', 'In the Tibetan house'],
+      ['3816', 'Jade Dragon Snow Mountain'], ['h5570', 'In the Tibetan house'], ['h5572', 'In the Tibetan house'],
       ['h5640', 'On the grasslands'], ['h5680', 'A new friend'], ['h5703', 'With the goats'],
-      ['h5728', 'Under the prayer flags'], ['h5906', 'The black horses'], ['h5929', 'The black horses'],
+      ['h5728', 'Under the prayer flags'], ['h5903', 'The black horses'], ['h5929', 'The black horses'], ['h5919', 'Standing tall'],
       ['h6039', 'Riding high'], ['h6056', 'Into the hills']
     ];
     const img = document.getElementById('slide-img');
@@ -3865,8 +3845,6 @@
         document.getElementById('rsvp-phone').value = '';
         document.getElementById('rsvp-cc-display').textContent = '+ —';
         if (ccSelect) ccSelect.selectedIndex = 0;
-        const detailsEl = modal.querySelector('.rsvp-cc-other');
-        if (detailsEl) detailsEl.open = false;
         modal.querySelectorAll('.rsvp-cc-chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
         document.getElementById('rsvp-travel').hidden = true;
         document.getElementById('rsvp-first').value = '';
@@ -3925,6 +3903,22 @@
     try { const saved = localStorage.getItem('explore-from'); if (saved && KM[saved]) start = saved; } catch (e) {}
     sels.forEach(s => s.addEventListener('change', () => render(s.value)));
     render(start);
+  })();
+</script>
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Photo">
+  <button class="lightbox-close" type="button" aria-label="Close">×</button>
+  <img alt="">
+</div>
+<script>
+  /* Tap a What to Wear photo to see it whole */
+  (function () {
+    const box = document.getElementById('lightbox'), img = box.querySelector('img');
+    document.addEventListener('click', e => {
+      const z = e.target.closest('.wear-zoom');
+      if (z) { const p = z.querySelector('img'); img.src = p.src; img.alt = p.alt; box.hidden = false; return; }
+      if (!box.hidden && e.target.closest('#lightbox')) box.hidden = true;
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !box.hidden) { box.hidden = true; e.stopPropagation(); } }, true);
   })();
 </script>
 </body>
