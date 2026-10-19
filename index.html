@@ -2241,6 +2241,18 @@
     <div class="modal-info travel-panel" data-panel="around">
       <div class="modal-info-label">On the day</div>
       <h4>Getting to the Celebrations</h4>
+      <div class="explore-from">
+        <label for="venue-from">Staying at</label>
+        <select id="venue-from">
+          <option value="hyatt">Hyatt Regency Trivandrum</option>
+          <option value="vivanta">Vivanta Thiruvananthapuram</option>
+          <option value="hilton">Hilton Garden Inn Trivandrum</option>
+          <option value="mascot">Mascot Hotel (KTDC)</option>
+          <option value="southpark">The South Park</option>
+          <option value="hycinth">Hycinth by Sparsa</option>
+        </select>
+        <span class="explore-from-note">Distances update for your hotel. Drive times are typical daytime traffic.</span>
+      </div>
       <div class="guide-grid event-venues">
         <div class="guide-card">
           <span class="member-name">Thu 14 January, evening</span>
@@ -2251,6 +2263,7 @@
         <div class="guide-card">
           <span class="member-name">Fri 15 January</span>
           <h5>Reception</h5>
+          <div class="hotel-dist" data-venue="club"></div>
           <p><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+Club+Vazhuthacaud+Thiruvananthapuram" target="_blank" rel="noopener"><b>Trivandrum Club</b></a>, Vazhuthacaud, Thiruvananthapuram, Kerala 695010.</p>
           <p class="guide-wear">Time to be confirmed. About 25 minutes from the airport and 10 minutes from the city hotels. <a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Trivandrum+Club+Vazhuthacaud+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></p>
         </div>
@@ -3047,7 +3060,7 @@
       if (max <= 0) return;
       if ((e.deltaY < 0 && thumbs.scrollLeft <= 0) || (e.deltaY > 0 && thumbs.scrollLeft >= max - 1)) return;
       e.preventDefault();
-      thumbs.scrollLeft += e.deltaY;
+      thumbs.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? thumbs.clientWidth : 1.5);
     }, { passive: false });
   })();
 
@@ -3889,7 +3902,7 @@
   (function () {
     const KM = {"hyatt": {"kovalam": 15.7, "temple": 2.9, "napier": 2.8, "poovar": 27.7, "shang": 9.0, "varkala": 46.2, "pothys": 2.4, "jaya": 2.2, "lulu": 9.1, "balaram": 14.3}, "vivanta": {"kovalam": 14.7, "temple": 1.9, "napier": 3.6, "poovar": 26.7, "shang": 8.0, "varkala": 45.9, "pothys": 1.5, "jaya": 1.3, "lulu": 8.7, "balaram": 13.2}, "hilton": {"kovalam": 15.2, "temple": 2.3, "napier": 2.1, "poovar": 27.2, "shang": 8.1, "varkala": 44.5, "pothys": 1.4, "jaya": 1.5, "lulu": 7.4, "balaram": 15.4}, "mascot": {"kovalam": 16.3, "temple": 3.3, "napier": 0.5, "poovar": 28.3, "shang": 9.1, "varkala": 44.4, "pothys": 2.5, "jaya": 2.6, "lulu": 7.3, "balaram": 15.9}, "southpark": {"kovalam": 15.2, "temple": 2.2, "napier": 2.1, "poovar": 27.2, "shang": 8.1, "varkala": 44.5, "pothys": 1.4, "jaya": 1.5, "lulu": 7.4, "balaram": 15.1}, "hycinth": {"kovalam": 15.4, "temple": 2.2, "napier": 2.8, "poovar": 27.4, "shang": 8.7, "varkala": 46.1, "pothys": 1.6, "jaya": 1.5, "lulu": 9.0, "balaram": 13.9}};
     const NAMES = { hyatt: 'Hyatt Regency', vivanta: 'Vivanta', hilton: 'Hilton Garden Inn', mascot: 'Mascot Hotel', southpark: 'The South Park', hycinth: 'Hycinth' };
-    const sels = ['explore-from', 'shop-from'].map(id => document.getElementById(id)).filter(Boolean);
+    const sels = ['explore-from', 'shop-from', 'venue-from'].map(id => document.getElementById(id)).filter(Boolean);
     if (!sels.length) return;
     const drive = km => {
       let m = Math.round((km * (km < 10 ? 2 : 1.8) + 5) / 5) * 5;
@@ -3897,8 +3910,14 @@
       const h = Math.floor(m / 60); m = m % 60;
       return h + ' hr' + (m ? ' ' + m + ' min' : '');
     };
+    // To the reception: the same figures as the hotel cards in the Hotels tab
+    const TO_CLUB = { hyatt: ['1 km', '5 min'], vivanta: ['2 km', '5–10 min'], hilton: ['1.5 km', '5–10 min'],
+                      mascot: ['1.5 km', '5–10 min'], southpark: ['1.5 km', '5–10 min'], hycinth: ['2.5 km', '10 min'] };
     function render(hotel) {
       sels.forEach(s => { s.value = hotel; });
+      document.querySelectorAll('.hotel-dist[data-venue]').forEach(el => {
+        el.textContent = `📍 About ${TO_CLUB[hotel][0]} · ${TO_CLUB[hotel][1]} drive from ${NAMES[hotel]}`;
+      });
       const from = KM[hotel];
       document.querySelectorAll('.hotel-dist[data-place], .hotel-dist[data-shop]').forEach(el => {
         const km = from[el.dataset.place || el.dataset.shop];
