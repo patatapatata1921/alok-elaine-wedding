@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Share your photos — Alok & Elaine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #faf7f2; --ink: #2b2622; --muted: #6b6258; --accent: #8a6d4b; --line: #e6dfd3; --dark: #3d2817; --card: #f1ebe2; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 1.2rem 1.25rem 3rem; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .lang { font: inherit; font-size: 0.85rem; border: 1px solid var(--ink); background: none; color: var(--ink); border-radius: 999px; padding: 0.25rem 0.8rem; cursor: pointer; }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2.4rem, 9vw, 3.2rem); line-height: 1.1; margin: 2rem 0 0.6rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); margin-bottom: 1.8rem; }
+  label.field { display: block; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.4rem; }
+  input[type=text] { width: 100%; font: inherit; font-size: 1.05rem; padding: 0.8rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); }
+  input[type=text]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .hint { font-size: 0.85rem; color: var(--muted); margin: 0.35rem 0 1.4rem; }
+  .pick { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 1.15rem; border: 0; border-radius: 999px; background: var(--dark); color: #fff; font: 600 1.1rem 'Inter', sans-serif; cursor: pointer; }
+  .pick:disabled { opacity: 0.5; cursor: default; }
+  #files { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .status { margin: 1.4rem 0 0.6rem; font-weight: 600; text-align: center; min-height: 1.5em; }
+  .bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin-bottom: 1rem; }
+  .bar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.3s ease; }
+  .list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .item { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--card); }
+  .item img, .item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .item .vid { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 2rem; }
+  .item .badge { position: absolute; left: 0.35rem; bottom: 0.35rem; font-size: 0.72rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 999px; background: rgba(255,255,255,0.92); color: var(--ink); }
+  .item.done .badge { background: #2f6b3a; color: #fff; }
+  .item.fail .badge { background: #a23b2a; color: #fff; }
+  .item.wait { opacity: 0.55; }
+  .retry { display: none; margin: 1rem auto 0; font: 600 1rem 'Inter', sans-serif; padding: 0.8rem 1.6rem; border-radius: 999px; border: 1px solid var(--dark); background: none; color: var(--dark); cursor: pointer; }
+  .note { margin-top: 1.6rem; padding: 1rem 1.1rem; border-radius: 12px; background: var(--card); font-size: 0.9rem; color: var(--muted); }
+  .note b { color: var(--ink); }
+  .code-box { margin-bottom: 1.4rem; }
+  .closed { text-align: center; padding: 2rem 1rem; background: var(--card); border-radius: 14px; color: var(--muted); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="logo" href="./">A&amp;E</a>
+    <button class="lang" id="lang" type="button">中文</button>
+  </div>
+
+  <h1 data-t="title">Share your photos</h1>
+  <p class="sub" data-t="sub">Add your pictures from the celebrations — they go straight to Alok &amp; Elaine, and onto the big screen.</p>
+
+  <div class="closed" id="closed" hidden data-t="closed">Photo sharing opens closer to the wedding. Please check back soon!</div>
+
+  <div id="form">
+    <div class="code-box" id="code-box" hidden>
+      <label class="field" for="code" data-t="codeLabel">Guest code</label>
+      <input type="text" id="code" autocomplete="off" autocapitalize="none" spellcheck="false">
+      <p class="hint" data-t="codeHint">It's on the card at your table, or in our WhatsApp message.</p>
+    </div>
+
+    <label class="field" for="from" data-t="nameLabel">Your name (optional)</label>
+    <input type="text" id="from" autocomplete="name" maxlength="40">
+    <p class="hint" data-t="nameHint">So we know who took these — not shown to other guests.</p>
+
+    <label class="pick" id="pick" for="files"><span aria-hidden="true">📷</span> <span data-t="pick">Choose photos</span></label>
+    <input type="file" id="files" accept="image/*,video/*" multiple>
+
+    <p class="status" id="status" aria-live="polite"></p>
+    <div class="bar" id="bar" hidden><span></span></div>
+    <div class="list" id="list"></div>
+    <button class="retry" id="retry" type="button" data-t="retry">Try the failed ones again</button>
+
+    <div class="note">
+      <p data-t="note1"><b>Keep this page open</b> until every photo shows ✓. You can add more any time.</p>
+      <p data-t="note2" style="margin-top:0.5rem">Short videos are welcome (up to about 30 MB each). For longer videos, send them to us on WhatsApp.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // EDIT ME: paste the photos Apps Script "Web app URL" here (photos-backend/SETUP.txt)
+  const PHOTO_ENDPOINT = '';
+  const MAX_BYTES = 30 * 1024 * 1024;   // per file, after resizing
+  const MAX_SIDE = 2560;                 // photos are resized on the phone to this long side
+
+  const T = {
+    en: {
+      title: 'Share your photos',
+      sub: 'Add your pictures from the celebrations — they go straight to Alok &amp; Elaine, and onto the big screen.',
+      closed: 'Photo sharing opens closer to the wedding. Please check back soon!',
+      codeLabel: 'Guest code', codeHint: "It's on the card at your table, or in our WhatsApp message.",
+      nameLabel: 'Your name (optional)', nameHint: 'So we know who took these — not shown to other guests.',
+      pick: 'Choose photos', pickMore: 'Add more photos', retry: 'Try the failed ones again',
+      note1: '<b>Keep this page open</b> until every photo shows ✓. You can add more any time.',
+      note2: 'Short videos are welcome (up to about 30 MB each). For longer videos, send them to us on WhatsApp.',
+      waiting: 'Waiting', sending: 'Sending…', done: '✓ Sent', failed: 'Failed', tooBig: 'Too large',
+      progress: (d, n) => `Sending ${d} of ${n}…`, allDone: n => `Thank you! ${n} sent ✓`,
+      someFailed: (d, f) => `${d} sent, ${f} didn't go through.`, badCode: "That guest code doesn't look right — please check it.",
+      needCode: 'Please enter the guest code first.'
+    },
+    zh: {
+      title: '分享您的照片',
+      sub: '上传您在婚礼上拍的照片——会直接送到 Alok 和 Elaine 手中，并在大屏幕上播放。',
+      closed: '照片分享将在婚礼临近时开放，请稍后再来！',
+      codeLabel: '宾客码', codeHint: '写在您桌上的卡片上，或我们发的 WhatsApp 消息里。',
+      nameLabel: '您的名字（选填）', nameHint: '让我们知道是谁拍的——不会显示给其他宾客。',
+      pick: '选择照片', pickMore: '继续添加照片', retry: '重新发送失败的照片',
+      note1: '<b>请保持此页面打开</b>，直到每张照片都显示 ✓。之后随时可以继续添加。',
+      note2: '欢迎上传短视频（每个约 30 MB 以内）。较长的视频请通过 WhatsApp 发给我们。',
+      waiting: '等待中', sending: '发送中…', done: '✓ 已发送', failed: '失败', tooBig: '文件太大',
+      progress: (d, n) => `正在发送第 ${d} 张，共 ${n} 张…`, allDone: n => `谢谢！已发送 ${n} 张 ✓`,
+      someFailed: (d, f) => `已发送 ${d} 张，${f} 张未成功。`, badCode: '宾客码好像不对——请再检查一下。',
+      needCode: '请先输入宾客码。'
+    }
+  };
+  let lang = 'en';
+  try { if (localStorage.getItem('lang') === 'zh') lang = 'zh'; } catch (e) {}
+  const t = k => T[lang][k];
+  function applyLang() {
+    document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = t(el.dataset.t); });
+    document.getElementById('lang').textContent = lang === 'zh' ? 'EN' : '中文';
+    document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+    document.title = lang === 'zh' ? '分享您的照片 — Alok & Elaine' : 'Share your photos — Alok & Elaine';
+    if (queue.length) { render(); updateStatus(); }
+  }
+  document.getElementById('lang').addEventListener('click', () => {
+    lang = lang === 'zh' ? 'en' : 'zh';
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+    applyLang();
+  });
+
+  const params = new URLSearchParams(location.search);
+  const MOCK = params.get('mock') === '1';
+  const codeInput = document.getElementById('code');
+  const fromInput = document.getElementById('from');
+  let code = params.get('c') || '';
+  try { code = code || localStorage.getItem('photo-code') || ''; fromInput.value = localStorage.getItem('photo-from') || ''; } catch (e) {}
+  if (code) { try { localStorage.setItem('photo-code', code); } catch (e) {} }
+  else document.getElementById('code-box').hidden = false;
+  codeInput.value = code;
+  fromInput.addEventListener('change', () => { try { localStorage.setItem('photo-from', fromInput.value.trim()); } catch (e) {} });
+
+  if (!PHOTO_ENDPOINT && !MOCK) {
+    document.getElementById('form').hidden = true;
+    document.getElementById('closed').hidden = false;
+  }
+
+  const queue = [];   // {file, state, thumb}
+  const list = document.getElementById('list');
+  const statusEl = document.getElementById('status');
+  const bar = document.getElementById('bar');
+  let busy = false;
+
+  function render() {
+    list.innerHTML = '';
+    queue.forEach(q => {
+      const d = document.createElement('div');
+      d.className = 'item ' + q.state;
+      if (q.thumb) { const im = document.createElement('img'); im.src = q.thumb; im.alt = ''; d.appendChild(im); }
+      else { const v = document.createElement('div'); v.className = 'vid'; v.textContent = '🎬'; d.appendChild(v); }
+      const b = document.createElement('span'); b.className = 'badge';
+      b.textContent = { wait: t('waiting'), sending: t('sending'), done: t('done'), fail: t('failed'), big: t('tooBig') }[q.state];
+      d.appendChild(b);
+      list.appendChild(d);
+    });
+  }
+  function updateStatus() {
+    const n = queue.length, done = queue.filter(q => q.state === 'done').length;
+    const failed = queue.filter(q => q.state === 'fail' || q.state === 'big').length;
+    bar.hidden = !n;
+    bar.firstElementChild.style.width = n ? (100 * (done + failed) / n) + '%' : 0;
+    if (busy) statusEl.textContent = t('progress')(Math.min(done + failed + 1, n), n);
+    else if (failed) statusEl.textContent = t('someFailed')(done, failed);
+    else if (n) statusEl.textContent = t('allDone')(done);
+    document.getElementById('retry').style.display = !busy && queue.some(q => q.state === 'fail') ? 'block' : 'none';
+    document.querySelector('[data-t="pick"]').textContent = n ? t('pickMore') : t('pick');
+  }
+
+  // Photos: decode and resize on the phone (also turns iPhone HEIC into JPEG); falls back to the original file
+  async function prepare(file) {
+    if (!file.type.startsWith('image/') || file.type === 'image/gif') return { blob: file, type: file.type };
+    try {
+      const img = await new Promise((res, rej) => {
+        const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = URL.createObjectURL(file);
+      });
+      const s = Math.min(1, MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(img.src);
+      const blob = await new Promise(res => c.toBlob(res, 'image/jpeg', 0.9));
+      if (blob) return { blob, type: 'image/jpeg' };
+    } catch (e) { /* couldn't decode here: send the original */ }
+    return { blob: file, type: file.type || 'image/jpeg' };
+  }
+  const toBase64 = blob => new Promise((res, rej) => {
+    const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(blob);
+  });
+
+  async function send(q) {
+    const { blob, type } = await prepare(q.file);
+    if (blob.size > MAX_BYTES) return 'big';
+    if (MOCK) { await new Promise(r => setTimeout(r, 300)); return params.get('fail') === '1' ? 'fail' : 'done'; }
+    const body = JSON.stringify({ code, from: fromInput.value.trim(), type, data: await toBase64(blob) });
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const r = await fetch(PHOTO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body });
+        const j = await r.json();
+        if (j.ok) return 'done';
+        if (j.error === 'code') return 'code';
+        if (j.error === 'size') return 'big';
+      } catch (e) { /* network blip: try once more */ }
+    }
+    return 'fail';
+  }
+
+  async function run() {
+    if (busy) return;
+    busy = true;
+    let wake = null;
+    try { wake = await navigator.wakeLock.request('screen'); } catch (e) {}
+    for (const q of queue) {
+      if (q.state !== 'wait') continue;
+      q.state = 'sending'; render(); updateStatus();
+      const r = await send(q);
+      if (r === 'code') {
+        q.state = 'wait'; busy = false; render();
+        document.getElementById('code-box').hidden = false;
+        statusEl.textContent = t('badCode');
+        codeInput.focus();
+        try { localStorage.removeItem('photo-code'); } catch (e) {}
+        if (wake) wake.release();
+        return;
+      }
+      q.state = r; render(); updateStatus();
+    }
+    busy = false; updateStatus();
+    if (wake) wake.release();
+  }
+
+  document.getElementById('files').addEventListener('change', e => {
+    code = codeInput.value.trim() || code;
+    if (!code) { statusEl.textContent = t('needCode'); document.getElementById('code-box').hidden = false; codeInput.focus(); e.target.value = ''; return; }
+    try { localStorage.setItem('photo-code', code); localStorage.setItem('photo-from', fromInput.value.trim()); } catch (er) {}
+    [...e.target.files].forEach(f => {
+      queue.push({ file: f, state: 'wait', thumb: f.type.startsWith('image/') ? URL.createObjectURL(f) : '' });
+    });
+    e.target.value = '';
+    render(); updateStatus(); run();
+  });
+  codeInput.addEventListener('change', () => {
+    code = codeInput.value.trim();
+    if (queue.some(q => q.state === 'wait')) run();
+  });
+  document.getElementById('retry').addEventListener('click', () => {
+    queue.forEach(q => { if (q.state === 'fail') q.state = 'wait'; });
+    render(); run();
+  });
+
+  applyLang();
+</script>
+</body>
+</html>

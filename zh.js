@@ -845,5 +845,9 @@ window.I18N_ZH = {
 "@Photo": "照片",
 "The Wedding Weekend": "婚礼周末",
 "Standing tall": "傲然而立",
-"<b>Parking:</b> Trivandrum Club has parking on its grounds for guests driving to the reception. It can fill up on a busy evening, so please arrive a little early — or take an Uber and skip parking altogether. Parking details for the Mehendi and the Grihapravesham will be shared with the venues.": "<b>停车：</b>Trivandrum Club 院内设有停车场，供自驾前来参加婚宴的宾客使用。晚间活动时车位可能较满，请稍早到达——或者直接乘坐 Uber，免去停车的麻烦。Mehendi 和 Grihapravesham 的停车信息将随场地一同公布。"
+"<b>Parking:</b> Trivandrum Club has parking on its grounds for guests driving to the reception. It can fill up on a busy evening, so please arrive a little early — or take an Uber and skip parking altogether. Parking details for the Mehendi and the Grihapravesham will be shared with the venues.": "<b>停车：</b>Trivandrum Club 院内设有停车场，供自驾前来参加婚宴的宾客使用。晚间活动时车位可能较满，请稍早到达——或者直接乘坐 Uber，免去停车的麻烦。Mehendi 和 Grihapravesham 的停车信息将随场地一同公布。",
+"During and after the celebrations": "婚礼期间及之后",
+"Send us your photos": "把照片发给我们",
+"We'd love to see the weekend through your eyes. Send your photos and short videos straight to us — they'll pop up on the big screen at the reception. No app or account needed.": "我们很想通过您的镜头看看这个婚礼周末。请把您拍的照片和短视频直接发给我们——它们会出现在婚宴现场的大屏幕上。无需下载应用，也无需注册账号。",
+"<a class=\"travel-btn\" href=\"upload.html?c=kerala2027\" target=\"_blank\" rel=\"noopener\">Share your photos →</a>": "<a class=\"travel-btn\" href=\"upload.html?c=kerala2027\" target=\"_blank\" rel=\"noopener\">分享您的照片 →</a>"
 };
