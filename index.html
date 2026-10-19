@@ -1680,7 +1680,16 @@
 
   <div class="cards">
     <!-- EDIT ME: each card below -->
-    <!-- Wedding Parties card hidden until the photos and names are ready -->
+    <a class="card" href="#" data-modal="modal-wedding-parties">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80" alt="">
+      <div class="card-overlay">
+        <div class="card-text">
+          <h4>Wedding Parties</h4>
+          <p>Meet our favorite people.</p>
+        </div>
+        <span class="card-plus">+</span>
+      </div>
+    </a>
     <a class="card" href="#" data-modal="modal-travel">
       <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=900&q=80" alt="">
       <div class="card-overlay">
@@ -1741,7 +1750,7 @@
     <h2 class="faq-title">Questions and answers</h2>
     <p class="faq-help">Can't find the answer here?</p>
     <!-- EDIT ME: contact email -->
-    <a href="mailto:alokelaine@gmail.com" class="faq-help-link">Reach out to Alok or Elaine</a>
+    <a href="mailto:alokelaine@gmail.com" class="faq-help-link">Reach out to Alok and Elaine at alokelaine@gmail.com</a>
   </div>
   <div class="faq-list">
     <!-- EDIT ME: each FAQ item below -->
@@ -1800,8 +1809,9 @@
     <!-- EDIT ME: hero image for the modal -->
     <img class="modal-hero" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=80" alt="Wedding party">
     <h2>Wedding Parties</h2>
-    <p>Introduce the people standing with you on the wedding day and add their names, roles, and photos here.</p>
-
+    <p>We can't wait to introduce the friends and family standing with us on the day. Their names and photos are coming soon — check back closer to January.</p>
+    <!-- EDIT ME: when names/photos are ready, move the grids out of this <template> and fill them in -->
+    <template id="party-grids">
     <h3 class="party-heading">Bridal Party</h3>
     <div class="party-grid">
       <!-- EDIT ME: each member card; replace src + name -->
@@ -1906,6 +1916,7 @@
         </div>
       </div>
     </div>
+    </template>
   </div>
 </div>
 
@@ -2281,7 +2292,8 @@
             <img src="images/place-kovalam.jpg" alt="Kovalam Beach" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Kovalam+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Kovalam Beach</a></h6>
-              <p>Three crescent beaches and a red-and-white lighthouse — lovely at sunset. About 30 minutes south.</p>
+              <div class="hotel-dist">📍 About 16 km · 35–45 min from the reception</div>
+              <p>Three crescent beaches and a red-and-white lighthouse — lovely at sunset.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Kovalam+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
             </div>
           </article>
@@ -2289,6 +2301,7 @@
             <img src="images/place-temple.jpg" alt="Sree Padmanabhaswamy Temple" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Sree+Padmanabhaswamy+Temple+Thiruvananthapuram" target="_blank" rel="noopener">Sree Padmanabhaswamy Temple</a></h6>
+              <div class="hotel-dist">📍 About 4 km · 10–15 min from the reception</div>
               <p><b>The great Vishnu temple</b> and the city's landmark — the city is named after it. <i>For those interested:</i> entry is for Hindus only, with a strict traditional dress code (men in a mundu, bare-chested; women in a saree) and no phones inside. Everyone can admire the seven-tiered tower and the old East Fort streets from outside.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Sree+Padmanabhaswamy+Temple+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
             </div>
@@ -2297,6 +2310,7 @@
             <img src="images/place-napier.jpg" alt="Napier Museum &amp; Zoo" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Napier+Museum+Thiruvananthapuram" target="_blank" rel="noopener">Napier Museum &amp; Zoo</a></h6>
+              <div class="hotel-dist">📍 About 2 km · 5–10 min from the reception</div>
               <p>Kerala architecture, art and leafy gardens in the city centre. Tickets at the gate.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Napier+Museum+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
             </div>
@@ -2305,7 +2319,8 @@
             <img src="images/place-poovar.jpg" alt="Poovar backwaters" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Poovar+Island+boat+ride" target="_blank" rel="noopener">Poovar backwaters</a></h6>
-              <p>A boat ride through mangroves to where the river meets the sea. About 45 minutes south.</p>
+              <div class="hotel-dist">📍 About 30 km · about 1 hour from the reception</div>
+              <p>A boat ride through mangroves to where the river meets the sea.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Poovar+Island+boat+ride" target="_blank" rel="noopener">Open in Google Maps →</a> <a class="inline-link" href="https://www.getyourguide.com/s/?q=Poovar" target="_blank" rel="noopener">Book a boat tour →</a></div>
             </div>
           </article>
@@ -2313,6 +2328,7 @@
             <img src="images/place-shanghumugham.jpg" alt="Shanghumugham Beach" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Shanghumugham+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Shanghumugham Beach</a></h6>
+              <div class="hotel-dist">📍 About 8 km · 20 min from the reception</div>
               <p>The city beach near the airport, where locals gather for sunset.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Shanghumugham+Beach+Thiruvananthapuram" target="_blank" rel="noopener">Open in Google Maps →</a></div>
             </div>
@@ -2321,7 +2337,8 @@
             <img src="images/place-varkala.jpg" alt="Varkala" loading="lazy">
             <div class="place-body">
               <h6><a class="name-link" href="https://www.google.com/maps/search/?api=1&query=Varkala+Cliff" target="_blank" rel="noopener">Varkala</a></h6>
-              <p>Red cliffs above the Arabian Sea, with cafés along the cliff path. A half-day trip, about 1½ hours north.</p>
+              <div class="hotel-dist">📍 About 50 km · about 1½ hours from the reception</div>
+              <p>Red cliffs above the Arabian Sea, with cafés along the cliff path. Best as a half-day trip.</p>
               <div class="place-links"><a class="inline-link" href="https://www.google.com/maps/search/?api=1&query=Varkala+Cliff" target="_blank" rel="noopener">Open in Google Maps →</a> <a class="inline-link" href="https://www.getyourguide.com/s/?q=Varkala" target="_blank" rel="noopener">Book a day trip →</a></div>
             </div>
           </article>
