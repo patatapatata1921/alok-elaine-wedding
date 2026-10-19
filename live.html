@@ -18,7 +18,7 @@
   .slide { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 1.2s ease; padding: 3vh 3vw 12vh; }
   .slide.on { opacity: 1; }
   .slide .blur { position: absolute; inset: -40px; background-size: cover; background-position: center; filter: blur(40px) brightness(0.45); }
-  .slide img { position: relative; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .slide img { position: relative; object-fit: contain; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
   .slide .from { position: absolute; left: 3vw; bottom: 4.5vh; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.1rem, 2.2vw, 2rem); color: var(--cream); text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
   .new { position: absolute; top: 3vh; left: 3vw; background: var(--cream); color: var(--bg); font-weight: 600; font-size: clamp(0.8rem, 1.2vw, 1.1rem); padding: 0.35em 0.9em; border-radius: 999px; opacity: 0; transition: opacity 0.6s ease; }
   .new.show { opacity: 1; }
@@ -55,6 +55,9 @@
 <script>
   // EDIT ME: paste the same photos Apps Script "Web app URL" as in upload.html
   const PHOTO_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyFS_PpVeda2ZVm6Rjw7pd7eeFpPAtoBZfvHr6iCef1q3NRoaekHTEYJKOIEWXxEyHY/exec';
+  // Alok & Elaine's own photos (Lijiang shoot + the horse shoot) keep the screen going
+  // between guest uploads, and fill it before any arrive.
+  const COUPLE = '5046 5048 4637 4712 4715 4804 4854 4943 4433 4444 4585 4599 4270 4319 4347 4359 4398 4412 4999 5006 5028 3882 3900 3968 3986 4016 4039 4106 4140 4154 4193 4199 4223 3833 3874 3604 3649 3759 3801 3816 h5570 h5572 h5640 h5681 h5703 h5728 h5903 h5929 h5919 h6039 h6056'.split(' ').map(id => 'images/gallery/lj-' + id + '.jpg');
   const SHOW_SECONDS = 7;      // each photo stays this long
   const CHECK_SECONDS = 20;    // how often to look for new uploads
 
@@ -69,8 +72,10 @@
   let order = [];            // ids in the order they arrived
   let fresh = [];            // new arrivals, shown next
   let pos = -1, current = null;
+  const ours = COUPLE.slice().sort(() => Math.random() - 0.5);   // shuffled once per start
+  let oursPos = -1, turn = 0, primed = false;   // photos already there at start aren't "new"
 
-  const src = id => MOCK ? id : 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(id) + '&sz=w2000';
+  const src = id => MOCK || id.startsWith('images/') ? id : 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(id) + '&sz=w2000';
 
   async function check() {
     try {
@@ -92,20 +97,21 @@
       files.forEach(f => {
         if (!known.has(f.id)) {
           known.set(f.id, f);
-          if (order.length || fresh.length || current) fresh.push(f.id); else order.push(f.id);
+          (primed ? fresh : order).push(f.id);
         }
       });
       [...known.keys()].forEach(id => { if (!ids.has(id)) known.delete(id); });
       document.getElementById('count').textContent = known.size ? known.size + (known.size === 1 ? ' photo shared' : ' photos shared') : '';
-      document.getElementById('empty').hidden = known.size > 0;
-      if (!current && known.size) next();
+      primed = true;
     } catch (e) { /* offline for a moment: keep showing what we have */ }
   }
 
   function next() {
     let id, isNew = false;
+    // new uploads first; otherwise two guest photos, then one of ours (only ours if none yet)
     if (fresh.length) { id = fresh.shift(); order.push(id); pos = order.length - 1; isNew = true; }
-    else if (order.length) { pos = (pos + 1) % order.length; id = order[pos]; }
+    else if (order.length && turn++ % 3 !== 2) { pos = (pos + 1) % order.length; id = order[pos]; }
+    else { oursPos = (oursPos + 1) % ours.length; id = ours[oursPos]; }
     if (!id) { current = null; return; }
     const f = known.get(id) || { from: '' };
     const img = new Image();
@@ -122,12 +128,24 @@
     s.appendChild(blur); s.appendChild(img);
     if (f.from) { const p = document.createElement('div'); p.className = 'from'; p.textContent = '📷 ' + f.from; s.appendChild(p); }
     stage.appendChild(s);
+    fit(s, img);
     requestAnimationFrame(() => requestAnimationFrame(() => s.classList.add('on')));
     const old = current; current = s;
     if (old) { old.classList.remove('on'); setTimeout(() => old.remove(), 1400); }
     document.getElementById('new').classList.toggle('show', isNew);
     clearTimeout(window.__t); window.__t = setTimeout(next, SHOW_SECONDS * 1000);
   }
+
+  // every photo fills the screen the same way, however big the original was
+  function fit(s, img) {
+    const cs = getComputedStyle(s);
+    const w = s.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const h = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const k = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+    img.style.width = Math.round(img.naturalWidth * k) + 'px';
+    img.style.height = Math.round(img.naturalHeight * k) + 'px';
+  }
+  window.addEventListener('resize', () => { if (current) fit(current, current.querySelector('img')); });
 
   document.getElementById('start').addEventListener('click', () => {
     (document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || (() => {})).call(document.documentElement);
@@ -136,8 +154,9 @@
   // keep the TV awake
   (async () => { try { await navigator.wakeLock.request('screen'); } catch (e) {} })();
 
+  document.getElementById('empty').hidden = true;
+  next();
   if (PHOTO_ENDPOINT || MOCK) { check(); setInterval(check, CHECK_SECONDS * 1000); }
-  else document.querySelector('.empty p').textContent = 'The live slideshow starts once photo sharing is switched on.';
 </script>
 </body>
 </html>
